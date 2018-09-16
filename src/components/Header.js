@@ -48,8 +48,8 @@ class Header extends Component {
                         >
                             Charts
                         </button>
-                        <button className="topbar-btn" rel="noopener noreferrer" href={support.show}>
-                            Support
+                        <button className="topbar-btn" rel="noopener noreferrer">
+                            <a href={support.show}>Support</a>
                         </button>
                     </div>
 
@@ -61,7 +61,7 @@ class Header extends Component {
                     >
                         <div className="topbar-left">
                             <button
-                                className="topbar-btn icon-pause"
+                                className={`topbar-btn icon-pause ${data.game_paused ? "active" : ""}`}
                                 onClick={() => {
                                     if (data.game_paused) {
                                         data.helpers.playGame();
@@ -71,20 +71,18 @@ class Header extends Component {
                                 }}
                             />
 
-                            <div
-                                className="time-controls"
-                                onClick={() => {
-                                    let i = 1;
-                                    let n = 24;
-                                    while (i <= n) {
-                                        data.helpers.tick(i === n);
-                                        i++;
-                                    }
-                                }}
-                            >
+                            <div className="time-controls">
                                 {[1, 3, 5].map((speed, index) => {
                                     return (
-                                        <button className="topbar-btn" key={index}>
+                                        <button
+                                            className={`topbar-btn ${
+                                                data.game_speed_multiplier === speed && !data.game_paused ? "active" : ""
+                                            }`}
+                                            key={index}
+                                            onClick={() => {
+                                                data.helpers.setGameSpeed(speed);
+                                            }}
+                                        >
                                             {data.game_speed_multiplier === speed ? (
                                                 <span className="speed-control" key={index}>
                                                     {
@@ -96,13 +94,7 @@ class Header extends Component {
                                                     }
                                                 </span>
                                             ) : (
-                                                <span
-                                                    className="speed-control"
-                                                    key={index}
-                                                    onClick={() => {
-                                                        data.helpers.setGameSpeed(speed);
-                                                    }}
-                                                >
+                                                <span className="speed-control" key={index}>
                                                     {
                                                         {
                                                             0: <span className="icon-play-arrow" />,
@@ -116,7 +108,17 @@ class Header extends Component {
                                     );
                                 })}
 
-                                <button className="topbar-btn">
+                                <button
+                                    onClick={() => {
+                                        let i = 1;
+                                        let n = 24;
+                                        while (i <= n) {
+                                            data.helpers.tick(i === n);
+                                            i++;
+                                        }
+                                    }}
+                                    className="topbar-btn"
+                                >
                                     <span className="icon-h-cycle" />
                                 </button>
                             </div>
