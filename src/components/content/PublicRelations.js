@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { public_relations } from "../../game/knowledge/public_relations";
 import { colors } from "../../game/knowledge/colors";
+import CircularProgressbar from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import Bar from "../Bar/Bar";
 import _ from "lodash";
 
@@ -35,94 +37,78 @@ class PublicRelations extends Component {
 
         return (
             <div className="card border text-center">
-                <h3>Public Relations</h3>
                 <div className="flex-container-row">
                     <div style={{ width: "47%", float: "left", margin: "5px" }}>
-                        <h5>Rumor</h5>
-                        <p>attracts new candidates to you </p>
-                        <Bar bar_data={rumor_bar} />
+                        <div className="flex-container-row">
+                            <div style={{ width: "25%" }}>
+                                <CircularProgressbar
+                                    initialAnimation={true}
+                                    strokeWidth={6}
+                                    styles={{
+                                        path: { stroke: `${colors.blue}, ${Math.ceil(data.rumor * 100) / 100}` },
+                                        text: { fill: `<h2>${colors.blue}</h2>` }
+                                    }}
+                                    percentage={Math.ceil(data.rumor * 100) / 100}
+                                    text={`${Math.ceil(data.rumor * 100) / 100}%`}
+                                />
+                            </div>
+                            <span className="flex-container-column" style={{ paddingLeft: "10px" }}>
+                                <h3>Rumor</h3>
+                                <h5>attracts new candidates to you</h5>
+                            </span>
+                        </div>
+                        {/* <Bar bar_data={rumor_bar} /> */}
+                        <button className="btn btn-success btn-md">Search candidate</button>
                     </div>
                     <div style={{ width: "47%", float: "right", margin: "5px" }}>
-                        <h5>Reputation</h5>
-                        <p>attracts new projects to you</p>
-                        <Bar bar_data={reputation_bar} />
+                        <div className="flex-container-row">
+                            <div style={{ width: "25%" }}>
+                                <CircularProgressbar
+                                    initialAnimation={true}
+                                    strokeWidth={6}
+                                    styles={{
+                                        path: { stroke: `${colors.orange}, ${Math.ceil(data.rumor * 100) / 100}` },
+                                        text: { fill: `<h2>${colors.orange}</h2>` }
+                                    }}
+                                    percentage={Math.ceil(data.reputation * 100) / 100}
+                                    text={`${Math.ceil(data.reputation * 100) / 100}%`}
+                                />
+                            </div>
+
+                            <span className="flex-container-column" style={{ paddingLeft: "10px" }}>
+                                <h3>Reputation</h3>
+                                <h5>Attracts new projects to you</h5>
+                            </span>
+                        </div>
+                        {/* <Bar bar_data={reputation_bar} /> */}
                     </div>
                 </div>
 
-                <div>
-                    <div>
-                        <button
-                            className="btn btn-info "
-                            onClick={() => {
-                                public_relations["forum_thread"].onClick(data);
-                            }}
-                        >
-                            {public_relations["forum_thread"].name +
-                                " " +
-                                (() => {
-                                    let effect = _.find(data.on_tick_effects, effect => {
-                                        return effect.type === "forum_thread";
-                                    });
-                                    return effect ? effect.click_count : 0;
-                                })()}
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            className={250 <= data.money ? "btn btn-info " : "btn btn-info disabled "}
-                            onClick={() => {
-                                public_relations["search_specialist"].onClick(data);
-                            }}
-                        >
-                            {public_relations["search_specialist"].name +
-                                " " +
-                                (() => {
-                                    let effect = _.find(data.on_tick_effects, effect => {
-                                        return effect.type === "search_specialist";
-                                    });
-                                    return effect ? effect.click_count : 0;
-                                })()}
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            className={100 <= data.money ? "btn btn-info " : "btn btn-info disabled "}
-                            onClick={() => {
-                                public_relations["search_job"].onClick(data);
-                            }}
-                        >
-                            {public_relations["search_job"].name +
-                                " " +
-                                (() => {
-                                    let effect = _.find(data.on_tick_effects, effect => {
-                                        return effect.type === "search_job";
-                                    });
-                                    return effect ? effect.click_count : 0;
-                                })()}
-                        </button>
-                    </div>
-                    <div>
-                        <button
-                            className={
-                                1000 <= data.money && this.state.next_click_will_able_at < data.date.tick
-                                    ? "btn btn-info "
-                                    : "btn btn-info disabled "
-                            }
-                            onClick={() => {
-                                public_relations["big_event"].onClick(data);
-                                this.setState({ next_click_will_able_at: data.date.tick + 24 }); //only one click at day
-                            }}
-                        >
-                            {public_relations["big_event"].name +
-                                " " +
-                                (() => {
-                                    let effect = _.find(data.on_tick_effects, effect => {
-                                        return effect.type === "big_event";
-                                    });
-                                    return effect ? effect.click_count : 0;
-                                })()}
-                        </button>
-                    </div>
+                <div className="flex-container-row">
+                    {_.map(public_relations, (item, key) => {
+                        return (
+                            <div className="card" style={{ margin: "20px", padding: "16px" }}>
+                                <h6>{public_relations[key].name + " "}</h6>
+                                <button
+                                    className={public_relations[key].cost <= data.money ? "btn btn-info " : "btn btn-info disabled "}
+                                    onClick={() => {
+                                        public_relations[key].onClick(data);
+                                    }}
+                                >
+                                    {public_relations[key].cost ? public_relations[key].cost + "$" : "Free"}
+                                </button>
+
+                                <div>
+                                    {(() => {
+                                        let effect = _.find(data.on_tick_effects, effect => {
+                                            return effect.type === key;
+                                        });
+                                        return effect ? effect.click_count : 0;
+                                    })()}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         );
