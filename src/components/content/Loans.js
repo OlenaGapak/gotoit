@@ -54,71 +54,79 @@ class Loans extends Component {
             <div className="text-center">
                 <h3 className="text-center">Loans</h3>
                 Your credit score: {this.calcCreditScore()}
-                <div className="">
-                    {Object.keys(loans).map(size => {
-                        let loan = loans[size];
-                        return (
-                            <div className=" flex-container-column" key={size}>
-                                <h4 className="">
-                                    {loan.min_credit_score <= this.calcCreditScore() ? (
-                                        <button className="btn btn-success btn-sm" onClick={() => this.take(size)}>
-                                            take
-                                        </button>
-                                    ) : (
-                                        <button className="btn btn-success btn-sm disabled">need {loan.min_credit_score} score</button>
-                                    )}
-                                    <span> {loan.name} </span>
-                                </h4>
-                                <span className=""> Money: {loan.money}$ </span>
-                                <span className=""> Time: {loan.time} month </span>
-                                <span className=""> Interest: {loan.interest}% </span>
-                            </div>
-                        );
-                    })}
-                </div>
-                <div className="card">
-                    {data.taken_loans.map((loan, i) => {
-                        let paid_percent = Math.ceil(((loan.time - loan.timer) / loan.time) * 100);
-
-                        return (
-                            <div className="card" key={i}>
-                                <div className="">
-                                    <h4 className=""> {loan.name} </h4>
+                <div className="flex-container-row">
+                    <div className="flex-element">
+                        {Object.keys(loans).map(size => {
+                            let loan = loans[size];
+                            return (
+                                <div key={size} style={{ padding: "15px" }}>
+                                    <h4 className="">
+                                        <span> {loan.name} </span>
+                                    </h4>
                                     <span className=""> Money: {loan.money}$ </span>
                                     <span className=""> Time: {loan.time} month </span>
                                     <span className=""> Interest: {loan.interest}% </span>
-                                    <span className={paid_percent ? "" : " hidden"}>
-                                        <button
-                                            className={
-                                                this.getEarlyCost(loan) <= data.money
-                                                    ? "btn btn-success btn-sm"
-                                                    : "btn btn-success btn-sm disabled"
-                                            }
-                                            onClick={() => {
-                                                if (this.getEarlyCost(loan) <= data.money) this.earlyRepayment(i);
-                                            }}
-                                        >
-                                            early repayment {this.getEarlyCost(loan)}$
-                                        </button>
-                                    </span>
+                                    <div>
+                                        {loan.min_credit_score <= this.calcCreditScore() ? (
+                                            <button className="btn btn-success btn-sm" onClick={() => this.take(size)}>
+                                                take
+                                            </button>
+                                        ) : (
+                                            <button className="btn btn-success btn-sm disabled">need {loan.min_credit_score} score</button>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="filament">
-                                    <div className="progress">
-                                        <div
-                                            className="progress-bar bg-warning"
-                                            role="progressbar"
-                                            style={{ width: 100 - paid_percent + "%" }}
-                                        >
-                                            debt
-                                        </div>
-                                        <div className="progress-bar bg-success" role="progressbar" style={{ width: paid_percent + "%" }}>
-                                            paid
+                            );
+                        })}
+                    </div>
+                    <div className="flex-container-row card">
+                        {data.taken_loans.map((loan, i) => {
+                            let paid_percent = Math.ceil(((loan.time - loan.timer) / loan.time) * 100);
+
+                            return (
+                                <div className="card" key={i}>
+                                    <div className="flex-element">
+                                        <h4 className=""> {loan.name} </h4>
+                                        <span className=""> Money: {loan.money}$ </span>
+                                        <span className=""> Time: {loan.time} month </span>
+                                        <span className=""> Interest: {loan.interest}% </span>
+                                        <span className={paid_percent ? "" : " hidden"}>
+                                            <button
+                                                className={
+                                                    this.getEarlyCost(loan) <= data.money
+                                                        ? "btn btn-success btn-sm"
+                                                        : "btn btn-success btn-sm disabled"
+                                                }
+                                                onClick={() => {
+                                                    if (this.getEarlyCost(loan) <= data.money) this.earlyRepayment(i);
+                                                }}
+                                            >
+                                                early repayment {this.getEarlyCost(loan)}$
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <div className="filament">
+                                        <div className="progress">
+                                            <div
+                                                className="progress-bar bg-warning"
+                                                role="progressbar"
+                                                style={{ width: 100 - paid_percent + "%" }}
+                                            >
+                                                debt
+                                            </div>
+                                            <div
+                                                className="progress-bar bg-success"
+                                                role="progressbar"
+                                                style={{ width: paid_percent + "%" }}
+                                            >
+                                                paid
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         );
