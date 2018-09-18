@@ -27,6 +27,8 @@ import { companies } from "./game/knowledge/companies";
 
 import { getDefaultState } from "./game/default_state";
 
+import { sounds } from "./game/knowledge/sounds";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "toastr/build/toastr.min.css";
@@ -91,6 +93,7 @@ class App extends Component {
         this.modifyRelation = this.modifyRelation.bind(this);
         this.modifyRelationPure = this.modifyRelationPure.bind(this);
         this.deepCheckRelation = this.deepCheckRelation.bind(this);
+        this.dreamComeTrueCheck = this.dreamComeTrueCheck.bind(this);
         this.getRole = this.getRole.bind(this);
         this.changeRole = this.changeRole.bind(this);
         this.hireCandidate = this.hireCandidate.bind(this);
@@ -110,6 +113,7 @@ class App extends Component {
 
         this.contractSearch = this.contractSearch.bind(this);
         this.offerProject = this.offerProject.bind(this);
+        this.pushNewProject = this.pushNewProject.bind(this);
         this.rejectProject = this.rejectProject.bind(this);
         this.rejectOffered = this.rejectOffered.bind(this);
         this.acceptOffered = this.acceptOffered.bind(this);
@@ -180,6 +184,7 @@ class App extends Component {
         app_state.data.helpers["modifyRelationPure"] = this.modifyRelationPure;
         app_state.data.helpers["getRelation"] = this.getRelation;
         app_state.data.helpers["deepCheckRelation"] = this.deepCheckRelation;
+        app_state.data.helpers["dreamComeTrueCheck"] = this.dreamComeTrueCheck;
         app_state.data.helpers["getRole"] = this.getRole;
         app_state.data.helpers["changeRole"] = this.changeRole;
         app_state.data.helpers["hireCandidate"] = this.hireCandidate;
@@ -199,6 +204,7 @@ class App extends Component {
 
         app_state.data.helpers["contractSearch"] = this.contractSearch;
         app_state.data.helpers["offerProject"] = this.offerProject;
+        app_state.data.helpers["pushNewProject"] = this.pushNewProject;
         app_state.data.helpers["rejectProject"] = this.rejectProject;
         app_state.data.helpers["rejectOffered"] = this.rejectOffered;
         app_state.data.helpers["acceptOffered"] = this.acceptOffered;
@@ -245,7 +251,7 @@ class App extends Component {
         let helpers = this.state.data.helpers;
 
         let loaded_app_state = JSON.parse(localStorage.getItem(game_name + "_app_state"));
-
+        console.log(loaded_app_state);
         if (loaded_app_state) {
             console.log(loaded_app_state.data);
 
@@ -293,6 +299,10 @@ class App extends Component {
                 item.type === "Resume"
                     ? (loaded_app_state.data.mailbox[id].object = _.create(WorkerModel.prototype, item.object))
                     : (loaded_app_state.data.mailbox[id].object = _.create(ProjectModel.prototype, item.object));
+            });
+
+            _.each(loaded_app_state.data.projects, project => {
+                loaded_app_state.data.projects_technologies[project.id] = {};
             });
 
             loaded_app_state.data.helpers = helpers;
@@ -574,13 +584,14 @@ class App extends Component {
     }
 
     dismissEmployer(id) {
-        hired--;
         const data = this.state.data;
         _.remove(data.workers, worker => {
             return worker.id === id;
         });
-        data.statistics.workers_hired.buffer = data.workers.length - 1;
-        this.setState({ data: data });
+        let worker = _.find(data.workers, worker => {
+            if (worker.id === id) return worker;
+        });
+        worker.proposeLeave();
     }
 
     buyItem(worker_id, skill, item_key) {
@@ -859,6 +870,8 @@ class App extends Component {
     failProject(id) {
         this.projectReporting(id, "fail");
         this.checkState();
+        let audio = new Audio(sounds.fail_project);
+        audio.play();
     }
 
     fixProject(id) {
@@ -871,16 +884,101 @@ class App extends Component {
         this.setState({ data: data });
     }
 
+    dreamComeTrueCheck(worker, project, opts) {
+        if (worker.is_player) return;
+
+        const kinds_top = _.max(
+            opts.same_kinds_projects.map(p => {
+                return p.total;
+            })
+        );
+        const platforms_top = _.max(
+            opts.same_platforms_projects.map(p => {
+                return p.total;
+            })
+        );
+        const kinds_platforms_top = _.max(
+            opts.same_platforms_kinds_projects.map(p => {
+                return p.total;
+            })
+        );
+        let dream_came_true = false;
+
+        switch (worker.dream.type) {
+            case "development_kind":
+                if (worker.dream.kind === project.kind && opts.project_total_stat >= kinds_top) {
+                    dream_came_true = true;
+                }
+                break;
+
+            case "development_platform":
+                if (worker.dream.platform === project.platform && opts.project_total_stat >= platforms_top) {
+                    dream_came_true = true;
+                }
+                break;
+
+            case "development_complex":
+                if (
+                    worker.dream.kind === project.kind &&
+                    worker.dream.platform === project.platform &&
+                    opts.project_total_stat >= kinds_platforms_top
+                ) {
+                    dream_came_true = true;
+                }
+                break;
+
+            default:
+                dream_came_true = false;
+        }
+
+        if (dream_came_true) {
+            worker.dreamComeTrue();
+            addAction(`The dream of your worker ${worker.name} has come true.`, { timeOut: 3000, extendedTimeOut: 2000 }, "warning");
+        }
+    }
+
     finishProject(id) {
         projects_done++;
+
         const data = this.state.data;
-        let project = _.find(data.projects, project => {
+        const project = _.find(data.projects, project => {
             return project.id === id;
         });
+        const opts = {
+            project_total_stat: _.sum(
+                Object.keys(project.done).map(stat => {
+                    return project.done[stat];
+                })
+            ),
+            same_kinds_projects: data.simplified_reports.filter(p => {
+                return p.kind === project.kind;
+            }),
+            same_platforms_projects: data.simplified_reports.filter(p => {
+                return p.platform === project.platform;
+            }),
+            same_platforms_kinds_projects: data.simplified_reports.filter(p => {
+                return p.kind === project.kind && p.platform === project.platform;
+            })
+        };
 
         data.workers.forEach(worker => {
             worker.facts.project_finished++;
+            this.dreamComeTrueCheck(worker, project, opts);
         });
+
+        if (
+            opts.project_total_stat >=
+            _.max(
+                data.simplified_reports.map(report => {
+                    return report.total;
+                })
+            )
+        ) {
+            data.top_projects_finished++;
+        }
+
+        let audio = new Audio(sounds.finish_project);
+        audio.play();
 
         let all_top_handler = ProjectsTop.getHandler(data.simplified_reports);
         let platform_top_handler = all_top_handler.filter("platform", project.platform);
@@ -1085,6 +1183,8 @@ class App extends Component {
     createMail(letter) {
         const data = this.state.data;
         data.mailbox.push(letter);
+        let audio = new Audio(sounds.new_message);
+        audio.play();
         this.setState({ data: data });
     }
 
@@ -1103,7 +1203,8 @@ class App extends Component {
             default:
                 console.log("unknown currency " + currency);
         }
-
+        let audio = new Audio(sounds.earn_money);
+        audio.play();
         addAction(
             "Income to your wallet: " + quantity + { usd: "$", btc: "BTC" }[currency],
             { timeOut: 5000, extendedTimeOut: 1000 },
@@ -1120,6 +1221,8 @@ class App extends Component {
             return false;
         }
         const data = this.state.data;
+        let audio = new Audio(sounds.charge_money);
+        audio.play();
         data.money -= quantity;
         data.statistics.money_spent.buffer += +quantity;
         if (!silent) addAction("Charge from your wallet: " + quantity + "$", { timeOut: 3000, extendedTimeOut: 2000 }, "warning");
@@ -2034,7 +2137,13 @@ class App extends Component {
 
     render() {
         return (
-            <div id="app">
+            <div
+                id="app"
+                onClick={() => {
+                    let audio = new Audio(sounds.click);
+                    audio.play();
+                }}
+            >
                 <BubblesAnimation onRef={ref => (this.animation = ref)} />
                 <Popup ref={p => (this.popupHandler = p)} />
                 <Layout data={this.state.data} newGame={this.newGame} />
