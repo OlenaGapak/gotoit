@@ -24,7 +24,6 @@ class Offer extends Component {
     }
 
     reject(id) {
-        console.log(this.props, "PROPS");
         this.props.data.helpers.rejectOffered(id);
         this.props.letter.expired = true;
         this.props.closeModal();
