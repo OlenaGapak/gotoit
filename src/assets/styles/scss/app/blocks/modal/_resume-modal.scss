@@ -22,6 +22,11 @@
     }
   }
 
+
+  .modal-body-container div:last-child{
+    margin-right: 100px;
+  }
+
   .worker-avatar {
     width: size(12);
     height: size(12);
@@ -41,6 +46,10 @@
     flex-flow: column nowrap;
   }
 
+  .name {
+    margin-bottom: 34px;
+  }
+
   .icon-star, .icon-star-border {
     
   }
@@ -56,7 +65,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 0 10.5px 0;
+    margin: 0 10.5px 0 100px;
+
   }
 
   .stats-column {
@@ -78,5 +88,15 @@
     width: 120px;
     height: 40px;
     margin: 32px 8px 0;
+  }
+
+  .hired {
+    margin-top: 38px;
+  }
+
+  .expired {
+    margin-top: 38px;
+    color: #FF6759;
+    font-size: 24px;
   }
 }

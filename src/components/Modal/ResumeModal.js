@@ -71,8 +71,8 @@ class Resume extends Component {
                 </div>
 
                 <div className="modal-body">
-                    <h3 className="fw-700">{worker.name}</h3>
-                    <div className="flex-element flex-container-column">
+                    <h3 className="fw-700 name">{worker.name}</h3>
+                    <div className="modal-body-container flex-element flex-container-column">
                         <div className="flex-element flex-container-row">
                             <h1 className="flex-element salary" style={{ color: `${colors.salary}` }}>
                                 {worker.salary}
@@ -122,7 +122,7 @@ class Resume extends Component {
                             })}
                         </div>
                         <div className="flex-container-row flex-element">
-                            <p className="flex-element stats-column salary" style={{ color: `${colors.salary}` }}>
+                            <p className="flex-element salary" style={{ color: `${colors.salary}` }}>
                                 Salary
                             </p>
                             <p className="flex-element stats-column" style={{ color: `${colors.design.colorCompleted}` }}>
@@ -139,15 +139,16 @@ class Resume extends Component {
 
                     <h6 className="character">Character:</h6>
                     <h5 className="">{worker.character.description}</h5>
-                    {expired ? <h2 className="fw-700">Enterpreneur offer has expired</h2> : ""}
-                    {!worker.hired ? (
+                    {expired ? (
+                        <h2 className="fw-700 expired">Enterpreneur offer has expired</h2>
+                    ) : !worker.hired ? (
                         !expired ? (
                             buttons
                         ) : (
-                            <h2 className="fw-700">This employer found another job</h2>
+                            <h2 className="fw-700 hired">This employer found another job</h2>
                         )
                     ) : (
-                        <h2 className="fw-700">{`You already hired ${gender_pointer}`}</h2>
+                        <h2 className="fw-700 hired">{`You already hired ${gender_pointer}`}</h2>
                     )}
                 </div>
             </section>
