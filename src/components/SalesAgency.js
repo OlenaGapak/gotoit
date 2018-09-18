@@ -10,6 +10,7 @@ import TeamDialog from "./TeamDialog";
 import { roles } from "../game/knowledge/workers";
 import { project_sizes } from "../game/knowledge/projects";
 import { skills, skills_names } from "../game/knowledge/skills";
+import { colors } from "../game/knowledge/colors";
 
 class SalesAgency extends Component {
     constructor(props) {
@@ -90,7 +91,11 @@ class SalesAgency extends Component {
     render() {
         const data = this.props.data;
 
-        const search_button = <button className="btn btn-info hidden">Sales Agency</button>;
+        const search_button = (
+            <button className="btn btn-md btn-info hidden search" style={{ backgroundColor: `${colors.reputation.colorCompleted}` }}>
+                Search project
+            </button>
+        );
 
         const draw_row = (name, child) => {
             return (

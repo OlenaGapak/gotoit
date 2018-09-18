@@ -45,8 +45,19 @@ export const colors = {
     danger: "#d9534f",
     blue: "#33cabb",
     orange: "#fbb264",
-    pink: "#F56293",
     salary: "#71B247",
+
+    rumor: {
+        name: "rumor",
+        colorCompleted: "#F56293",
+        colorTrail: "#F5DCE4"
+    },
+
+    reputation: {
+        name: "reputation",
+        colorCompleted: "#2E99E5",
+        colorTrail: "#DCEDF5"
+    },
 
     backgrounds: {
         Achievements: "#C0E5ED",

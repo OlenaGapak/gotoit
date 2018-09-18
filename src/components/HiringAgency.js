@@ -4,6 +4,7 @@ import _ from "lodash";
 
 import ReactBootstrapSlider from "react-bootstrap-slider";
 import "../../node_modules/react-bootstrap-slider/src/css/bootstrap-slider.min.css";
+import { colors } from "../game/knowledge/colors";
 
 import TeamDialog from "./TeamDialog";
 
@@ -95,7 +96,11 @@ class HiringAgency extends PureComponent {
     render() {
         const data = this.props.data;
 
-        const search_button = <button className="btn btn-info hidden">Hiring Agency</button>;
+        const search_button = (
+            <button className="btn btn-md btn-info hidden search" style={{ backgroundColor: `${colors.rumor.colorCompleted}` }}>
+                Search candidate
+            </button>
+        );
 
         const draw_row = (name, child) => {
             return (

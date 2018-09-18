@@ -59,10 +59,56 @@ padding: size(1);
     flex-direction: column;
 }
 
-.card-content-center {
-    margin: 0 8px 0;
-    padding: 4px 4px 2px 4px;
-    text-align: center;
+
+.card{
+    .card-content-center {
+        margin: 0 8px 0;
+        padding: 4px 4px 2px 4px;
+        text-align: center;
+        height: 100%;
+        display: flex;
+
+        .office-actions{
+            flex-direction: column;
+        }
+
+        h4 {
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .pr-actions button {
+            position:relative;
+            height: 32px;
+            width: 120px;
+            margin-bottom: 26px;
+            margin-top: 16px;
+        }
+
+        .search {
+            margin-top: 16px;
+            height: 32px;
+            width: 172px;
+        }
+        .btn-wrapper{
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+    }
+    .btn-wrapper{
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+}
+.office-buttons {
+    button {
+        width: 160px;
+        height: 32px;
+    }
 }
 
 .small-heading {
@@ -71,21 +117,32 @@ padding: size(1);
     font-weight: bold;
 }
 
-.office .column-buttons {
-    display: flex;
+.office {
+
+    .column-buttons {
+        display: flex;
 
     & > button {
-        flex: 1 1 50%;
-        margin: 0 auto;
+            flex: 1 1 50%;
+            margin: 0 auto;
+        }
     }
+
+    h3 {
+        margin-left: 28px;
+    }
+
+}
+.office-disabled {
+    opacity: 0.5;
 }
 
-.office-buttons button {
-    height: 32px;
-    width: 160px;
-}
+.circle-text {
+    margin-left: 26px;
+    text-align: left;
 
-.office-buttons {
-    margin-right: 28px;
-}
+    h3 {
+        font-weight: bold;
+    }
 
+}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { offices } from "../../game/knowledge/office";
+import { colors } from "../../game/knowledge/colors";
 
 //import {offices} from '../game/knowledge';
 
@@ -79,11 +80,11 @@ class Office extends Component {
                         )}
                     </div>
 
-                    <span className="icon-usd">
-                        <span className="path1" />
-                        <span className="path2" />
-                    </span>
-                    <h3 style={{ color: "#71B247", paddingLeft: "6px" }} className="fw-700">
+                    <h3 style={{ color: `${colors.salary}`, paddingLeft: "6px" }} className="fw-700">
+                        <span className="icon-usd">
+                            <span className="path1" />
+                            <span className="path2" />
+                        </span>{" "}
                         {data.office.price}
                     </h3>
                 </div>
@@ -91,74 +92,84 @@ class Office extends Component {
         );
 
         const coffeemaker = (
-            <div className="card flex-element" style={{ margin: "0 auto" }}>
-                <div className="card-content-center">
+            <div className="card flex-element card-content-center">
+                <div className="card-content-center office-actions">
                     <h4>Coffeemaker</h4>
                     <h6>Workers will come to work earlier if there is a Coffeemaker in the office.</h6>
-                    {data.office_things.coffeemaker ? (
-                        <button
-                            className="btn btn-info disabled"
-                            data-provide="tooltip"
-                            data-placement="top"
-                            title=""
-                            data-original-title="Workers come to work earlier because of the Coffeemaker in the office."
-                        >
-                            Coffeemaker is bought
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => {
-                                data.helpers.buyCoffeemaker();
-                            }}
-                            className={data.money >= 5000 ? "btn btn-success btn-md" : "btn btn-success btn-md disabled"}
-                        >
-                            $5000
-                        </button>
-                    )}
+                    <div className="btn-wrapper">
+                        {data.office_things.coffeemaker ? (
+                            <button
+                                className="btn btn-success disabled"
+                                data-provide="tooltip"
+                                data-placement="top"
+                                title=""
+                                data-original-title="Workers come to work earlier because of the Coffeemaker in the office."
+                            >
+                                Bought
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    data.helpers.buyCoffeemaker();
+                                }}
+                                className={data.money >= 5000 ? "btn btn-success btn-md" : "btn btn-success btn-md disabled"}
+                            >
+                                $5000
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         );
 
         const lunch = (
             <div className="card flex-element card-content-center">
-                <h4>Lunches</h4>
-                <h6>After a delicious Lunch for $25, employees will stay at work until night.</h6>
-                {data.office_things.lunch ? (
-                    <button
-                        onClick={() => {
-                            data.helpers.lunchOff();
-                        }}
-                        className="btn btn-danger btn-md"
-                    >
-                        Cancel
-                    </button>
-                ) : (
-                    <button
-                        onClick={() => {
-                            data.helpers.lunchOn();
-                        }}
-                        className="btn btn-info btn-md"
-                    >
-                        On
-                    </button>
-                )}{" "}
+                <div className="card-content-center office-actions">
+                    <h4>Lunches</h4>
+                    <h6>After a delicious Lunch for $25, employees will stay at work until night.</h6>
+                    <div className="btn-wrapper">
+                        {data.office_things.lunch ? (
+                            <button
+                                onClick={() => {
+                                    data.helpers.lunchOff();
+                                }}
+                                className="btn btn-danger btn-md"
+                            >
+                                Cancel
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => {
+                                    data.helpers.lunchOn();
+                                }}
+                                className="btn btn-success btn-md"
+                            >
+                                On
+                            </button>
+                        )}
+                    </div>
+                </div>
             </div>
         );
         const gadget = (
             <div className="card flex-element card-content-center">
-                <h4>Gadgets</h4>
-                <h6>
-                    Fancy gadgets gives 1% happiness Boost per gadget. You Own:
-                    {data.office_things.gadget}
-                </h6>
-                <button
-                    onClick={() => {
-                        data.helpers.buyGadget();
-                    }}
-                    className={data.money >= data.helpers.getGadgetCost() ? "btn btn-info" : "btn btn-info disabled"}
-                >
-                    Buy Gadget ${data.helpers.getGadgetCost()}
-                </button>
+                <div className="card-content-center office-actions">
+                    <h4>Gadgets</h4>
+                    <h6>
+                        Fancy gadgets gives 1% happiness Boost per gadget. You Own:
+                        {data.office_things.gadget}
+                    </h6>
+                    <div className="btn-wrapper">
+                        <button
+                            onClick={() => {
+                                data.helpers.buyGadget();
+                            }}
+                            className={data.money >= data.helpers.getGadgetCost() ? "btn btn-success" : "btn btn-success disabled"}
+                        >
+                            ${data.helpers.getGadgetCost()}
+                        </button>
+                    </div>
+                </div>
             </div>
         );
 
@@ -167,9 +178,9 @@ class Office extends Component {
                 {apartment_description}
                 {data.office.size > 1 ? (
                     <div className="flex-container-row" style={{ paddingTop: "32px" }}>
-                        {data.office.size > 1 ? coffeemaker : ""}
-                        {data.office.size > 2 ? lunch : ""}
-                        {data.office.size > 3 ? gadget : ""}
+                        <span className={data.office.size > 1 ? "" : "office-disabled"}>{coffeemaker}</span>
+                        <span className={data.office.size > 2 ? "" : "office-disabled"}>{lunch}</span>
+                        <span className={data.office.size > 3 ? "" : "office-disabled"}>{gadget}</span>
                     </div>
                 ) : (
                     <div />
