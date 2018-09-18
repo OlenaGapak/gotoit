@@ -54,8 +54,8 @@ class Loans extends Component {
             <div className="text-center">
                 <h3 className="text-center">Loans</h3>
                 Your credit score: {this.calcCreditScore()}
-                <div className="flex-container-row">
-                    <div className="flex-element">
+                <div>
+                    <div className=" flex-container-row flex-element">
                         {Object.keys(loans).map(size => {
                             let loan = loans[size];
                             return (
@@ -79,17 +79,17 @@ class Loans extends Component {
                             );
                         })}
                     </div>
-                    <div className="flex-container-row card">
+                    <div className="card">
                         {data.taken_loans.map((loan, i) => {
                             let paid_percent = Math.ceil(((loan.time - loan.timer) / loan.time) * 100);
 
                             return (
                                 <div className="card" key={i}>
-                                    <div className="flex-element">
+                                    <div className="flex-container-column" style={{ margin: "0 auto" }}>
                                         <h4 className=""> {loan.name} </h4>
-                                        <span className=""> Money: {loan.money}$ </span>
-                                        <span className=""> Time: {loan.time} month </span>
-                                        <span className=""> Interest: {loan.interest}% </span>
+                                        <span className="flex-element"> Money: {loan.money}$ </span>
+                                        <span className="flex-element"> Time: {loan.time} month </span>
+                                        <span className="flex-element"> Interest: {loan.interest}% </span>
                                         <span className={paid_percent ? "" : " hidden"}>
                                             <button
                                                 className={

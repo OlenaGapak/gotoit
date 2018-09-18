@@ -3,6 +3,8 @@ import _ from "lodash";
 import { FormattedDate } from "react-intl";
 import { resume_will_expire_after } from "../../game/knowledge/workers";
 import { Avatar } from "../Projects/Avatar";
+import CircularProgressbar from "react-circular-progressbar";
+import { colors } from "../../game/knowledge/colors";
 
 class Resume extends Component {
     render() {
@@ -20,7 +22,19 @@ class Resume extends Component {
         const buttons = (
             <div>
                 <button
-                    className="btn btn-success"
+                    className="btn btn-md btn-danger"
+                    id={worker.id}
+                    onClick={e => {
+                        this.props.data.helpers.rejectCandidate(e.target.id, "resumes");
+                        expired = true;
+                        this.props.closeModal();
+                    }}
+                >
+                    Reject
+                </button>
+
+                <button
+                    className="btn btn-md btn-success"
                     id={worker.id}
                     onClick={e => {
                         if (data.workers.length !== data.office.space) {
@@ -33,17 +47,6 @@ class Resume extends Component {
                     }}
                 >
                     Accept
-                </button>
-                <button
-                    className="btn btn-danger"
-                    id={worker.id}
-                    onClick={e => {
-                        this.props.data.helpers.rejectCandidate(e.target.id, "resumes");
-                        expired = true;
-                        this.props.closeModal();
-                    }}
-                >
-                    Reject
                 </button>
             </div>
         );
@@ -69,14 +72,74 @@ class Resume extends Component {
 
                 <div className="modal-body">
                     <h3 className="fw-700">{worker.name}</h3>
-                    <div>
-                        <p>Salary {worker.salary}</p>
-                        <p>Design {worker.stats.design}</p>
-                        <p>Program {worker.stats.program}</p>
-                        <p>Manage {worker.stats.manage}</p>
+                    <div className="flex-element flex-container-column">
+                        <div className="flex-element flex-container-row">
+                            <h1 className="flex-element salary" style={{ color: `${colors.salary}` }}>
+                                {worker.salary}
+                            </h1>
+                            {_.map(worker.stats, (item, key) => {
+                                return (
+                                    <div className="stats-column">
+                                        <CircularProgressbar
+                                            className="skills-circle flex-element"
+                                            initialAnimation={true}
+                                            strokeWidth={8}
+                                            styles={{
+                                                path: {
+                                                    stroke: `${
+                                                        key === "program"
+                                                            ? colors.program.colorCompleted
+                                                            : key === "design"
+                                                                ? colors.design.colorCompleted
+                                                                : colors.manage.colorCompleted
+                                                    }`
+                                                },
+                                                text: {
+                                                    fill: `${
+                                                        key === "program"
+                                                            ? colors.program.colorCompleted
+                                                            : key === "design"
+                                                                ? colors.design.colorCompleted
+                                                                : colors.manage.colorCompleted
+                                                    }`,
+                                                    fontSize: "38px"
+                                                },
+                                                trail: {
+                                                    stroke: `${
+                                                        key === "program"
+                                                            ? colors.program.colorTrail
+                                                            : key === "design"
+                                                                ? colors.design.colorTrail
+                                                                : colors.manage.colorTrail
+                                                    }`
+                                                }
+                                            }}
+                                            percentage={Math.ceil(item * 100) / 100}
+                                            text={`${(Math.ceil(item * 100) / 100).toFixed(0)}`}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="flex-container-row flex-element">
+                            <p className="flex-element stats-column salary" style={{ color: `${colors.salary}` }}>
+                                Salary
+                            </p>
+                            <p className="flex-element stats-column" style={{ color: `${colors.design.colorCompleted}` }}>
+                                Design
+                            </p>
+                            <p className="flex-element stats-column" style={{ color: `${colors.program.colorCompleted}` }}>
+                                Program
+                            </p>
+                            <p className="flex-element stats-column" style={{ color: `${colors.manage.colorCompleted}` }}>
+                                Manage
+                            </p>
+                        </div>
                     </div>
+
+                    <h6 className="character">Character:</h6>
                     <h5 className="">{worker.character.description}</h5>
-                    {!expired ? <h2 className="fw-700">Enterpreneur offer has expired</h2> : ""}
+                    {expired ? <h2 className="fw-700">Enterpreneur offer has expired</h2> : ""}
                     {!worker.hired ? (
                         !expired ? (
                             buttons

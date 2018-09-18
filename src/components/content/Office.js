@@ -63,7 +63,7 @@ class Office extends Component {
                                     Rent an Office
                                 </button>
                             </div>
-                        ) : data.office.size < 4 && data.workers.length === data.office.space ? (
+                        ) : data.office.size > 1 ? (
                             <div className="column-buttons">
                                 <button
                                     onClick={() => {
@@ -79,15 +79,13 @@ class Office extends Component {
                         )}
                     </div>
 
-                    <div className="flex-element">
-                        <span className="icon-usd">
-                            <span className="path1" />
-                            <span className="path2" />
-                        </span>
-                        <h3 style={{ color: "#71B247", paddingLeft: "6px" }} className="fw-700">
-                            {data.office.price}
-                        </h3>
-                    </div>
+                    <span className="icon-usd">
+                        <span className="path1" />
+                        <span className="path2" />
+                    </span>
+                    <h3 style={{ color: "#71B247", paddingLeft: "6px" }} className="fw-700">
+                        {data.office.price}
+                    </h3>
                 </div>
             </div>
         );

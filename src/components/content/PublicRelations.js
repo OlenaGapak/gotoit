@@ -45,8 +45,8 @@ class PublicRelations extends Component {
                                     initialAnimation={true}
                                     strokeWidth={4}
                                     styles={{
-                                        path: { stroke: `${colors.blue}` },
-                                        text: { fill: `${colors.blue}` }
+                                        path: { stroke: `${colors.pink}` },
+                                        text: { fill: `${colors.pink}` }
                                     }}
                                     percentage={Math.ceil(data.rumor * 100) / 100}
                                     text={`${(Math.ceil(data.rumor * 100) / 100).toFixed(0)}%`}
@@ -67,8 +67,8 @@ class PublicRelations extends Component {
                                     initialAnimation={true}
                                     strokeWidth={6}
                                     styles={{
-                                        path: { stroke: `${colors.orange}` },
-                                        text: { fill: `${colors.orange}` }
+                                        path: { stroke: `${colors.blue}` },
+                                        text: { fill: `${colors.blue}` }
                                     }}
                                     percentage={Math.ceil(data.reputation * 100) / 100}
                                     text={`${(Math.ceil(data.reputation * 100) / 100).toFixed(0)}%`}
