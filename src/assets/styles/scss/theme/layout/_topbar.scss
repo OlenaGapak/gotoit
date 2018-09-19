@@ -1,5 +1,5 @@
 .topbar {
-  padding: 0 18px;
+  padding: 0 8px;
   height: var(--height-topbar);
   //line-height: var(--height-topbar);
   display: flex;
@@ -11,8 +11,8 @@
   left: 0;
   z-index: var(--zindex-topbar);
   transition: margin-left 0.3s ease;
-  background-color: #fff;
   box-shadow: 4px 0 5px rgba(0,0,0,0.08);
+  box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.1);
 
   .container {
     padding-left: 0;
@@ -63,7 +63,7 @@
   min-width: 48px;
   white-space: nowrap;
   border: none;
-  border-top: 1px solid transparent;
+  //border-top: 1px solid transparent;
   transition: .2s linear;
 
   // Click make toggle buttons click-able
@@ -200,7 +200,7 @@
 
 .sidebar-toggler,
 .topbar-menu-toggler {
-  font-size: 21px;
+  font-size: 20px;
   background: 0 0;
   outline: none !important;
 
