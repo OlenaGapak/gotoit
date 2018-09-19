@@ -107,6 +107,16 @@ class HiringAgency extends PureComponent {
     render() {
         const data = this.props.data;
 
+        const search_button = (
+            <DefaultClickSoundButton
+                className="btn btn-md btn-info hidden search"
+                style={{ backgroundColor: `${colors.rumor.colorCompleted}` }}
+                onClick={() => this.openModal()}
+            >
+                Search candidate
+            </DefaultClickSoundButton>
+        );
+
         const draw_row = (name, child) => {
             return (
                 <div key={name} className="row">
@@ -120,13 +130,7 @@ class HiringAgency extends PureComponent {
 
         return (
             <div>
-                <DefaultClickSoundButton
-                    className="btn btn-md btn-info hidden search"
-                    style={{ backgroundColor: `${colors.rumor.colorCompleted}` }}
-                    onClick={() => this.openModal()}
-                >
-                    Search candidate
-                </DefaultClickSoundButton>
+{search_button}
 
                 {this.state.modalOpen ? (
                     <Modal closeModal={() => this.closeModal()} showCloseButton={true}>
