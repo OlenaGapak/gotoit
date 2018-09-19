@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
 
-import React, { Component } from "react";
-
 import { loans } from "../../game/knowledge/loans";
 
 class Loans extends Component {
@@ -76,7 +74,9 @@ class Loans extends Component {
                                                 take
                                             </DefaultClickSoundButton>
                                         ) : (
-                                            <DefaultClickSoundButton className="btn btn-success btn-sm disabled">need {loan.min_credit_score} score</DefaultClickSoundButton>
+                                            <DefaultClickSoundButton className="btn btn-success btn-sm disabled">
+                                                need {loan.min_credit_score} score
+                                            </DefaultClickSoundButton>
                                         )}
                                     </div>
                                 </div>

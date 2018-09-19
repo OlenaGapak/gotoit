@@ -93,9 +93,12 @@ class SalesAgency extends Component {
         const data = this.props.data;
 
         const search_button = (
-            <DefaultClickSoundButton className="btn btn-md btn-info hidden search" style={{ backgroundColor: `${colors.reputation.colorCompleted}` }}>
+            <DefaultClickSoundButton
+                className="btn btn-md btn-info hidden search"
+                style={{ backgroundColor: `${colors.reputation.colorCompleted}` }}
+            >
                 Search project
-            </button>
+            </DefaultClickSoundButton>
         );
 
         const draw_row = (name, child) => {
