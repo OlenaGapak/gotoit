@@ -98,7 +98,10 @@ class HiringAgency extends PureComponent {
         const data = this.props.data;
 
         const search_button = (
-            <DefaultClickSoundButton className="btn btn-md btn-info hidden search" style={{ backgroundColor: `${colors.rumor.colorCompleted}` }}>
+            <DefaultClickSoundButton
+                className="btn btn-md btn-info hidden search"
+                style={{ backgroundColor: `${colors.rumor.colorCompleted}` }}
+            >
                 Search candidate
             </DefaultClickSoundButton>
         );
