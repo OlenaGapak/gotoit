@@ -25,3 +25,13 @@
     position: absolute;
   }
 }
+
+.project-avatar-big {
+  background-color: var(--white);
+  position: relative;
+  width: size(16);
+  height: size(20);
+  & > img {
+    position: absolute;
+  }
+}

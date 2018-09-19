@@ -24,6 +24,7 @@ class WorkerModel {
         this.name = name;
         this.gender = gender;
         this.stats = stats;
+
         this.is_player = is_player;
         this.expirience = JSON.parse(JSON.stringify(skills));
         this.standing = 0;

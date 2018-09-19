@@ -24,6 +24,8 @@ import employees from "../../assets/images/icon/service/pr/employees.png";
 
 import news from "../../assets/images/icon/service/news.png";
 
+import SVGInline from "react-svg-inline";
+
 class Mail extends Component {
     static propTypes = {
         data: PropTypes.object
@@ -56,6 +58,7 @@ class Mail extends Component {
             return array;
         })();
         let handleClick;
+
         const letters = _.map(inverted_mailbox, (letter, i) => {
             switch (letter.type) {
                 case "Project report":
@@ -66,6 +69,8 @@ class Mail extends Component {
                         this.setState({ show_modal: true });
                         letter.isRead = true;
                     };
+                    letter.title = "Project report: " + letter.object.name;
+                    letter.description = "Customer: " + letter.object.company + ". Stage: " + letter.object.stage + ".";
                     break;
 
                 case "Hot offer":
@@ -76,6 +81,16 @@ class Mail extends Component {
                         this.setState({ show_modal: true });
                         letter.isRead = true;
                     };
+                    letter.title = "Hot project offer: " + letter.object.name;
+                    letter.description =
+                        "Reward: $" +
+                        letter.object.reward +
+                        ". Estimate: Design " +
+                        letter.object.estimate.design +
+                        " Program " +
+                        letter.object.estimate.program +
+                        " Manage " +
+                        letter.object.estimate.program;
                     break;
                 case "Resume":
                     handleClick = () => {
@@ -85,6 +100,17 @@ class Mail extends Component {
                         this.setState({ show_modal: true });
                         letter.isRead = true;
                     };
+                    letter.title = "Employee offer: " + letter.object.name;
+                    letter.description =
+                        "Salary: $" +
+                        letter.object.salary +
+                        ". Skills: Design: " +
+                        letter.object.stats.design +
+                        ", Program: " +
+                        letter.object.stats.program +
+                        ", Manage: " +
+                        letter.object.stats.manage +
+                        ".";
                     break;
                 case "Offer":
                     handleClick = () => {
@@ -104,6 +130,17 @@ class Mail extends Component {
                         this.setState({ show_modal: true });
                         letter.isRead = true;
                     };
+                    letter.title = "Project offer: " + letter.object.company + " " + letter.object.name;
+                    letter.description =
+                        "Reward: $" +
+                        letter.object.reward +
+                        ". Estimate: Design: " +
+                        letter.object.estimate.design +
+                        ", Program: " +
+                        letter.object.estimate.program +
+                        ", Manage: " +
+                        letter.object.estimate.manage +
+                        ".";
                     break;
                 case "Event":
                     handleClick = () => {
@@ -113,8 +150,11 @@ class Mail extends Component {
                             )
                         });
                         this.setState({ show_modal: true });
+
                         letter.isRead = true;
                     };
+                    letter.title = "World news: " + letter.object.name;
+                    letter.description = letter.object.description;
                     break;
                 default:
                     break;
@@ -127,6 +167,8 @@ class Mail extends Component {
                                 return <img src={employees} className="mail-icon" />;
                             case "Offer":
                                 return <img src={clients} className="mail-icon" />;
+                            case "Hot offer":
+                                return <img src={clients} className="mail-icon" />;
                             case "Event":
                                 return <img src={news} className="mail-icon" />;
                             case "Office":
@@ -135,13 +177,8 @@ class Mail extends Component {
                                 return <img src={pr} className="mail-icon" />;
                         }
                     })()}
-
-                    <span className="sender-name">{letter.object.name}</span>
-
-                    {letter.isRead ? <span className="letter-type">{letter.type}</span> : <strong>{letter.type}</strong>}
-
-                    {/* <span className="letter-status">{letter.isRead ? 'read' : ''}</span> */}
-
+                    <h6 className="letter-title">{letter.title}</h6>
+                    <p className="letter-description">{letter.description}</p>
                     <span className="formatted-date">
                         <FormattedDate
                             value={letter.date}
@@ -152,15 +189,49 @@ class Mail extends Component {
                             hour="numeric"
                         />
                     </span>
+                    <svg className="done_icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M9 16.2188L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.78125 12L9 16.2188Z"
+                            fill={letter.isRead ? "#CCCCCC" : "#2E99E5"}
+                        />
+                    </svg>
+                    {/*<SVGInline
+                        svg={
+                            <svg
+                                className="done_icon"
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M9 16.2188L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.78125 12L9 16.2188Z"
+                                    fill={letter.isRead ? "#CCCCCC" : "#2E99E5"}
+                                />
+                            </svg>
+                        }
+                    />*/}
                 </div>
             );
         });
 
         return (
             <div className="mail">
-                <DefaultClickSoundButton className="btn btn-info btn-xs" onClick={this.markAllAsRead}>
-                    Mark all as read
-                </DefaultClickSoundButton>
+                <div className="mail-menu">
+                    <DefaultClickSoundButton className="mark-all-btn" onClick={this.markAllAsRead}>
+                        Mark all as read
+                    </DefaultClickSoundButton>
+                    <div className="left-side">
+                        <DefaultClickSoundButton className="mark-all-btn" onClick={this.markAllAsRead}>
+                            Mark all as read
+                        </DefaultClickSoundButton>
+                        <DefaultClickSoundButton className="mark-all-btn" onClick={this.markAllAsRead}>
+                            Mark all as read
+                        </DefaultClickSoundButton>
+                    </div>
+                </div>
+
                 {letters}
                 {this.state.show_modal ? (
                     <Modal closeModal={this.closeModal} showCloseButton={true}>

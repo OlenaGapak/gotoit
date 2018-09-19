@@ -27,10 +27,10 @@ export const archive_chats_parameters = {
 };
 
 export const market_chart_parameters = {
-    design: { label: "Design", color: "#8B0000" },
-    manage: { label: "Manage", color: "#5cb85c" },
-    program: { label: "Program", color: "#3e95cd" },
-    total: { label: "Total", color: "#f7931a" }
+    design: { label: "Design", color: "#ff954d" },
+    manage: { label: "Manage", color: "#57d9d1" },
+    program: { label: "Program", color: "#cc6cbc" },
+    total: { label: "Total", color: "#5cb85c" }
 };
 
 export const exchange_charts_parameters = {

@@ -12,7 +12,6 @@
     padding: size(2);
     position: relative;
     height: size(12);
-
     div {
       display: flex;
       align-items: center;
@@ -21,6 +20,11 @@
         margin-right: size(3);
       }
     }
+  }
+
+
+  .modal-body-container div:last-child{
+    margin-right: 100px;
   }
 
   .worker-avatar {
@@ -42,7 +46,57 @@
     flex-flow: column nowrap;
   }
 
+  .name {
+    margin-bottom: 34px;
+  }
+
   .icon-star, .icon-star-border {
     
+  }
+
+  .skills-circle  {
+    font-weight: bold;
+    width: 48px;
+  }
+
+  .salary {
+    font-weight: bold;
+    width: 90px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 10.5px 0 100px;
+
+  }
+
+  .stats-column {
+    font-size: 13px;
+    font-weight: bold;
+    width: 48px;
+    justify-content: center;
+    text-align: center;
+    margin: 0 31px 0;
+  }
+
+  .character {
+    margin-top: 24px;
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  button {
+    width: 120px;
+    height: 40px;
+    margin: 32px 8px 0;
+  }
+
+  .hired {
+    margin-top: 38px;
+  }
+
+  .expired {
+    margin-top: 38px;
+    color: #FF6759;
+    font-size: 24px;
   }
 }

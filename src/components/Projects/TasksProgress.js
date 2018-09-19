@@ -4,9 +4,9 @@ import * as PropTypes from "prop-types";
 export class TasksProgress extends Component {
     render() {
         return (
-            <div key={this.props.skill} className="row">
-                <div className="col-2">{this.props.skill}</div>
-                <div className="col-10 progress">
+            <div key={this.props.skill} className="flex-container-row">
+                <div className="flex-element">{this.props.skill}</div>
+                <div className="flex-element progress">
                     <div className="progress-bar bg-warning" role="progressbar" style={{ width: this.props.tasksPercent + "%" }}>
                         {this.props.tasks ? <span>{this.props.tasks} tasks</span> : ""}
                     </div>

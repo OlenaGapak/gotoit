@@ -31,8 +31,8 @@ export default class Deadline extends PureComponent {
         ];
 
         return (
-            <div key="deadline" className="row">
-                <div className="col-2">Deadline</div>
+            <div key="deadline" className="flex-container-row">
+                <div className="flex-element">Deadline</div>
                 <Bar bar_data={bar_data} />
             </div>
         );
