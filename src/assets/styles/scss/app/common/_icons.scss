@@ -56,6 +56,18 @@
     }
   }
 
+  &usd-penalty {
+    .path1:before {
+      content: "\e902";
+      color: #7A9999;
+    }
+    .path2:before {
+      content: "\e903";
+      margin-left: -1em;
+      color: rgb(255, 255, 255);
+    }
+  }
+
   &btc {
     .path1:before {
       content: "\e904";

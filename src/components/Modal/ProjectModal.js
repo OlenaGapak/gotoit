@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import ProjectName from "../Projects/ProjectName";
+import { Avatar } from "../Projects/Avatar";
 import { skills_names } from "../../game/knowledge/skills";
 import { StartPauseButton } from "../Projects/StartPauseButton";
 import { ReleaseButton } from "../Projects/ReleaseButton";
 import { ProjectReward } from "../Projects/ProjectReward";
 import { TasksProgress } from "../Projects/TasksProgress";
 import { RejectButton } from "../Projects/RejectButton";
+import ProjectProgressBar from "../Projects/ProjectProgressBar";
+import ProjectDeadlineBar from "../Projects/ProjectDeadlineBar";
 
 import ProjectDeadline from "../Projects/ProjectDeadline";
 import { Statistics } from "../Projects/Statistics";
@@ -131,37 +134,48 @@ export default class ProjectModal extends Component {
         let deadlineText = project.getDeadlineText();
         let doneQuantity = project.doneQuantity();
         let planedTasksQuantity = project.planedTasksQuantity;
+        let taskQuantity = project.tasksQuantity();
+        let bugsQuantity = project.bugsQuantity();
         let projectTechnologies = this.props.projectTechnologies;
+
         return (
-            <section>
-                <h4>
-                    <span>
-                        {" "}
-                        <ProjectName
-                            {...{
-                                size,
-                                platform,
-                                kind,
-                                name,
-                                reward,
-                                penalty
-                            }}
-                            deadlineText={deadlineText}
-                        />{" "}
-                    </span>
-                    <ProjectReward reward={reward} penalty={penalty} />
-                    <div>
-                        <span>
-                            <RejectButton onClick={this.onReject} />
-                            <ReleaseButton doneQuantity={doneQuantity} type={type} stage={stage} onClick={this.onRelease} />
-                        </span>
+            <section style={{ padding: "32px" }}>
+                <div className="flex-container-row">
+                    <div className="flex-element">
+                        <Avatar sources={_.toPairs(avatar)} size={144} className="project-avatar-big" />
                     </div>
-                </h4>
-                <div className="row">
+                    <div className="flex-element flex-container-column">
+                        <div className="flex-element">
+                            <ProjectName
+                                {...{
+                                    size,
+                                    platform,
+                                    kind,
+                                    name,
+                                    reward,
+                                    penalty
+                                }}
+                                deadlineText={deadlineText}
+                            />
+                        </div>
+
+                        <div className="flex-element flex-container-row">
+                            <ProjectReward reward={reward} penalty={penalty} />
+                        </div>
+                        <div className="flex-element">
+                            <span>
+                                <ReleaseButton doneQuantity={doneQuantity} type={type} stage={stage} onClick={this.onRelease} />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex-container-row">
                     <div className="col-8">
                         <div>
-                            <ProjectDeadline deadline={deadline} deadlineMax={deadline_max} />
-                            <Statistics iteration={iteration} project={project} complexity={complexity} />
+                            <ProjectDeadlineBar project={project} deadlineMax={deadline_max} />
+                            <ProjectProgressBar project={project} />
+
                             <div>
                                 {type === "draft" &&
                                     stage === "ready" &&
@@ -175,27 +189,6 @@ export default class ProjectModal extends Component {
                                                     project.estimate[skill] = e.target.value;
                                                     project.original_estimate[skill] = e.target.value;
                                                 }}
-                                            />
-                                        );
-                                    })}
-                            </div>
-                            <div>
-                                {!(type === "draft" && stage === "ready") &&
-                                    skills_names.map(skill => {
-                                        let { tasks, bugs, done, tasks_percent, bugs_percent, done_percent } = this.extractTaskProgress(
-                                            skill
-                                        );
-
-                                        return (
-                                            <TasksProgress
-                                                key={skill}
-                                                skill={skill}
-                                                tasksPercent={tasks_percent}
-                                                tasks={tasks}
-                                                bugsPercent={bugs_percent}
-                                                bugs={bugs}
-                                                donePercent={done_percent}
-                                                done={done}
                                             />
                                         );
                                     })}
@@ -233,6 +226,7 @@ export default class ProjectModal extends Component {
                         </div>
                     </div>
                 </div>
+                <RejectButton onClick={this.onReject} />
             </section>
         );
     }
