@@ -40,8 +40,9 @@ const makeSoundOnClick = (Component, sound_name) => {
                 <Component
                     {...props}
                     onClick={() => {
+                        if(this.props.onClick){
                         this.makeAudio();
-                        this.props.onClick();
+                        this.props.onClick();}
                     }}
                 />
             );
