@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import Bar from "./Bar/Bar";
+import ReactTooltip from "react-tooltip";
 //import PropTypes from 'prop-types';
 //import _ from "lodash";
 //import {roles, skills_names} from "../game/knowledge";
@@ -57,7 +59,7 @@ class StatsProgressBar extends Component {
         }
 
         return (
-            <label className="stats-progress-bar">
+            <label data-tip data-for={"progress_skill_" + stat} className="stats-progress-bar">
                 <>
                     <input
                         className={"custom-checkbox icon-" + stat}
@@ -68,7 +70,9 @@ class StatsProgressBar extends Component {
                     />
                     <span className={"icon-" + stat} />
                 </>
-
+                <ReactTooltip id={"progress_skill_" + stat}>
+                    <span>{`${stat}: ${stats[stat].value}`}</span>
+                </ReactTooltip>
                 <Bar bar_data={[bar_data]} />
             </label>
         );

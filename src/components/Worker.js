@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import _ from "lodash";
 import StatsProgressBar from "./StatsProgressBar";
 import { colors } from "../game/knowledge/colors";
@@ -10,7 +11,6 @@ import Modal from "./Modal/Modal";
 import WorkerModal from "./Modal/WorkerModal";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 
-//import {addAction} from '../components/ToastNest';
 
 
 class Worker extends Component {
@@ -156,6 +156,7 @@ class Worker extends Component {
                 worker={worker}
                 data={data}
               />
+
               <StatsProgressBar
                 type={'program'}
                 max_stat={data.max_stat}
@@ -163,6 +164,7 @@ class Worker extends Component {
                 worker={worker}
                 data={data}
               />
+
               <StatsProgressBar
                 type={'manage'}
                 max_stat={data.max_stat}
@@ -180,6 +182,7 @@ class Worker extends Component {
           </Modal>
           ) : ''
         }
+
       </div>
     );
   }
