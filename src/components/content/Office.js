@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
 import { offices } from "../../game/knowledge/office";
 import { colors } from "../../game/knowledge/colors";
 
@@ -98,7 +99,7 @@ class Office extends Component {
                     <h6>Workers will come to work earlier if there is a Coffeemaker in the office.</h6>
                     <div className="btn-wrapper">
                         {data.office_things.coffeemaker ? (
-                            <button
+                            <DefaultClickSoundButton
                                 className="btn btn-success disabled"
                                 data-provide="tooltip"
                                 data-placement="top"
@@ -106,16 +107,16 @@ class Office extends Component {
                                 data-original-title="Workers come to work earlier because of the Coffeemaker in the office."
                             >
                                 Bought
-                            </button>
+                            </DefaultClickSoundButton>
                         ) : (
-                            <button
+                            <DefaultClickSoundButton
                                 onClick={() => {
                                     data.helpers.buyCoffeemaker();
                                 }}
                                 className={data.money >= 5000 ? "btn btn-success btn-md" : "btn btn-success btn-md disabled"}
                             >
                                 $5000
-                            </button>
+                            </DefaultClickSoundButton>
                         )}
                     </div>
                 </div>
@@ -129,23 +130,23 @@ class Office extends Component {
                     <h6>After a delicious Lunch for $25, employees will stay at work until night.</h6>
                     <div className="btn-wrapper">
                         {data.office_things.lunch ? (
-                            <button
+                            <DefaultClickSoundButton
                                 onClick={() => {
                                     data.helpers.lunchOff();
                                 }}
                                 className="btn btn-danger btn-md"
                             >
                                 Cancel
-                            </button>
+                            </DefaultClickSoundButton>
                         ) : (
-                            <button
+                            <DefaultClickSoundButton
                                 onClick={() => {
                                     data.helpers.lunchOn();
                                 }}
                                 className="btn btn-success btn-md"
                             >
                                 On
-                            </button>
+                            </DefaultClickSoundButton>
                         )}
                     </div>
                 </div>
@@ -160,14 +161,14 @@ class Office extends Component {
                         {data.office_things.gadget}
                     </h6>
                     <div className="btn-wrapper">
-                        <button
+                        <DefaultClickSoundButton
                             onClick={() => {
                                 data.helpers.buyGadget();
                             }}
                             className={data.money >= data.helpers.getGadgetCost() ? "btn btn-success" : "btn btn-success disabled"}
                         >
                             ${data.helpers.getGadgetCost()}
-                        </button>
+                        </DefaultClickSoundButton>
                     </div>
                 </div>
             </div>

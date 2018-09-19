@@ -3,6 +3,7 @@ import _ from "lodash";
 import { FormattedDate } from "react-intl";
 import { resume_will_expire_after } from "../../game/knowledge/workers";
 import { Avatar } from "../Projects/Avatar";
+import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
 import CircularProgressbar from "react-circular-progressbar";
 import { colors } from "../../game/knowledge/colors";
 
@@ -19,9 +20,9 @@ class Resume extends Component {
             if (worker.gender === "female") return "her";
             if (worker.gender === "other") return "them";
         })();
-        const buttons = (
+        const DefaultClickSoundButtons = (
             <div>
-                <button
+                <DefaultClickSoundButton
                     className="btn btn-md btn-danger"
                     id={worker.id}
                     onClick={e => {
@@ -31,14 +32,14 @@ class Resume extends Component {
                     }}
                 >
                     Reject
-                </button>
+                </DefaultClickSoundButton>
 
-                <button
+                <DefaultClickSoundButton
                     className="btn btn-md btn-success"
                     id={worker.id}
                     onClick={e => {
                         if (data.workers.length !== data.office.space) {
-                            this.props.data.helpers.hireCandidate(e.target.id, "resumes");
+                            this.props.data.helpers.hireCandidate(worker.id, "resumes");
                             worker.hired = true;
                             this.props.closeModal();
                         } else {
@@ -47,7 +48,18 @@ class Resume extends Component {
                     }}
                 >
                     Accept
-                </button>
+                </DefaultClickSoundButton>
+                <DefaultClickSoundButton
+                    className="btn btn-danger"
+                    id={worker.id}
+                    onClick={e => {
+                        this.props.data.helpers.rejectCandidate(worker.id, "resumes");
+                        expired = true;
+                        this.props.closeModal();
+                    }}
+                >
+                    Reject
+                </DefaultClickSoundButton>
             </div>
         );
 
@@ -143,7 +155,7 @@ class Resume extends Component {
                         <h2 className="fw-700 expired">Enterpreneur offer has expired</h2>
                     ) : !worker.hired ? (
                         !expired ? (
-                            buttons
+                            DefaultClickSoundButtons
                         ) : (
                             <h2 className="fw-700 hired">This employer found another job</h2>
                         )

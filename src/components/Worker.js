@@ -8,6 +8,7 @@ import WorkerStaminaBar from "./WorkerStaminaBar";
 import { Avatar } from "./Projects/Avatar";
 import Modal from "./Modal/Modal";
 import WorkerModal from "./Modal/WorkerModal";
+import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 
 //import {addAction} from '../components/ToastNest';
 
@@ -77,7 +78,7 @@ class Worker extends Component {
     const worker = this.props.worker;
 
     const manage_button = (
-      <button onClick={() => this.openModal() } className="btn btn-manage">Manage</button>
+      <DefaultClickSoundButton onClick={() => this.openModal() } className="btn btn-manage">Manage</DefaultClickSoundButton>
     );
 
     const stats_progressbar_data = _.mapValues(worker.stats, (val, stat) => {
@@ -174,7 +175,7 @@ class Worker extends Component {
         </div>
         {
           this.state.modalOpen ? (
-          <Modal closeModal={this.closeModal}>
+          <Modal closeModal={this.closeModal} showCloseButton={true}>
             <WorkerModal data={data} worker={worker} stats_progressbar_data={stats_progressbar_data}/>
           </Modal>
           ) : ''
