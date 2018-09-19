@@ -130,7 +130,7 @@ class HiringAgency extends PureComponent {
 
         return (
             <div>
-{search_button}
+                {search_button}
 
                 {this.state.modalOpen ? (
                     <Modal closeModal={() => this.closeModal()} showCloseButton={true}>
