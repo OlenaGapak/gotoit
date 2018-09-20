@@ -72,7 +72,7 @@
     height: 24px;
     border: 2px solid var(--color-darken-cyan);
     padding: 0;
-    margin: 0 size(0.5);
+    margin: 0 size(0.25);
     position: relative;
 
     .desaturate {
@@ -83,10 +83,10 @@
   .project-team, project-techs {
     margin-bottom: 0;
 
-    button {
-      margin-right: size(0.25);
-      margin-left: size(0.25);
-    }
+    //button {
+    //  margin-right: size(0.25);
+    //  margin-left: size(0.25);
+    //}
   }
 
   .worker-avatar {
@@ -94,7 +94,7 @@
   }
 
   .icon-tech {
-    margin-right: 2px;
+    margin-right: 3px;
   }
   
   .icon-workers {
