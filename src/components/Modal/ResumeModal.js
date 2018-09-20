@@ -49,17 +49,6 @@ class Resume extends Component {
                 >
                     Accept
                 </DefaultClickSoundButton>
-                <DefaultClickSoundButton
-                    className="btn btn-danger"
-                    id={worker.id}
-                    onClick={e => {
-                        this.props.data.helpers.rejectCandidate(worker.id, "resumes");
-                        expired = true;
-                        this.props.closeModal();
-                    }}
-                >
-                    Reject
-                </DefaultClickSoundButton>
             </div>
         );
 
@@ -84,7 +73,7 @@ class Resume extends Component {
 
                 <div className="modal-body">
                     <h3 className="fw-700 name">{worker.name}</h3>
-                    <div className="modal-body-container flex-element flex-container-column">
+                    <div className="modal-body-container flex-element flex-container-column description">
                         <div className="flex-element flex-container-row">
                             <h1 className="flex-element salary" style={{ color: `${colors.salary}` }}>
                                 {worker.salary}

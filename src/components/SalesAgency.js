@@ -89,7 +89,7 @@ class SalesAgency extends Component {
         let state = this.state;
         state.deal_counter++;
         this.props.data.helpers.contractSearch(state, this.calcCost());
-        this.refs.agency.closePortal();
+        //this.setState({ modalOpen: false });
     }
 
     openModal() {

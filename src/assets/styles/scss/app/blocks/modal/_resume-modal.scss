@@ -22,11 +22,6 @@
     }
   }
 
-
-  .modal-body-container div:last-child{
-    margin-right: 100px;
-  }
-
   .worker-avatar {
     width: size(12);
     height: size(12);
@@ -54,6 +49,10 @@
     
   }
 
+  .description {
+    text-align: center;
+  }
+
   .skills-circle  {
     font-weight: bold;
     width: 48px;
@@ -61,12 +60,10 @@
 
   .salary {
     font-weight: bold;
-    width: 90px;
+    width: 120px;
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 0 10.5px 0 100px;
-
   }
 
   .stats-column {
@@ -91,12 +88,19 @@
   }
 
   .hired {
-    margin-top: 38px;
+    margin-top: 24px;
+    font-weight: bold;
+    font-size: 24px;
+    opacity: 0.6;
   }
 
   .expired {
     margin-top: 38px;
     color: #FF6759;
     font-size: 24px;
+  }
+
+  .icon-usd {
+    padding-left: 5px;
   }
 }
