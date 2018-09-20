@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { colors } from "../game/knowledge/colors";
 import CircularProgressbar from "react-circular-progressbar";
+import StatsProgressBar from "./StatsProgressBar";
 
 /***
  * KILL THIS ASAP
@@ -18,6 +19,7 @@ class StatsBar extends Component {
         const data = this.props.data;
         const stats = this.props.stats;
         const project = this.props.project;
+        let circle_maximum = 100;
 
         return (
             <div className="text-center flex-element flex-container-row description">
@@ -75,6 +77,9 @@ class StatsBar extends Component {
                                 </span>
                             </span>
                         </span>
+                        /* <div className="worker-skills">
+                            <StatsProgressBar type={stats[stat].name} max_stat={data.max_stat} stats={stats[stat].val} data={data} />
+                        </div> */
                     );
                 })}
             </div>

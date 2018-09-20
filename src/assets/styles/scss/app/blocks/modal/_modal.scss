@@ -14,10 +14,11 @@
     pointer-events: auto;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3), 0px 8px 16px rgba(0, 0, 0, 0.3);
     background-color: #fff;
-    border-radius: size(0.5);
+    border-radius: size(2);
   }
 
   .modal-content {
+    max-height: 670px;
     position: relative;
     background-color: transparent;
 
@@ -26,8 +27,8 @@
       top: 0;
       right: 0;
       line-height: 0.5;
-      padding: size(2);
-      font-size: 2.5rem;
+      padding: 12px 16px 12px 0;
+      font-size: 24px;
       font-weight: 300;
       margin: 0;
       z-index: 1;

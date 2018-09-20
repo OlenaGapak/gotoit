@@ -9,7 +9,7 @@
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: bottom;
-    padding: size(2);
+    padding: size(1);
     position: relative;
     height: size(12);
 
@@ -39,7 +39,8 @@
   }
 
   .icon-star, .icon-star-border {
-    
+    font-size: 24px;
+    margin-right: 28px;
   }
 
   .salary {
@@ -50,11 +51,15 @@
     text-align: center;
   }
 
-  .reward {
-    margin-top: 24px;
-    font-size: 11px;
-    opacity: 0.6;
-    text-align: center;
+  .reward-container {
+    margin: 0 auto;
+
+    .reward {
+      margin-top: 24px;
+      font-size: 11px;
+      opacity: 0.6;
+      text-align: center;
+    }
   }
 
   .quantity {
@@ -83,7 +88,7 @@
   button {
     width: 120px;
     height: 40px;
-    margin: 0 8px 0;
+    margin: 0 8px;
   }
 
   .hired {
@@ -115,6 +120,10 @@
 
   .icon-usd {
     padding-left: 5px;
+
+    .penalty {
+      color: var(--gray-500)
+    }
   }
 
 }
