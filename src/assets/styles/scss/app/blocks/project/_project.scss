@@ -49,7 +49,7 @@
     height: 24px;
     border: 2px solid var(--color-darken-cyan);
     padding: 0;
-    margin: 0 size(0.5);
+    margin-right: size(0.5);
     position: relative;
 
     .icon-close {
@@ -72,7 +72,7 @@
     height: 24px;
     border: 2px solid var(--color-darken-cyan);
     padding: 0;
-    margin: 0 size(0.25);
+    margin-right: size(0.5);
     position: relative;
 
     .desaturate {
@@ -90,15 +90,15 @@
   }
 
   .worker-avatar {
-    border-radius: 0;
+    border-radius: 2px;
   }
 
   .icon-tech {
-    margin-right: 3px;
+    margin-right: 5px;
   }
   
   .icon-workers {
-    margin-right: 4px;
+    margin-right: 8px;
   }
 
   .btn-add-worker {
