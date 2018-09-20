@@ -14,6 +14,7 @@ class ProjectProgressBar extends Component {
         let project = this.props.project;
         let sum_design, sum_prog, sum_manage;
         let design_data, prog_data, manage_data;
+        let own_modal = this.props.own_modal;
         if (project.type === "own") {
             sum_design = project.done.design + project.bugs.design;
             design_data = [
@@ -147,24 +148,24 @@ class ProjectProgressBar extends Component {
             <div className="project-progress-bar">
                 {prog_data[0].value !== 0 ? (
                     <div className="flexbox">
-                        <span className="icon-program" id={`${project.id}_program`} />
-                        <Bar className="flex-grow" bar_data={prog_data} />
+                        <span className={`icon-program ${own_modal ? "icon-program-own" : ""}`} id={`${project.id}_program`} />
+                        <Bar className="flex-grow" bar_data={prog_data} own_modal={own_modal} />
                     </div>
                 ) : (
                     ""
                 )}
                 {design_data[0].value !== 0 ? (
                     <div className="flexbox">
-                        <span className="icon-design" id={`${project.id}_design`} />
-                        <Bar className="flex-grow" bar_data={design_data} />
+                        <span className={`icon-design ${own_modal ? "icon-design-own" : ""}`} id={`${project.id}_design`} />
+                        <Bar className="flex-grow" bar_data={design_data} own_modal={own_modal} />
                     </div>
                 ) : (
                     ""
                 )}
                 {manage_data[0].value !== 0 ? (
                     <div className="flexbox">
-                        <span className="icon-manage" id={`${project.id}_manage`} />
-                        <Bar className="flex-grow" bar_data={manage_data} />
+                        <span className={`icon-manage ${own_modal ? "icon-manage-own" : ""}`} id={`${project.id}_manage`} />
+                        <Bar className="flex-grow" bar_data={manage_data} own_modal={own_modal} />
                     </div>
                 ) : (
                     ""

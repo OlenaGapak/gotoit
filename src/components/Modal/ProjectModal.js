@@ -316,7 +316,7 @@ export default class ProjectModal extends Component {
                             </div>
                         </div>
                         <div className="col-9" style={{ paddingLeft: "32px", paddingRight: "0" }}>
-                            <ProjectProgressBar project={project} />
+                            <ProjectProgressBar project={project} own_modal={true} />
                         </div>
                     </div>
                 </div>
