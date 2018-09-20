@@ -81,7 +81,7 @@ class Office extends Component {
                         )}
                     </div>
 
-                    <h3 style={{ color: `${colors.salary}`, paddingLeft: "6px" }} className="fw-700">
+                    <h3 style={{ color: `${colors.salary}` }} className="fw-700">
                         <span className="icon-usd">
                             <span className="path1" />
                             <span className="path2" />

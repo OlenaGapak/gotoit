@@ -90,10 +90,9 @@ class HiringAgency extends PureComponent {
 
     search() {
         let state = this.state;
-        state.deal_counter++;
+        this.setState({ deal_counter: state.deal_counter++ });
         this.props.data.helpers.agencySearch(state, this.calcCost());
-
-        this.refs.agency.closePortal();
+        //this.setState({ modalOpen: false });
     }
 
     openModal() {
