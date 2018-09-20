@@ -74,3 +74,5 @@ src/assets/vendor/
 src/assets/styles/*.min.css
 src/assets/styles/*.map
 yarn-error.log
+npm-debug.log
+.idea/misc.xml
