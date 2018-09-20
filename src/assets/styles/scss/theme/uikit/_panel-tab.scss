@@ -32,22 +32,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 28px;
+    height: 29px;
     
     h2, h3, h4, h5, h6 {
       color: var(--color-text-secondary);
     }
 
-    // FOR SHADOW-BOTTOM OVERFLOW
-    &::after {
-      content: '';
-      position: absolute;
-      width: 106%;
-      height: 32%;
-      top: 100%;
-      left: -3%;
-      background-color: var(--white);
-    }
 
 
     @include media-down(sm) {
@@ -59,7 +49,7 @@
     &.active:focus,
     &.active:hover {
       border-color: var(--color-primary);
-      
+
       h2, h3, h4, h5, h6 {
         color: var(--color-text);
       }
