@@ -9,6 +9,7 @@
   background: linear-gradient(180deg, #F5F5F5 0%, #EBEBEB 100%);
   position: relative;
   overflow: visible;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 1px var(--white);
 
   .card-header {
     align-items: start;
