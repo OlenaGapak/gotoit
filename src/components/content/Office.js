@@ -81,7 +81,7 @@ class Office extends Component {
                         )}
                     </div>
 
-                    <h3 style={{ color: `${colors.salary}`, paddingLeft: "6px" }} className="fw-700">
+                    <h3 style={{ color: `${colors.salary}` }} className="fw-700">
                         <span className="icon-usd">
                             <span className="path1" />
                             <span className="path2" />
@@ -99,7 +99,7 @@ class Office extends Component {
                     <h6>Workers will come to work earlier if there is a Coffeemaker in the office.</h6>
                     <div className="btn-wrapper">
                         {data.office_things.coffeemaker ? (
-                            <DefaultClickSoundButton
+                            <button
                                 className="btn btn-success disabled"
                                 data-provide="tooltip"
                                 data-placement="top"
@@ -107,7 +107,7 @@ class Office extends Component {
                                 data-original-title="Workers come to work earlier because of the Coffeemaker in the office."
                             >
                                 Bought
-                            </DefaultClickSoundButton>
+                            </button>
                         ) : (
                             <DefaultClickSoundButton
                                 onClick={() => {
@@ -141,7 +141,11 @@ class Office extends Component {
                         ) : (
                             <DefaultClickSoundButton
                                 onClick={() => {
-                                    data.helpers.lunchOn();
+                                    if (data.money >= data.helpers.getGadgetCost() && data.office.size > 3) {
+                                        data.helpers.lunchOn();
+                                    } else {
+                                        return false;
+                                    }
                                 }}
                                 className="btn btn-success btn-md"
                             >
@@ -163,9 +167,17 @@ class Office extends Component {
                     <div className="btn-wrapper">
                         <DefaultClickSoundButton
                             onClick={() => {
-                                data.helpers.buyGadget();
+                                if (data.money >= data.helpers.getGadgetCost() && data.office.size > 3) {
+                                    data.helpers.buyGadget();
+                                } else {
+                                    return false;
+                                }
                             }}
-                            className={data.money >= data.helpers.getGadgetCost() ? "btn btn-success" : "btn btn-success disabled"}
+                            className={
+                                data.money >= data.helpers.getGadgetCost() && data.office.size > 3
+                                    ? "btn btn-success"
+                                    : "btn btn-success disabled"
+                            }
                         >
                             ${data.helpers.getGadgetCost()}
                         </DefaultClickSoundButton>

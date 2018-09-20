@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
-
 import { loans } from "../../game/knowledge/loans";
 
 class Loans extends Component {

@@ -16,10 +16,6 @@
     div {
       display: flex;
       align-items: center;
-
-      :last-of-type {
-        margin-right: size(3);
-      }
     }
   }
 
@@ -45,4 +41,83 @@
   .icon-star, .icon-star-border {
     
   }
+
+  .salary {
+    font-weight: bold;
+    width: 120px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .reward {
+    margin-top: 24px;
+    font-size: 11px;
+    opacity: 0.6;
+    text-align: center;
+  }
+
+  .quantity {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .stats-column {
+    font-size: 13px;
+    font-weight: bold;
+    width: 48px;
+    justify-content: center;
+    text-align: center;
+    margin: 0 31px 0;
+  }
+
+  .stats-row {
+    margin-top: 15px;
+  }
+
+  .project-heading {
+    font-weight: bold;
+    padding-bottom: size(2);
+  }
+
+  button {
+    width: 120px;
+    height: 40px;
+    margin: 0 8px 0;
+  }
+
+  .hired {
+    margin-top: 38px;
+  }
+
+  .skills-circle  {
+    font-weight: bold;
+    width: 48px;
+  }
+
+  .expired {
+    font-weight: bold;
+    margin-top: 24px;
+    color: #FF6759;
+    font-size: 24px;
+  }
+
+  .taken {
+    margin-top: 24px;
+    font-weight: bold;
+    font-size: 24px;
+    opacity: 0.6;
+  }
+
+  .description {
+    text-align: center;
+  }
+
+  .icon-usd {
+    padding-left: 5px;
+  }
+
 }
+
+
+
