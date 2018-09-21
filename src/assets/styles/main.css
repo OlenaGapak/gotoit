@@ -489,6 +489,7 @@ h1, h2, h3, h4, h5, h6,
   color: var(--color-title);
   line-height: 1.5;
   letter-spacing: .5px;
+  cursor: default;
 }
 
 h1 b,
@@ -5308,8 +5309,8 @@ progress {
   background-color: color(var(--color-primary) shade(percentage));
   border-color: color(var(--color-primary) shade(percentage));
   color: #fff;
-  box-shadow: none;
 }
+
 
 .btn-success {
   background-color: var(--color-success);

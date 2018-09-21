@@ -184,7 +184,7 @@ export const generateMaleAvatar = () => {
         mouth: mouthesSVG(`./${_.sample(male_asset.mouth).src}.svg`),
         beard: have_beard ? beard ? beardsSVG(`./${_.sample(male_asset.beard).src}.svg`) : null : null,
         accessories: have_accessories ? accessoriesSVG(`./${_.sample(male_asset.accessories).src}.svg`) : null,
-        hair: hair ? hairSVG(`./${hair.src}.svg`) : null,
+        hair: hair.src ? hairSVG(`./${hair.src}.svg`) : null,
         clothes: clothesSVG(`./${_.sample(male_asset.clothes).src}.svg`)
     };
 };

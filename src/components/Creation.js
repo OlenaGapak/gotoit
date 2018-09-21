@@ -378,7 +378,9 @@ class Creation extends Component {
                                         <div className="gender-select mb-32">
                                             <h4 className="fw-500 mt-24">Gender</h4>
                                             <DefaultClickSoundButton
-                                                className="btn btn-sm btn-primary flex-grow"
+                                                className={`btn btn-sm btn-primary flex-grow ${
+                                                    this.state.gender === "male" ? "active" : ""
+                                                }`}
                                                 value="male"
                                                 onClick={() => this.handleGenderChange("male")}
                                             >
@@ -386,7 +388,9 @@ class Creation extends Component {
                                                  Male
                                             </DefaultClickSoundButton>
                                             <DefaultClickSoundButton
-                                                className="btn btn-sm btn-primary flex-grow"
+                                                className={`btn btn-sm btn-primary flex-grow ${
+                                                    this.state.gender === "female" ? "active" : ""
+                                                }`}
                                                 value="female"
                                                 onClick={() => this.handleGenderChange("female")}
                                             >
@@ -394,7 +398,9 @@ class Creation extends Component {
                                                  Female
                                             </DefaultClickSoundButton>
                                             <DefaultClickSoundButton
-                                                className="btn btn-sm btn-primary flex-grow"
+                                                className={`btn btn-sm btn-primary flex-grow ${
+                                                    this.state.gender === "other" ? "active" : ""
+                                                }`}
                                                 value="other"
                                                 onClick={() => this.handleGenderChange("other")}
                                             >
