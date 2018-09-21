@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
-
 import { project_sizes } from "../../game/knowledge/projects";
+import _ from "lodash";
 
 class ProjectName extends PureComponent {
     static defaultProps = {
@@ -22,11 +22,11 @@ class ProjectName extends PureComponent {
         const { size, platform, kind, name, deadlineText } = this.props;
         return (
             <div className="project-name flex-grow">
-                <h4>{name}</h4>
+                <h2>{name}</h2>
                 <span className="project-desription">
                     {project_sizes[size].name} {platform} {kind}
                 </span>
-                {/* <span className="project-deadline">{deadlineText}</span> */}
+                {/*<span className="project-deadline">{_.values(deadlineText)}</span>*/}
                 {this.props.children}
             </div>
         );
