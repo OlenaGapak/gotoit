@@ -1,29 +1,20 @@
 import _ from "lodash";
 
-const bodySVG_man = require.context("../../assets/images/man_asset/00_body/", true, /^\.\/.*\.svg$/);
-const eyesSVG_man = require.context("../../assets/images/man_asset/01_eyes/", true, /^\.\/.*\.svg$/);
-const eyebrowsSVG_man = require.context("../../assets/images/man_asset/02_eyebrows/", true, /^\.\/.*\.svg$/);
-const nosesSVG_man = require.context("../../assets/images/man_asset/03_nose/", true, /^\.\/.*\.svg$/);
-const mouthesSVG_man = require.context("../../assets/images/man_asset/04_mouth/", true, /^\.\/.*\.svg$/);
-const beardsSVG_man = require.context("../../assets/images/man_asset/05_beard/", true, /^\.\/.*\.svg$/);
-const accessoriesSVG_man = require.context("../../assets/images/man_asset/06_accessories/", true, /^\.\/.*\.svg$/);
-const clothesSVG_man = require.context("../../assets/images/man_asset/07_clothes/", true, /^\.\/.*\.svg$/);
-const hairSVG_man = require.context("../../assets/images/man_asset/08_hair/", true, /^\.\/.*\.svg$/);
-
-const bodySVG_female = require.context("../../assets/images/female_asset/00_body/", true, /^\.\/.*\.svg$/);
-const eyesSVG_female = require.context("../../assets/images/female_asset/01_eyes/", true, /^\.\/.*\.svg$/);
-const eyebrowsSVG_female = require.context("../../assets/images/female_asset/02_eyebrows/", true, /^\.\/.*\.svg$/);
-const nosesSVG_female = require.context("../../assets/images/female_asset/03_nose/", true, /^\.\/.*\.svg$/);
-const mouthesSVG_female = require.context("../../assets/images/female_asset/04_mouth/", true, /^\.\/.*\.svg$/);
-const accessoriesSVG_female = require.context("../../assets/images/female_asset/05_accessories/", true, /^\.\/.*\.svg$/);
-const clothesSVG_female = require.context("../../assets/images/female_asset/07_clothes/", true, /^\.\/.*\.svg$/);
-const hairSVG_female = require.context("../../assets/images/female_asset/06_hair/", true, /^\.\/.*\.svg$/);
+const bodySVG = require.context("../../assets/images/avatar_asset/00_body/", true, /^\.\/.*\.svg$/);
+const eyesSVG = require.context("../../assets/images/avatar_asset/01_eyes/", true, /^\.\/.*\.svg$/);
+const eyebrowsSVG = require.context("../../assets/images/avatar_asset/02_eyebrows/", true, /^\.\/.*\.svg$/);
+const nosesSVG = require.context("../../assets/images/avatar_asset/03_nose/", true, /^\.\/.*\.svg$/);
+const mouthesSVG = require.context("../../assets/images/avatar_asset/04_mouth/", true, /^\.\/.*\.svg$/);
+const beardsSVG = require.context("../../assets/images/avatar_asset/05_beards/", true, /^\.\/.*\.svg$/);
+const accessoriesSVG = require.context("../../assets/images/avatar_asset/06_accessories/", true, /^\.\/.*\.svg$/);
+const clothesSVG = require.context("../../assets/images/avatar_asset/07_clothes/", true, /^\.\/.*\.svg$/);
+const hairSVG = require.context("../../assets/images/avatar_asset/08_hair/", true, /^\.\/.*\.svg$/);
 
 export const male_asset = {
     body: [
-        { name: "Mokko", src: "body_dark_skin" },
-        { name: "Сappuccino", src: "body_medium_skin" },
-        { name: "Latte", src: "body_light_skin" }
+        { name: "Mokko", src: "body_dark_skin_1" },
+        { name: "Сappuccino", src: "body_medium_skin_1" },
+        { name: "Latte", src: "body_light_skin_1" }
     ],
     eyes: [
         { name: "Curious dotes", src: "eyes_01" },
@@ -62,7 +53,8 @@ export const male_asset = {
         { name: "Hot ginger stubble", src: "beard_03_red" },
         { name: "Woodcutter-codewriter", src: "beard_01_blonde" },
         { name: "Devilishly handsome", src: "beard_02_blonde" },
-        { name: "Blond designer stubble", src: "beard_03_blonde" }
+        { name: "Blond designer stubble", src: "beard_03_blonde" },
+        { name: "Clean-shaven", src: null }
     ],
     accessories: [{ name: "Four-eyed", src: "access_01" }, { name: "Fancy one here", src: "access_02" }],
     hair: [
@@ -81,7 +73,8 @@ export const male_asset = {
         { name: "Blond pompadour", src: "hair_01_blonde" },
         { name: "No money for haircut", src: "hair_02_blonde" },
         { name: "Blond freestyle", src: "hair_03_blonde" },
-        { name: "Blond flat surface", src: "hair_04_blonde" }
+        { name: "Blond flat surface", src: "hair_04_blonde" },
+        { name: "Bruce Willis", src: null }
     ],
     clothes: [
         { name: "Casual style", src: "clothes_01" },
@@ -141,7 +134,7 @@ export const female_asset = {
         { name: "Super Star Tatoo", src: "tattoo01" }
     ],
     hair: [
-        { name: "Sarah Silverman", src: "hair05_black" },
+        { name: "Sarah Silv erman", src: "hair05_black" },
         { name: "Pucca", src: "hair06_black" },
         { name: "Xena", src: "hair07_black" },
         { name: "Gothic", src: "hair08_black" },
@@ -166,19 +159,33 @@ export const female_asset = {
     ]
 };
 
+export const other_asset = {
+  body: male_asset.body.concat(female_asset.body),
+  eyes: male_asset.eyes.concat(female_asset.eyes),
+  eyebrows: male_asset.eyebrows.concat(female_asset.eyebrows),
+  nose: male_asset.nose.concat(female_asset.nose),
+  mouth: male_asset.mouth.concat(female_asset.mouth),
+  beard: male_asset.beard,
+  accessories: male_asset.accessories.concat(female_asset.accessories),
+  hair: male_asset.hair.concat(female_asset.hair),
+  clothes: male_asset.clothes.concat(female_asset.clothes),
+};
+
 export const generateMaleAvatar = () => {
     let have_beard = Boolean(Math.round(Math.random()));
     let have_accessories = Boolean(Math.round(Math.random()));
+    let hair = _.sample(male_asset.hair);
+    let beard = _.sample(male_asset.beard);
     return {
-        body: bodySVG_man(`./${_.sample(male_asset.body).src}.svg`),
-        eyes: eyesSVG_man(`./${_.sample(male_asset.eyes).src}.svg`),
-        eyebrows: eyebrowsSVG_man(`./${_.sample(male_asset.eyebrows).src}.svg`),
-        nose: nosesSVG_man(`./${_.sample(male_asset.nose).src}.svg`),
-        mouth: mouthesSVG_man(`./${_.sample(male_asset.mouth).src}.svg`),
-        beard: have_beard ? beardsSVG_man(`./${_.sample(male_asset.beard).src}.svg`) : null,
-        accessories: have_accessories ? accessoriesSVG_man(`./${_.sample(male_asset.accessories).src}.svg`) : null,
-        hair: hairSVG_man(`./${_.sample(male_asset.hair).src}.svg`),
-        clothes: clothesSVG_man(`./${_.sample(male_asset.clothes).src}.svg`)
+        body: bodySVG(`./${_.sample(male_asset.body).src}.svg`),
+        eyes: eyesSVG(`./${_.sample(male_asset.eyes).src}.svg`),
+        eyebrows: eyebrowsSVG(`./${_.sample(male_asset.eyebrows).src}.svg`),
+        nose: nosesSVG(`./${_.sample(male_asset.nose).src}.svg`),
+        mouth: mouthesSVG(`./${_.sample(male_asset.mouth).src}.svg`),
+        beard: have_beard ? beard ? beardsSVG(`./${_.sample(male_asset.beard).src}.svg`) : null : null,
+        accessories: have_accessories ? accessoriesSVG(`./${_.sample(male_asset.accessories).src}.svg`) : null,
+        hair: hair ? hairSVG(`./${hair.src}.svg`) : null,
+        clothes: clothesSVG(`./${_.sample(male_asset.clothes).src}.svg`)
     };
 };
 
@@ -186,41 +193,54 @@ export const generateFemaleAvatar = () => {
     let have_accessories = Boolean(Math.round(Math.random()));
 
     return {
-        body: bodySVG_female(`./${_.sample(female_asset.body).src}.svg`),
-        eyes: eyesSVG_female(`./${_.sample(female_asset.eyes).src}.svg`),
-        eyebrows: eyebrowsSVG_female(`./${_.sample(female_asset.eyebrows).src}.svg`),
-        nose: nosesSVG_female(`./${_.sample(female_asset.nose).src}.svg`),
-        mouth: mouthesSVG_female(`./${_.sample(female_asset.mouth).src}.svg`),
-        accessories: have_accessories ? accessoriesSVG_female(`./${_.sample(female_asset.accessories).src}.svg`) : null,
-        hair: hairSVG_female(`./${_.sample(female_asset.hair).src}.svg`),
-        clothes: clothesSVG_female(`./${_.sample(female_asset.clothes).src}.svg`)
+        body: bodySVG(`./${_.sample(female_asset.body).src}.svg`),
+        eyes: eyesSVG(`./${_.sample(female_asset.eyes).src}.svg`),
+        eyebrows: eyebrowsSVG(`./${_.sample(female_asset.eyebrows).src}.svg`),
+        nose: nosesSVG(`./${_.sample(female_asset.nose).src}.svg`),
+        mouth: mouthesSVG(`./${_.sample(female_asset.mouth).src}.svg`),
+        accessories: have_accessories ? accessoriesSVG(`./${_.sample(female_asset.accessories).src}.svg`) : null,
+        hair: hairSVG(`./${_.sample(female_asset.hair).src}.svg`),
+        clothes: clothesSVG(`./${_.sample(female_asset.clothes).src}.svg`)
     };
 };
 
 export const customizeAvatar = (gender, body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes) => {
-    if (gender === "male") {
-        return {
-            body: bodySVG_man(`./${male_asset.body[body].src}.svg`),
-            eyes: eyesSVG_man(`./${male_asset.eyes[eyes].src}.svg`),
-            eyebrows: eyebrowsSVG_man(`./${male_asset.eyebrows[eyebrows].src}.svg`),
-            nose: nosesSVG_man(`./${male_asset.nose[nose].src}.svg`),
-            mouth: mouthesSVG_man(`./${male_asset.mouth[mouth].src}.svg`),
-            beard: beardsSVG_man(`./${male_asset.beard[beard].src}.svg`),
-            accessories: accessoriesSVG_man(`./${male_asset.accessories[accessories].src}.svg`),
-            hair: hairSVG_man(`./${male_asset.hair[hair].src}.svg`),
-            clothes: clothesSVG_man(`./${male_asset.clothes[clothes].src}.svg`)
-        };
-    } else if (gender === "female") {
-        return {
-            body: bodySVG_female(`./${female_asset.body[body].src}.svg`),
-            eyes: eyesSVG_female(`./${female_asset.eyes[eyes].src}.svg`),
-            eyebrows: eyebrowsSVG_female(`./${female_asset.eyebrows[eyebrows].src}.svg`),
-            nose: nosesSVG_female(`./${female_asset.nose[nose].src}.svg`),
-            mouth: mouthesSVG_female(`./${female_asset.mouth[mouth].src}.svg`),
-            beard: null,
-            accessories: accessoriesSVG_female(`./${female_asset.accessories[accessories].src}.svg`),
-            hair: hairSVG_female(`./${female_asset.hair[hair].src}.svg`),
-            clothes: clothesSVG_female(`./${female_asset.clothes[clothes].src}.svg`)
-        };
+    if (gender === "male"){
+      return {
+        body: bodySVG(`./${male_asset.body[body].src}.svg`),
+        eyes: eyesSVG(`./${male_asset.eyes[eyes].src}.svg`),
+        eyebrows: eyebrowsSVG(`./${male_asset.eyebrows[eyebrows].src}.svg`),
+        nose: nosesSVG(`./${male_asset.nose[nose].src}.svg`),
+        mouth: mouthesSVG(`./${male_asset.mouth[mouth].src}.svg`),
+        beard: beard ? male_asset.beard[beard].src ? beardsSVG(`./${male_asset.beard[beard].src}.svg`) : null : null,
+        accessories: accessoriesSVG(`./${male_asset.accessories[accessories].src}.svg`),
+        hair: male_asset.hair[hair].src ? hairSVG(`./${male_asset.hair[hair].src}.svg`) : null,
+        clothes: clothesSVG(`./${male_asset.clothes[clothes].src}.svg`)
+      };
+    } else if (gender === "female"){
+      return {
+        body: bodySVG(`./${female_asset.body[body].src}.svg`),
+        eyes: eyesSVG(`./${female_asset.eyes[eyes].src}.svg`),
+        eyebrows: eyebrowsSVG(`./${female_asset.eyebrows[eyebrows].src}.svg`),
+        nose: nosesSVG(`./${female_asset.nose[nose].src}.svg`),
+        mouth: mouthesSVG(`./${female_asset.mouth[mouth].src}.svg`),
+        beard: null,
+        accessories: accessoriesSVG(`./${female_asset.accessories[accessories].src}.svg`),
+        hair: female_asset.hair[hair].src ? hairSVG(`./${female_asset.hair[hair].src}.svg`) : null,
+        clothes: clothesSVG(`./${female_asset.clothes[clothes].src}.svg`)
+      };
+    } else {
+      return {
+        body: bodySVG(`./${other_asset.body[body].src}.svg`),
+        eyes: eyesSVG(`./${other_asset.eyes[eyes].src}.svg`),
+        eyebrows: eyebrowsSVG(`./${other_asset.eyebrows[eyebrows].src}.svg`),
+        nose: nosesSVG(`./${other_asset.nose[nose].src}.svg`),
+        mouth: mouthesSVG(`./${other_asset.mouth[mouth].src}.svg`),
+        beard: beard ? other_asset.beard[beard].src ? beardsSVG(`./${other_asset.beard[beard].src}.svg`) : null : null,
+        accessories: accessoriesSVG(`./${other_asset.accessories[accessories].src}.svg`),
+        hair: other_asset.hair[hair].src ? hairSVG(`./${other_asset.hair[hair].src}.svg`) : null,
+        clothes: clothesSVG(`./${other_asset.clothes[clothes].src}.svg`)
+      };
     }
+  
 };
