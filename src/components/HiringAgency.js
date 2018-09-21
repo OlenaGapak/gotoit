@@ -15,9 +15,23 @@ import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 class HiringAgency extends PureComponent {
     constructor(props) {
         super(props);
+
         this.state = {
+            deal_counter: 1,
+            min_stats: 0,
+            max_stats: 0,
+            min_salary: 1,
+            max_salary: 100,
             modalOpen: false
         };
+
+        this.calcCost = this.calcCost.bind(this);
+        this.search = this.search.bind(this);
+    }
+    componentDidMount() {
+        this.init();
+    }
+    init() {
         let min = JSON.parse(JSON.stringify(skills));
         let max = JSON.parse(JSON.stringify(skills));
 
@@ -29,21 +43,20 @@ class HiringAgency extends PureComponent {
             max[skill] = 10;
         });
 
-        this.state = Object.assign(
+        let state = Object.assign(
             {
                 deal_counter: 1,
                 min_stats: JSON.parse(JSON.stringify(min)),
                 max_stats: JSON.parse(JSON.stringify(max)),
                 min_salary: 1,
-                max_salary: 100
+                max_salary: 100,
+                modalOpen: false
             },
             this.props.data.hiring_agency_state
         );
-
-        this.calcCost = this.calcCost.bind(this);
-        this.search = this.search.bind(this);
+        this.setState(state);
+        console.log(this.state);
     }
-
     calcCost() {
         let s = this.state;
 
@@ -89,13 +102,16 @@ class HiringAgency extends PureComponent {
     }
 
     search() {
+        // this.setState({ deal_counter: state.deal_counter++, modalOpen: false });
+        this.setState({ modalOpen: false });
         let state = this.state;
-        this.setState({ deal_counter: state.deal_counter++ });
-        this.props.data.helpers.agencySearch(state, this.calcCost());
-        //this.setState({ modalOpen: false });
+        //state.modalOpen = false;
+        console.log(this.state);
+        this.props.data.helpers.agencySearch(this.state, this.calcCost());
     }
 
     openModal() {
+        this.init();
         this.setState({ modalOpen: true });
     }
 
@@ -104,6 +120,8 @@ class HiringAgency extends PureComponent {
     }
 
     render() {
+        console.log(this.state);
+
         const data = this.props.data;
 
         const search_button = (
