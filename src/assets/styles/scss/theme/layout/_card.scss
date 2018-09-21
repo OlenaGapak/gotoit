@@ -6,10 +6,6 @@
   margin-bottom: 30px;
   box-shadow: 0 2px 3px rgba(0,0,0,0.03);
   transition: .5s;
-  :hover {
-    box-shadow: 0 4px 5px rgba(0,0,0,0.03);
-    transition: .1s;
-  }
 
   > .table-responsive .table,
   > .table {
@@ -66,9 +62,9 @@
 //-----------------------------------------------------------------
 // Card body
 //
+
 .card-body {
-
-
+  background-color: var(--gray-200);
 }
 
 

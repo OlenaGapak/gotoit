@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
-import Portal from "react-portal";
+import Modal from "./Modal/Modal";
 import _ from "lodash";
 
 import ReactBootstrapSlider from "react-bootstrap-slider";
 import "../../node_modules/react-bootstrap-slider/src/css/bootstrap-slider.min.css";
+import { colors } from "../game/knowledge/colors";
 
 import TeamDialog from "./TeamDialog";
 
@@ -14,7 +15,9 @@ import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 class HiringAgency extends PureComponent {
     constructor(props) {
         super(props);
-
+        this.state = {
+            modalOpen: false
+        };
         let min = JSON.parse(JSON.stringify(skills));
         let max = JSON.parse(JSON.stringify(skills));
 
@@ -87,16 +90,31 @@ class HiringAgency extends PureComponent {
 
     search() {
         let state = this.state;
-        state.deal_counter++;
+        this.setState({ deal_counter: state.deal_counter++ });
         this.props.data.helpers.agencySearch(state, this.calcCost());
+        //this.setState({ modalOpen: false });
+    }
 
-        this.refs.agency.closePortal();
+    openModal() {
+        this.setState({ modalOpen: true });
+    }
+
+    closeModal() {
+        this.setState({ modalOpen: false });
     }
 
     render() {
         const data = this.props.data;
 
-        const search_button = <DefaultClickSoundButton className="btn btn-info hidden">Hiring Agency</DefaultClickSoundButton>;
+        const search_button = (
+            <DefaultClickSoundButton
+                className="btn btn-md btn-info hidden search"
+                style={{ backgroundColor: `${colors.rumor.colorCompleted}` }}
+                onClick={() => this.openModal()}
+            >
+                Search candidate
+            </DefaultClickSoundButton>
+        );
 
         const draw_row = (name, child) => {
             return (
@@ -110,58 +128,64 @@ class HiringAgency extends PureComponent {
         };
 
         return (
-            <Portal ref="agency" closeOnEsc openByClickOn={search_button}>
-                <TeamDialog>
-                    <div className="text-center">
-                        <h3 className="text-center">Hiring Agency</h3>
-                        <p>Choose search criteria. Leave our personnel officers leeway to reduce the cost of the search.</p>
-                        {skills_names.map(skill => {
-                            return draw_row(
-                                roles[skill].name,
+            <div>
+                {search_button}
+
+                {this.state.modalOpen ? (
+                    <Modal closeModal={() => this.closeModal()} showCloseButton={true}>
+                        <div className="text-center">
+                            <h3 className="text-center">Hiring Agency</h3>
+                            <p>Choose search criteria. Leave our personnel officers leeway to reduce the cost of the search.</p>
+                            {skills_names.map(skill => {
+                                return draw_row(
+                                    roles[skill].name,
+                                    <ReactBootstrapSlider
+                                        value={[this.state.min_stats[skill], this.state.max_stats[skill]]}
+                                        change={e => {
+                                            let state = this.state;
+                                            state.min_stats[skill] = e.target.value[0];
+                                            state.max_stats[skill] = e.target.value[1];
+                                            this.setState(state);
+                                        }}
+                                        tooltip="always"
+                                        step={1}
+                                        max={50}
+                                        min={1}
+                                    />
+                                );
+                            })}
+                            {draw_row(
+                                "Salary overrate",
                                 <ReactBootstrapSlider
-                                    value={[this.state.min_stats[skill], this.state.max_stats[skill]]}
+                                    value={[this.state.min_salary, this.state.max_salary]}
                                     change={e => {
                                         let state = this.state;
-                                        state.min_stats[skill] = e.target.value[0];
-                                        state.max_stats[skill] = e.target.value[1];
+                                        state.min_salary = e.target.value[0];
+                                        state.max_salary = e.target.value[1];
                                         this.setState(state);
                                     }}
                                     tooltip="always"
                                     step={1}
-                                    max={50}
+                                    max={100}
                                     min={1}
                                 />
-                            );
-                        })}
-                        {draw_row(
-                            "Salary overrate",
-                            <ReactBootstrapSlider
-                                value={[this.state.min_salary, this.state.max_salary]}
-                                change={e => {
-                                    let state = this.state;
-                                    state.min_salary = e.target.value[0];
-                                    state.max_salary = e.target.value[1];
-                                    this.setState(state);
+                            )}
+                            <DefaultClickSoundButton
+                                className={this.calcCost() <= data.money ? "btn btn-xs btn-success" : "btn btn-success btn-xs disabled"}
+                                onClick={() => {
+                                    if (this.calcCost() <= data.money) {
+                                        this.search();
+                                    }
                                 }}
-                                tooltip="always"
-                                step={1}
-                                max={100}
-                                min={1}
-                            />
-                        )}
-                        <DefaultClickSoundButton
-                            className={this.calcCost() <= data.money ? "btn btn-xs btn-success" : "btn btn-success btn-xs disabled"}
-                            onClick={() => {
-                                if (this.calcCost() <= data.money) {
-                                    this.search();
-                                }
-                            }}
-                        >
-                            Search {this.calcCost()}
-                        </DefaultClickSoundButton>
-                    </div>
-                </TeamDialog>
-            </Portal>
+                            >
+                                Search {this.calcCost()}
+                            </DefaultClickSoundButton>
+                        </div>
+                    </Modal>
+                ) : (
+                    ""
+                )}
+            </div>
         );
     }
 }

@@ -16,7 +16,7 @@ class Bar extends Component {
     render() {
         let { bar_data } = this.props; //must be array!
         return (
-            <div className={`progress ${this.props.className}`}>
+            <div className={`progress ${this.props.className}`} style={{ width: "100%" }}>
                 {_.map(bar_data, (item, i) => {
                     const { id, name = "", showName = false, color = "#fff", value, width = 0 } = item;
                     return (

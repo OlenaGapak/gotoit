@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import ProjectName from "../Projects/ProjectName";
+import { Avatar } from "../Projects/Avatar";
 import { skills_names } from "../../game/knowledge/skills";
 import { StartPauseButton } from "../Projects/StartPauseButton";
 import { ReleaseButton } from "../Projects/ReleaseButton";
 import { ProjectReward } from "../Projects/ProjectReward";
 import { TasksProgress } from "../Projects/TasksProgress";
 import { RejectButton } from "../Projects/RejectButton";
+import ProjectProgressBar from "../Projects/ProjectProgressBar";
+import ProjectDeadlineBar from "../Projects/ProjectDeadlineBar";
 
 import ProjectDeadline from "../Projects/ProjectDeadline";
 import { Statistics } from "../Projects/Statistics";
@@ -14,10 +17,13 @@ import { Refactoring } from "../Projects/Refactoring";
 import { SkillRow } from "../Projects/SkillRow";
 import { Tests } from "../Projects/Tests";
 import StatsBar from "../StatsBar";
+import TechToggle from "../Projects/TechToggle";
 import { Technology } from "../Projects/Technology";
 import _ from "lodash";
 import { StatsDataItem } from "../Projects/StatsDataItem";
 import { technologies } from "../../game/knowledge/technologies";
+
+import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
 
 export default class ProjectModal extends Component {
     /*static propTypes = {
@@ -107,6 +113,7 @@ export default class ProjectModal extends Component {
         return { tasks, bugs, done, tasks_percent, bugs_percent, done_percent };
     };
     render() {
+        let data = this.props.data;
         let project = this.props.project;
         let { getTechnology } = this.props.data.helpers;
         let {
@@ -131,108 +138,291 @@ export default class ProjectModal extends Component {
         let deadlineText = project.getDeadlineText();
         let doneQuantity = project.doneQuantity();
         let planedTasksQuantity = project.planedTasksQuantity;
+        let taskQuantity = project.tasksQuantity();
+        let bugsQuantity = project.bugsQuantity();
         let projectTechnologies = this.props.projectTechnologies;
+        const tech_label = (() => {
+            let tech_keys = data.projects_known_technologies;
+            return _.map(tech_keys, tech_name => {
+                let enabled = data.projects_technologies[project.id][tech_name];
+                return <TechToggle data={data} name={tech_name} project={project} tech={technologies[tech_name]} enabled={enabled} />;
+            });
+        })();
+        let team_ids = {};
+        _.keys(data.relations).forEach(worker_id => {
+            let worker_projects = data.relations[worker_id];
+            _.keys(worker_projects).forEach(project_id => {
+                let relation = worker_projects[project_id];
+                if (relation && project_id === project.id) {
+                    team_ids[worker_id] = true;
+                }
+            });
+        });
+        let team = [];
+        data.workers.forEach(worker => {
+            if (worker.id in team_ids && worker.get_monthly_salary && data.helpers.deepCheckRelation(worker, project)) {
+                team.push(worker);
+            }
+        });
+
         return (
-            <section>
-                <h4>
-                    <span>
-                        {" "}
-                        <ProjectName
-                            {...{
-                                size,
-                                platform,
-                                kind,
-                                name,
-                                reward,
-                                penalty
-                            }}
-                            deadlineText={deadlineText}
-                        />{" "}
-                    </span>
-                    <ProjectReward reward={reward} penalty={penalty} />
-                    <div>
-                        <span>
-                            <RejectButton onClick={this.onReject} />
-                            <ReleaseButton doneQuantity={doneQuantity} type={type} stage={stage} onClick={this.onRelease} />
-                        </span>
+            <section
+                style={{
+                    padding: "32px",
+                    width: "680px",
+                    height: "670px"
+                }}
+            >
+                <div className="flex-container-row">
+                    <div className="flex-element col-3">
+                        <Avatar sources={_.toPairs(avatar)} style={{ height: "144px", width: "144px" }} className="project-avatar-big" />
                     </div>
-                </h4>
-                <div className="row">
-                    <div className="col-8">
-                        <div>
-                            <ProjectDeadline deadline={deadline} deadlineMax={deadline_max} />
-                            <Statistics iteration={iteration} project={project} complexity={complexity} />
-                            <div>
-                                {type === "draft" &&
-                                    stage === "ready" &&
-                                    skills_names.map(skill => {
-                                        return (
-                                            <SkillRow
-                                                key={skill}
-                                                skill={skill}
-                                                value={project.estimate[skill]}
-                                                onChange={e => {
-                                                    project.estimate[skill] = e.target.value;
-                                                    project.original_estimate[skill] = e.target.value;
-                                                }}
-                                            />
-                                        );
-                                    })}
-                            </div>
-                            <div>
-                                {!(type === "draft" && stage === "ready") &&
-                                    skills_names.map(skill => {
-                                        let { tasks, bugs, done, tasks_percent, bugs_percent, done_percent } = this.extractTaskProgress(
-                                            skill
-                                        );
-
-                                        return (
-                                            <TasksProgress
-                                                key={skill}
-                                                skill={skill}
-                                                tasksPercent={tasks_percent}
-                                                tasks={tasks}
-                                                bugsPercent={bugs_percent}
-                                                bugs={bugs}
-                                                donePercent={done_percent}
-                                                done={done}
-                                            />
-                                        );
-                                    })}
-                            </div>
-
-                            {getTechnology(id, "refactoring") && <Refactoring complexity={complexity} complexityMax={complexity_max} />}
-
-                            {tests > 0 && <Tests tests={tests} planedTasksQuantity={planedTasksQuantity} />}
+                    <div className="flex-element flex-container-column col-9" style={{ width: "100%", paddingLeft: "32px" }}>
+                        <div className="flex-element">
+                            <ProjectName
+                                {...{
+                                    size,
+                                    platform,
+                                    kind,
+                                    name,
+                                    reward,
+                                    penalty
+                                }}
+                                deadlineText={deadlineText}
+                            />
                         </div>
-                        <div className="card">
-                            <div>
-                                {this.props.data.workers.map(worker => {
-                                    const stats_data = this.getStatsData(worker);
-                                    return (
-                                        <div key={worker.id + project.id}>
-                                            <div>{worker.name}</div>
-                                            <StatsBar stats={stats_data} data={this.props.data} />
-                                        </div>
-                                    );
-                                })}
+
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <div className="flex-element flex-container-row">
+                                <ProjectReward reward={reward} penalty={penalty} project={project} />
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-4">
-                        <div className="card">
-                            <div className="col slim-left">
-                                {projectTechnologies.map((technology, i) => (
-                                    <Technology
-                                        key={technology.id}
-                                        {...technology}
-                                        onChange={technology.locked ? this.addTechnology : this.changeTechnology}
-                                    />
-                                ))}
+                            <div className="flex-element">
+                                <span
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignSelf: "flex-end"
+                                    }}
+                                >
+                                    <ReleaseButton doneQuantity={doneQuantity} type={type} stage={stage} onClick={this.onRelease} />
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {project.type !== "own" ? (
+                    <div className="flex-container-row" style={{ width: "100%" }}>
+                        <div className="flex-container-row" style={{ width: "100%", marginBottom: "24px" }}>
+                            <div className="col-3">
+                                <div className="flexbox">
+                                    <h5
+                                        style={{
+                                            color: "rgba(0, 51, 51, 0.6)",
+                                            fontSize: "13px",
+                                            lineHeight: "15px",
+                                            width: "65%",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "flex-end"
+                                        }}
+                                    >
+                                        <span>Done:</span>
+                                    </h5>
+                                    <h2
+                                        style={{
+                                            color: "#2E9999",
+                                            fontWeight: "bold",
+                                            fontSize: "24px",
+                                            lineHeight: "24px",
+                                            width: "35%",
+                                            textAlign: "left"
+                                        }}
+                                    >
+                                        {project.iteration}
+                                    </h2>
+                                </div>
+                            </div>
+                            <div className="col-9" style={{ width: "100%", paddingLeft: "32px", paddingRight: "0" }}>
+                                <ProjectDeadlineBar project={project} />
+                            </div>
+                        </div>
+                    </div>
+                ) : null}
+                <div className="flex-container-row">
+                    <div className="flex-container-row" style={{ width: "100%" }}>
+                        <div
+                            className="col-3"
+                            style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",
+                                minHeight: "72px"
+                            }}
+                        >
+                            <div className="flexbox">
+                                <h5
+                                    style={{
+                                        color: "rgba(0, 51, 51, 0.6)",
+                                        fontSize: "13px",
+                                        lineHeight: "15px",
+                                        width: "65%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "flex-end"
+                                    }}
+                                >
+                                    <span>Iteration:</span>
+                                </h5>
+                                <h2
+                                    style={{
+                                        color: "#2E9999",
+                                        fontWeight: "bold",
+                                        fontSize: "24px",
+                                        lineHeight: "24px",
+                                        width: "35%",
+                                        textAlign: "left"
+                                    }}
+                                >
+                                    {project.iteration}
+                                </h2>
+                            </div>
+                            <div className="flexbox" style={{ marginTop: "18px" }}>
+                                <h5
+                                    style={{
+                                        color: "rgba(0, 51, 51, 0.6)",
+                                        fontSize: "13px",
+                                        lineHeight: "15px",
+                                        width: "65%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "flex-end"
+                                    }}
+                                >
+                                    <span>Complexity:</span>
+                                </h5>
+                                <h2
+                                    style={{
+                                        color: "#2E9999",
+                                        fontWeight: "bold",
+                                        fontSize: "24px",
+                                        lineHeight: "24px",
+                                        width: "35%",
+                                        textAlign: "left"
+                                    }}
+                                >
+                                    {project.complexity}
+                                </h2>
+                            </div>
+                        </div>
+                        <div className="col-9" style={{ paddingLeft: "32px", paddingRight: "0" }}>
+                            <ProjectProgressBar project={project} />
+                        </div>
+                    </div>
+                </div>
+                <div className="flex-container-row">
+                    <div className="col-6" style={{ height: "300px" }}>
+                        <h4 style={{ fontSize: "16px", lineHeight: "19px", color: "#7A9999", fontWeight: "bold", opacity: "60%" }}>
+                            <span className="icon-workers" />
+                            Workers on project
+                        </h4>
+                        <DefaultClickSoundButton
+                            style={{
+                                width: "100%",
+                                height: "30px",
+                                backgroundColor: "#3DCCCC",
+                                display: "flex",
+                                justifyContent: "space-around",
+                                alignItems: "center",
+                                marginBottom: "16px"
+                            }}
+                            className={`btn btn-add-worker ${data.project_team_selector === id ? "active" : ""}`}
+                            onClick={() => {
+                                data.helpers.changeTeamSelector(project);
+                            }}
+                        >
+                            <span style={{ fontSize: "13px", lineHeight: "15px", paddingLeft: "15%" }}>Add employee on project</span>
+                            <span className="icon-add" style={{ color: "#fff" }} />
+                        </DefaultClickSoundButton>
+                        <div style={{ display: "block", justifyContent: "space-around" }}>
+                            {team.map((worker, i) => {
+                                return (
+                                    <div
+                                        key={i}
+                                        style={{
+                                            width: "100%",
+                                            height: "44px",
+                                            border: "1px solid rgba(0, 51, 51, 0.2)",
+                                            borderRadius: "2px",
+                                            marginBottom: "10px",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "space-around"
+                                        }}
+                                    >
+                                        <span style={{ height: "32px", width: "32px" }}>
+                                            <Avatar
+                                                className="player-avatar"
+                                                name={worker.name}
+                                                style={{ position: "absolute" }}
+                                                size={32}
+                                                sources={_.toPairs(worker.avatar)}
+                                            />
+                                        </span>
+                                        <span>{worker.name}</span>
+                                        <span>
+                                            <span
+                                                className="icon-program"
+                                                style={{
+                                                    marginRight: "8px",
+                                                    fontSize: "18px",
+                                                    color: "var(--color-program)"
+                                                }}
+                                            />
+                                            <span className="icon-design" style={{ fontSize: "18px", color: "var(--color-design)" }} />
+                                            <span
+                                                className="icon-manage"
+                                                style={{
+                                                    marginLeft: "8px",
+                                                    fontSize: "18px",
+                                                    color: "var(--color-manage)"
+                                                }}
+                                            />
+                                        </span>
+                                        <span style={{ width: "2px", height: "24px", backgroundColor: "rgba(0, 51, 51, 0.2)" }} />
+                                        <button
+                                            style={{
+                                                backgroundColor: "transparent",
+                                                outline: "none",
+                                                cursor: "pointer",
+                                                color: "#7A9999",
+                                                backgroundRepeat: "no-repeat",
+                                                border: "none",
+                                                lineHeight: "0.5",
+                                                padding: "0",
+                                                fontSize: "2.5rem",
+                                                fontWeight: "300",
+                                                margin: "0",
+                                                zIndex: "1",
+                                                paddingRight: "8px"
+                                            }}
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className="col-6" style={{ height: "300px" }}>
+                        <h4 style={{ fontSize: "16px", lineHeight: "19px", color: "#7A9999", fontWeight: "bold", opacity: "60%" }}>
+                            <span className="icon-tech" />
+                            Metodologies
+                        </h4>
+                        <div className="project-techs">{tech_label}</div>
+                    </div>
+                </div>
+                <RejectButton onClick={this.onReject} />
             </section>
         );
     }

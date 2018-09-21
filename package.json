@@ -87,6 +87,7 @@
     "react-chartjs-2": "^2.7.2",
     "react-click-outside": "github:tj/react-click-outside",
     "react-click-outside-component": "^1.1.1",
+    "react-circular-progressbar": "^1.0.0",
     "react-dev-utils": "6.0.0-next.a671462c",
     "react-dom": "^16.4.2",
     "react-hot-loader": "4.3.5",

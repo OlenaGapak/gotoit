@@ -508,7 +508,9 @@ class Creation extends Component {
                                         </h5>
                                     </div>
 
-                                    <StatsBar stats={stats_data} data={data} />
+                                    <div className="creation-skills">
+                                        <StatsBar stats={stats_data} data={data} />
+                                    </div>
 
                                     <div className="bonus-select pt-16 bt-1 border-secondary">
                                         <h3 className="text-center modal-title">Start bonus</h3>

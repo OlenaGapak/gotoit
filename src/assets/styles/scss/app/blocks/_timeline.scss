@@ -1,5 +1,6 @@
 .timeline-wrapper {
   background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
   width: 100vw;
   // margin: 0 -18px;
@@ -16,16 +17,16 @@
 
   .line {
     width: 100%;
-    height: 3px;
-    background-color: rgba(255, 255, 255, 1);
+  //  height: 3px;
+  //  background-color: rgba(255, 255, 255, 1);
   }
 
   .step {
     background-color: rgba(255, 255, 255, 1);
     position: absolute;
-    height: 10px;
-    width: 2px;
-    border-radius: 25%;
+    height: 2px;
+    width: 38px;
+    border-radius: 2px;
     color: white;
     display: flex;
     justify-content: center;
@@ -33,6 +34,7 @@
     & > div {
       position: absolute;
       font-size: 8px;
+      font-weight: 500;
       top: -20px;
     }
   }
@@ -43,6 +45,7 @@
     width: 6px;
     border-radius: 25%;
     background-color: rgba(255, 255, 255, 1);
+    margin-left: 0;
   }
 
   .worker-portrait {
@@ -50,7 +53,7 @@
     max-width: none !important;
     width: 20px;
     height: 20px;
-    top: 34px;
+    top: 24px;
     border-radius: 12%;
   }
 }

@@ -10,17 +10,15 @@ export class Statistics extends Component {
 
     render() {
         return (
-            <div>
-                <div> Iteration: {this.props.iteration} </div>
-                <div>
-                    {" "}
+            <div className="flex-container-column">
+                <div className="flex-element"> Iteration: {this.props.iteration} </div>
+                <div className="flex-element">
                     Tasks: {this.props.project.tasksQuantity()}/{this.props.project.planedTasksQuantity()}{" "}
                 </div>
-                <div>
-                    {" "}
+                <div className="flex-element">
                     Bugs: <span className="text-danger">{this.props.project.bugsQuantity()}</span>
                 </div>
-                <div> Complexity: {this.props.complexity} </div>
+                <div className="flex-element"> Complexity: {this.props.complexity} </div>
             </div>
         );
     }
