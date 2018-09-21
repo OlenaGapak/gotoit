@@ -127,7 +127,7 @@ class Worker extends Component {
         `}
         id={worker.id}
       >
-        <div style={{ position: 'relative', width: '80px', height: '80px'}}>
+        <div>
           <Avatar
             className="worker-avatar"
             name={worker.name}
