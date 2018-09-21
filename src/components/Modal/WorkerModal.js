@@ -30,8 +30,8 @@ export default class ModalWorker extends Component {
         let state = this.state;
         let character = (
             <div className="worker-character">
-                <div className="row px-24">
-                    <div className="col-6">
+                <div className="row">
+                    <div className="col-8">
                         {worker.in_vacation || worker.to_vacation ? (
                             worker.in_vacation ? (
                                 <h4>Worker in vacation</h4>
@@ -59,7 +59,7 @@ export default class ModalWorker extends Component {
                             )}
                         </>
                     </div>
-                    <div className="col-6 worker-statistic">
+                    <div className="col-4 worker-statistic">
                         <h4 className="text-center fw-700 text-fade">Employee statistic</h4>
                         {worker.get_monthly_salary ? (
                             ""
@@ -239,7 +239,7 @@ export default class ModalWorker extends Component {
         return (
             <section className="worker-modal">
                 <div className="modal-header">
-                    <div style={{ position: "relative", width: "200px", height: "200px" }}>
+                    <div style={{ position: "relative" }}>
                         <Avatar
                             className="worker-avatar"
                             name={worker.name}
