@@ -66,7 +66,7 @@ class StatsBar extends Component {
                             />
                         </div>
                     ) : (
-                        <span>
+                        <span key={stat}>
                             <span key={stat}>
                                 {stats[stat].name}:{" "}
                                 <span>
