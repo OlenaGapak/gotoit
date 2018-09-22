@@ -8,7 +8,7 @@
 overflow-y: auto;
 
     &::-webkit-scrollbar {
-        background-color: var(--light);
+        //background-color: var(--light);
         width: size(0.5);
         border-radius: size(1);
     }
@@ -119,6 +119,7 @@ box-shadow: inset 0 0 0 size(0.5) rgba(var(--color-success), 0.5);
 }
 
 .office {
+    padding: 8px;
 
     .column-buttons {
         display: flex;
@@ -130,7 +131,15 @@ box-shadow: inset 0 0 0 size(0.5) rgba(var(--color-success), 0.5);
     }
 
     h3 {
-        margin-left: 28px;
+        margin: auto 32px;
+
+        .icon-usd {
+            vertical-align: text-bottom;
+        }
+    }
+
+    h4 {
+        margin-bottom: 16px;
     }
 
 }

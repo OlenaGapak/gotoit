@@ -9,7 +9,7 @@
   background-color: #fff;
   border-color: var(--color-divider);
   outline: none !important;
-  transition: 0.15s linear;
+  transition: 0.2s linear;
   font-family: 'Roboto Condensed';
   font-weight: 300;
 
@@ -23,10 +23,9 @@
   &:hover {
     cursor: pointer;
     box-shadow:
-      0 1px 4px rgba(0, 0, 0, 0.2),
-      0 1px 2px rgba(0, 0, 0, 0.2),
-      inset 0 0 20px rgba(255, 255, 255, 0.2),
-      inset 0 0 20px rgba(255, 255, 255, 0.2),
+      0 1px 1px rgba(0, 0, 0, 0.2),
+      inset 0 0 20px rgba(255, 255, 255, 0.1),
+      inset 0 0 20px rgba(255, 255, 255, 0.1),
       inset 0 -2px rgba(0,0,0,0.2),
       inset 0 -2px 3px rgba(0,0,0,0.1);
   }
