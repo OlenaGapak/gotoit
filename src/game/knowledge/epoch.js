@@ -7,7 +7,7 @@ export const epoch_list = {
     },
     epoch_2: {
         name: "Epoch 2",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, atque, corporis distinctio doloremque dolores eius eligendi esse excepturi explicabo id labore modi odio perferendis provident, quaerat reiciendis sint sit ut vitae voluptates! Dicta, perspiciatis repudiandae. Blanditiis, debitis perferendis ratione rem sit voluptate voluptates! Alias, aliquam consequuntur esse est porro voluptatum.",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, atque, corporis distinctio doloremque dolores eius eligendi esse excepturi explicabo id labore modi odio perferendis provident, quaerat reiciendis sint sit ut vitae voluptates! Dicta, perspiciatis repudiandae. Blanditiis, debitis perferendis ratione rem sit voluptate voluptates!",
         start_tech: "Lorem ipsum dolor sit amet.",
         start_tick: 0
     },
@@ -19,13 +19,13 @@ export const epoch_list = {
     },
     epoch_4: {
         name: "Epoch 4",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto assumenda dicta dolor doloremque eos illo magnam natus necessitatibus, nihil odit optio quia, quidem quis reiciendis sapiente similique sit soluta sunt temporibus ut voluptate voluptatibus voluptatum! Alias animi consectetur consequatur corporis in iure quod ut vitae! Facere, perferendis.",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet aperiam architecto assumenda dicta dolor doloremque eos illo magnam natus necessitatibus, nihil odit optio quia, quidem quis reiciendis sapiente similique sit soluta sunt temporibus ut voluptate voluptatibus voluptatum! Alias animi consectetur consequatur corporis in iure quod ut vitae!",
         start_tech: "Lorem ipsum dolor sit amet.",
         start_tick: 0
     },
     epoch_5: {
         name: "Epoch 5",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto autem commodi cum cumque cupiditate doloribus exercitationem ipsam, iure laborum mollitia nemo neque nisi numquam, quas voluptas. Consequatur dignissimos ducimus ea, enim pariatur perspiciatis qui recusandae saepe velit veniam! Ex iusto laborum mollitia nostrum quod sunt tempora. Error inventore sunt tempore.",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto autem commodi cum cumque cupiditate doloribus exercitationem ipsam, iure laborum mollitia nemo neque nisi numquam, quas voluptas. Consequatur dignissimos ducimus ea, enim pariatur perspiciatis qui recusandae saepe velit veniam! Ex iusto laborum mollitia nostrum quod sunt tempora.",
         start_tech: "Lorem ipsum dolor sit amet.",
         start_tick: 0
     }
