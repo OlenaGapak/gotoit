@@ -41,7 +41,7 @@
   }
 
   .worker-info {
-    width: calc(100% - var(--worker-avatar-size);
+    width: 100%;
     //margin-left: size(1);
   }
 
@@ -80,6 +80,7 @@
 
     .progress-bar-name {
       font-size: 0;
+      margin-bottom: 0;
     }
   }
 }

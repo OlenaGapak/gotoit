@@ -21,7 +21,7 @@ class Workers extends Component {
 
     render() {
         const data = this.props.data;
-        const cancel_office = (
+        /*const cancel_office = (
             <DefaultClickSoundButton
                 onClick={() => {
                     data.helpers.downOffice();
@@ -61,19 +61,19 @@ class Workers extends Component {
             >
                 Rent the Office
             </DefaultClickSoundButton>
-        );
+        );*/
 
         return (
             <section className="workers">
-                {data.workers.length < data.office.space ? (
+                {/*{data.workers.length < data.office.space ? (
                     <div className="column-buttons">
-                        {/*
+
                         <button
                             className="btn btn-success btn-xs"
                             onClick={() => { data.helpers.changeContent('HireWorkers')}}>
                             Hire Worker
                         </button>
-                        */}
+
 
                         {data.office.size > 1 && offices[data.office.size - 1].space >= data.workers.length
                             ? data.office.size === 2
@@ -89,7 +89,7 @@ class Workers extends Component {
                     <div className="column-buttons">{extend_office}</div>
                 ) : (
                     ""
-                )}
+                )}*/}
 
                 {data.workers.map((x, i) => (
                     <Worker key={x.id} worker={x} data={data} />
