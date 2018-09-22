@@ -21,7 +21,9 @@ import {
     other_asset
 } from "../game/knowledge/worker_avatar";
 import logo from "../assets/images/go2it-logo.png";
-import backgroundImg from "../assets/images/creation/backgrounds/specialist.png";
+import specialistImg from "../assets/images/creation/backgrounds/specialist.png";
+import coworkerImg from "../assets/images/creation/backgrounds/coworker.png";
+import bussinessmanImg from "../assets/images/creation/backgrounds/bussinessman.png";
 import bonusImg from "../assets/images/creation/bonuses/cash.png";
 import { DefaultClickSoundButton, sounds } from "../game/knowledge/sounds";
 
@@ -481,7 +483,16 @@ class Creation extends Component {
                                                         }}
                                                     />
                                                     <label className="btn-background" htmlFor={background + "-radio-button"}>
-                                                        <img className="background-img" src={backgroundImg} />
+                                                        <img
+                                                            className="background-img"
+                                                            src={
+                                                                background === "specialist"
+                                                                    ? specialistImg
+                                                                    : background === "coworker"
+                                                                        ? coworkerImg
+                                                                        : bussinessmanImg
+                                                            }
+                                                        />
                                                         <h4 className="fw-700 mt-8">{player_backgrounds[background].name}</h4>
                                                     </label>
                                                 </div>
