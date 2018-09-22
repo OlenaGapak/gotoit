@@ -202,6 +202,48 @@
     }
   }
 
+  .epoch {
+    height: size(85);
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-body {
+      padding-top: size(4);
+    }
+
+    .modal-footer {
+      padding: size(4) size(7) size(7);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .epoch-select {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    .btn-epoch {
+      width: size(14);
+      height: size(17);
+      border-radius: size(1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: size(2) 0 size(1);
+
+    }
+
+    .epoch-img {
+      width: size(10);
+      border-radius: size(1);
+    }
+  }
+
   input[type="radio"] {
     display: none;
 
@@ -263,6 +305,17 @@
   .background-description {
     width: 100%;
     height: size(7);
+  }
+
+  .epoch-description {
+    width: 100%;
+    font-size: 13px;
+    line-height: 15px;
+    margin-top: 32px;
+
+    .tech {
+      margin-top: 18px;
+    }
   }
 
   .creation-skills {
