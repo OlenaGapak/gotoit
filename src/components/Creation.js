@@ -11,6 +11,7 @@ import ProjectModel from "../models/ProjectModel";
 import { skills_1 } from "../game/knowledge/skills";
 import { technologies } from "../game/knowledge/technologies";
 import { player_backgrounds } from "../game/knowledge/player_backgrounds";
+import { epoch_list } from "../game/knowledge/epoch";
 import { Avatar } from "./Projects/Avatar";
 import {
     generateFemaleAvatar,
@@ -34,6 +35,7 @@ class Creation extends Component {
         super(props);
 
         let back = _.sample(_.keys(player_backgrounds));
+        let default_epoch = _.keys(epoch_list)[0];
 
         let gender = ["male", "female", "other"][_.random(0, 1)];
 
@@ -85,6 +87,7 @@ class Creation extends Component {
             gender: gender,
             suggest_name: WorkerModel.genName(gender),
             selected_background: back, //'specialist',
+            selected_epoch: default_epoch,
             specialist: _.sample(_.keys(player_backgrounds["specialist"].spices)),
             coworker: _.sample(_.keys(player_backgrounds["coworker"].spices)),
             businessman: _.sample(_.keys(player_backgrounds["businessman"].spices)),
@@ -311,7 +314,6 @@ class Creation extends Component {
                         <DefaultClickSoundButton className="control-arrow" onClick={() => this.fragmentDec(key)}>
                             {"<"}
                         </DefaultClickSoundButton>
-                        {console.log(this.state.avatarNums)}
                         <h5 className="text-center">{asset[key][this.state.avatarNums[key]].name}</h5>
 
                         <DefaultClickSoundButton className="control-arrow" onClick={() => this.fragmentInc(key)}>
@@ -600,6 +602,50 @@ class Creation extends Component {
                             <div className="modal-content epoch">
                                 <div className="modal-header">
                                     <h2 className="modal-title text-center fw-300">Choose Epoch</h2>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="epoch-select pb-16 bb-1 border-secondary">
+                                        {Object.keys(epoch_list).map(epoch => {
+                                            return (
+                                                <div key={epoch}>
+                                                    <input
+                                                        className=""
+                                                        id={epoch + "-radio-button"}
+                                                        type="radio"
+                                                        name="epoch"
+                                                        value={epoch}
+                                                        checked={this.state.selected_epoch === epoch}
+                                                        onChange={event => {
+                                                            this.setState({
+                                                                selected_epoch: event.target.value
+                                                            });
+                                                        }}
+                                                    />
+                                                    <label className="btn-epoch" htmlFor={epoch + "-radio-button"}>
+                                                        <img
+                                                            className="epoch-img"
+                                                            src={
+                                                                epoch === "epoch_1" || epoch === "epoch_4"
+                                                                    ? specialistImg
+                                                                    : epoch === "epoch_2" || epoch === "epoch_5"
+                                                                        ? coworkerImg
+                                                                        : bussinessmanImg
+                                                            }
+                                                        />
+                                                        <h4 className="fw-700 mt-8">{epoch_list[epoch].name}</h4>
+                                                    </label>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <h5 className=" epoch-description text-center">
+                                        {epoch_list[this.state.selected_epoch].description}
+                                        <h5 className="tech text-center">Start tech: {epoch_list[this.state.selected_epoch].start_tech}</h5>
+                                    </h5>
+                                    <h5 className="text-center" style={{ marginTop: "80px", color: "red" }}>
+                                        <p>This feature is in development and does not affect the gameplay yet.</p>
+                                        <p>Choose any and press Embark to start.</p>
+                                    </h5>
                                 </div>
                                 <div className="modal-footer">
                                     <div className="partition-switch">
