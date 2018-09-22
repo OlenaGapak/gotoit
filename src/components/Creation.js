@@ -436,6 +436,12 @@ class Creation extends Component {
                                                 this.setState({ step: "background" });
                                             }}
                                         />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "epoch" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "epoch" });
+                                            }}
+                                        />
                                     </div>
                                     <DefaultClickSoundButton
                                         className="btn btn-lg btn-success btn-w-lg next-partition"
@@ -558,10 +564,56 @@ class Creation extends Component {
                                                 this.setState({ step: "background" });
                                             }}
                                         />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "epoch" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "epoch" });
+                                            }}
+                                        />
                                     </div>
-                                    <DefaultClickSoundButton className="btn btn-success btn-lg btn-w-lg embark" onClick={this.embark}>
-                                        Embark
+                                    <DefaultClickSoundButton
+                                        className="btn btn-lg btn-success btn-w-lg next-partition"
+                                        onClick={() => {
+                                            this.setState({ step: "epoch" });
+                                        }}
+                                    >
+                                        Next
                                     </DefaultClickSoundButton>
+                                </div>
+                            </div>
+                        ) : (
+                            ""
+                        )}
+
+                        {this.state.step === "epoch" ? (
+                            <div className="modal-content epoch">
+                                <div className="modal-header">
+                                    <h2 className="modal-title text-center fw-300">Choose Epoch</h2>
+                                </div>
+                                <div className="modal-footer">
+                                    <div className="partition-switch">
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "appearance" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "appearance" });
+                                            }}
+                                        />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "background" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "background" });
+                                            }}
+                                        />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "epoch" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "epoch" });
+                                            }}
+                                        />
+                                        <DefaultClickSoundButton className="btn btn-success btn-lg btn-w-lg embark" onClick={this.embark}>
+                                            Embark
+                                        </DefaultClickSoundButton>
+                                    </div>
                                 </div>
                             </div>
                         ) : (

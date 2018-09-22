@@ -202,6 +202,26 @@
     }
   }
 
+  .epoch {
+    height: size(85);
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-body {
+      padding-top: size(4);
+    }
+
+    .modal-footer {
+      padding: size(4) size(7) size(7);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+  }
+
   input[type="radio"] {
     display: none;
 
