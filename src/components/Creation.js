@@ -630,16 +630,7 @@ class Creation extends Component {
                                                         }}
                                                     />
                                                     <label className="btn-epoch" htmlFor={epoch + "-radio-button"}>
-                                                        <img
-                                                            className="epoch-img"
-                                                            src={
-                                                                epoch === "epoch_1" || epoch === "epoch_4"
-                                                                    ? specialistImg
-                                                                    : epoch === "epoch_2" || epoch === "epoch_5"
-                                                                        ? coworkerImg
-                                                                        : bussinessmanImg
-                                                            }
-                                                        />
+                                                        <img className="epoch-img" src={epoch_list[epoch].icon} />
                                                         <h4 className="fw-700 mt-8">{epoch_list[epoch].name}</h4>
                                                     </label>
                                                 </div>
@@ -648,9 +639,9 @@ class Creation extends Component {
                                     </div>
                                     <h5 className=" epoch-description text-center">
                                         {epoch_list[this.state.selected_epoch].description}
-                                        <div className="tech text-center">
+                                        {/*<div className="tech text-center">
                                             Start tech: {epoch_list[this.state.selected_epoch].start_tech}
-                                        </div>
+                                        </div>*/}
                                     </h5>
                                 </div>
                                 <div className="modal-footer">
