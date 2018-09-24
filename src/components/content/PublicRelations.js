@@ -90,9 +90,9 @@ class PublicRelations extends Component {
                                     style={{ margin: "10px", padding: "16px 16px 16px 16px", maxWidth: "250px" }}
                                 >
                                     <h6>{public_relations[key].name + " "}</h6>
-                                    <h7 style={{ fontSize: "9px", lineHeight: "11px", marginBottom: "10px" }}>
+                                    <h6 style={{ fontSize: "9px", lineHeight: "11px", marginBottom: "10px" }}>
                                         {public_relations[key].tooltip}
-                                    </h7>
+                                    </h6>
                                     <div className="btn-wrapper">
                                         <DefaultClickSoundButton
                                             className={
