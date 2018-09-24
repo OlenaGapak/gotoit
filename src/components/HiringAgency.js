@@ -6,8 +6,6 @@ import ReactBootstrapSlider from "react-bootstrap-slider";
 import "../../node_modules/react-bootstrap-slider/src/css/bootstrap-slider.min.css";
 import { colors } from "../game/knowledge/colors";
 
-import TeamDialog from "./TeamDialog";
-
 import { roles } from "../game/knowledge/workers";
 import { skills, skills_names } from "../game/knowledge/skills";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
@@ -15,23 +13,6 @@ import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 class HiringAgency extends PureComponent {
     constructor(props) {
         super(props);
-
-        this.state = {
-            deal_counter: 1,
-            min_stats: 0,
-            max_stats: 0,
-            min_salary: 1,
-            max_salary: 100,
-            modalOpen: false
-        };
-
-        this.calcCost = this.calcCost.bind(this);
-        this.search = this.search.bind(this);
-    }
-    componentDidMount() {
-        this.init();
-    }
-    init() {
         let min = JSON.parse(JSON.stringify(skills));
         let max = JSON.parse(JSON.stringify(skills));
 
@@ -52,11 +33,17 @@ class HiringAgency extends PureComponent {
                 max_salary: 100,
                 modalOpen: false
             },
-            this.props.data.hiring_agency_state
+            this.props.data.hiring_agency_state,
+            { modalOpen: false }
         );
-        this.setState(state);
+
+        this.state = state;
+
         console.log(this.state);
+        this.calcCost = this.calcCost.bind(this);
+        this.search = this.search.bind(this);
     }
+
     calcCost() {
         let s = this.state;
 
@@ -102,16 +89,12 @@ class HiringAgency extends PureComponent {
     }
 
     search() {
-        // this.setState({ deal_counter: state.deal_counter++, modalOpen: false });
-        this.setState({ modalOpen: false });
         let state = this.state;
-        //state.modalOpen = false;
-        console.log(this.state);
-        this.props.data.helpers.agencySearch(this.state, this.calcCost());
+        this.setState({ deal_counter: state.deal_counter++, modalOpen: false });
+        this.props.data.helpers.agencySearch(state, this.calcCost());
     }
 
     openModal() {
-        this.init();
         this.setState({ modalOpen: true });
     }
 

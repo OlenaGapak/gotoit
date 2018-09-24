@@ -298,8 +298,8 @@ class Creation extends Component {
                                             </p>
                                         </h4>
                                         <h6 className="warning text-center">
-                                            The game on the early stages of development, bugs are possible! Developers will be grateful if
-                                            in case of any problem you write to the Support.
+                                            The game is on the early stages of development, bugs are possible! Developers will be grateful
+                                            if you report any appeared problem to Support.
                                         </h6>
                                     </div>
                                 </div>

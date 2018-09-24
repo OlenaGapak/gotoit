@@ -84,7 +84,11 @@ class PublicRelations extends Component {
                     <div className="flex-element" style={{ marginTop: "24px" }}>
                         {_.map(public_relations, (item, key) => {
                             return (
-                                <div className="card" style={{ margin: "10px", padding: "16px 16px 16px 16px", maxWidth: "250px" }}>
+                                <div
+                                    key={key}
+                                    className="card"
+                                    style={{ margin: "10px", padding: "16px 16px 16px 16px", maxWidth: "250px" }}
+                                >
                                     <h6>{public_relations[key].name + " "}</h6>
                                     <h7 style={{ fontSize: "9px", lineHeight: "11px", marginBottom: "10px" }}>
                                         {public_relations[key].tooltip}

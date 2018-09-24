@@ -86,7 +86,7 @@
   .statistic-list {
     display: flex;
     flex-flow: column nowrap;
-    padding-left: 0px;
+    padding-left: 0;
   }
 
   .statistic-item {
@@ -115,14 +115,66 @@
   }
 
   .instrumentary {
+    justify-content: space-between;
     padding: size(1);
     background-color: transparent;
     border: 2px solid var(--color-primary);
-    border-radius: size(4);
-    margin-right: size(2);
+    border-radius: size(2);
+    margin: 8px;
 
     &:last-of-type {
       margin-right: 0;
+    }
+
+    .card {
+      padding: 8px;
+
+      .flex-container-row {
+        justify-content: space-between;
+      }
+    }
+
+    .card:last-of-type {
+      margin-bottom: 0;
+    }
+
+    h5 {
+      font-style: normal;
+      font-weight: bold;
+      line-height: normal;
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    .description {
+      margin-bottom: 4px;
+      font-size: 9px;
+    }
+
+    .cost {
+      font-size: 11px;
+      font-weight: bold;
+      color: var(--color-green);
+
+      .icon-usd {
+        margin-top: 12.5%;
+        font-size: 12px;
+      }
+
+      .money {
+        margin-left: 4px;
+        vertical-align: middle;
+      }
+    }
+
+
+
+    .buy-gadget {
+      button {
+        font-size: 13px;
+        width: 40px;
+        height: 20px;
+      }
     }
   }
 

@@ -20,7 +20,7 @@ export const public_relations = {
         long: 24 * 7,
         cost: 1000,
         tooltip:
-            "Spend some money preaching and advertising your company at the most popular hiring web sites. Rather later than sooner but you`ll definitely find someone willing to take the offer.",
+            "Preaching and advertising your company at the most popular hiring web sites",
         onClick: state => {
             state.money -= 1000;
             state.statistics.public_relations_costs.buffer += 1000;
@@ -42,7 +42,7 @@ export const public_relations = {
         long: 24 * 7,
         cost: 500,
         tooltip:
-            "Spend some money preaching and advertising your company at the most popular hiring web sites. Rather later than sooner but you`ll definitely find someone willing to take the offer.",
+            "Using contemporary sales CRM and public relations to increase interest in your company",
         onClick: state => {
             state.money -= 500;
             state.statistics.public_relations_costs.buffer += 500;
