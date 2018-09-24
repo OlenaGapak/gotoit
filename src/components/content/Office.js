@@ -187,10 +187,10 @@ class Office extends Component {
         );
 
         return (
-            <div style={{ padding: "32px 32px 32px 32px" }}>
+            <div>
                 {apartment_description}
                 {data.office.size > 1 ? (
-                    <div className="flex-container-row" style={{ paddingTop: "32px" }}>
+                    <div className="flex-container-row">
                         <span className={data.office.size > 1 ? "" : "office-disabled"}>{coffeemaker}</span>
                         <span className={data.office.size > 2 ? "" : "office-disabled"}>{lunch}</span>
                         <span className={data.office.size > 3 ? "" : "office-disabled"}>{gadget}</span>

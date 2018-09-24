@@ -6,8 +6,6 @@ import ReactBootstrapSlider from "react-bootstrap-slider";
 import "../../node_modules/react-bootstrap-slider/src/css/bootstrap-slider.min.css";
 import { colors } from "../game/knowledge/colors";
 
-import TeamDialog from "./TeamDialog";
-
 import { roles } from "../game/knowledge/workers";
 import { skills, skills_names } from "../game/knowledge/skills";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
@@ -15,9 +13,6 @@ import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 class HiringAgency extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = {
-            modalOpen: false
-        };
         let min = JSON.parse(JSON.stringify(skills));
         let max = JSON.parse(JSON.stringify(skills));
 
@@ -29,17 +24,22 @@ class HiringAgency extends PureComponent {
             max[skill] = 10;
         });
 
-        this.state = Object.assign(
+        let state = Object.assign(
             {
                 deal_counter: 1,
                 min_stats: JSON.parse(JSON.stringify(min)),
                 max_stats: JSON.parse(JSON.stringify(max)),
                 min_salary: 1,
-                max_salary: 100
+                max_salary: 100,
+                modalOpen: false
             },
-            this.props.data.hiring_agency_state
+            this.props.data.hiring_agency_state,
+            { modalOpen: false }
         );
 
+        this.state = state;
+
+        console.log(this.state);
         this.calcCost = this.calcCost.bind(this);
         this.search = this.search.bind(this);
     }
@@ -90,9 +90,8 @@ class HiringAgency extends PureComponent {
 
     search() {
         let state = this.state;
-        this.setState({ deal_counter: state.deal_counter++ });
+        this.setState({ deal_counter: state.deal_counter++, modalOpen: false });
         this.props.data.helpers.agencySearch(state, this.calcCost());
-        //this.setState({ modalOpen: false });
     }
 
     openModal() {
@@ -104,6 +103,8 @@ class HiringAgency extends PureComponent {
     }
 
     render() {
+        console.log(this.state);
+
         const data = this.props.data;
 
         const search_button = (
