@@ -17,8 +17,13 @@ export default class TechToggle extends Component {
 
     render() {
         let enabled = this.props.enabled;
+        let own_modal = this.props.own_modal;
         return (
-            <button onClick={() => this.changeTech()} className="btn btn-tech">
+            <button
+                onClick={() => this.changeTech()}
+                className="btn btn-tech"
+                style={own_modal ? { width: "60px", height: "60px", marginRight: "8px", marginBottom: "8px" } : {}}
+            >
                 <img src={this.props.tech.img_sm} className={`worker-avatar ${enabled ? "" : "desaturate"}`} />
             </button>
         );

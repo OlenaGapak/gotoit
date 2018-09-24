@@ -24,6 +24,8 @@ import { StatsDataItem } from "../Projects/StatsDataItem";
 import { technologies } from "../../game/knowledge/technologies";
 
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
+import ClickOutside from "react-click-outside-component";
+import Select from "react-select";
 
 export default class ProjectModal extends Component {
     /*static propTypes = {
@@ -77,6 +79,16 @@ export default class ProjectModal extends Component {
 
     manage = event => {
         this.props.data.helpers.modifyRelation(event.target.id, this.props.project.id, event.target.checked);
+    };
+
+    closeSelect = () => {
+        this.props.data.helpers.changeTeamSelector();
+    };
+
+    onSelectChange = event => {
+        this.props.data.helpers.changeTeamSelector();
+        this.props.data.helpers.modifyRelation(event.value.id, this.props.project.id);
+        this.props.data.helpers.modifyHoveredObjects();
     };
 
     extractTaskProgress = skill => {
@@ -135,6 +147,7 @@ export default class ProjectModal extends Component {
             complexity_max,
             tests
         } = this.props.project;
+        let own_modal = true;
         let deadlineText = project.getDeadlineText();
         let doneQuantity = project.doneQuantity();
         let planedTasksQuantity = project.planedTasksQuantity;
@@ -145,7 +158,16 @@ export default class ProjectModal extends Component {
             let tech_keys = data.projects_known_technologies;
             return _.map(tech_keys, tech_name => {
                 let enabled = data.projects_technologies[project.id][tech_name];
-                return <TechToggle data={data} name={tech_name} project={project} tech={technologies[tech_name]} enabled={enabled} />;
+                return (
+                    <TechToggle
+                        data={data}
+                        name={tech_name}
+                        project={project}
+                        tech={technologies[tech_name]}
+                        enabled={enabled}
+                        own_modal={own_modal}
+                    />
+                );
             });
         })();
         let team_ids = {};
@@ -249,7 +271,7 @@ export default class ProjectModal extends Component {
                         </div>
                     </div>
                 ) : null}
-                <div className="flex-container-row">
+                <div className="flex-container-row" style={{ marginBottom: "32px" }}>
                     <div className="flex-container-row" style={{ width: "100%" }}>
                         <div
                             className="col-3"
@@ -316,12 +338,12 @@ export default class ProjectModal extends Component {
                             </div>
                         </div>
                         <div className="col-9" style={{ paddingLeft: "32px", paddingRight: "0" }}>
-                            <ProjectProgressBar project={project} />
+                            <ProjectProgressBar project={project} own_modal={own_modal} />
                         </div>
                     </div>
                 </div>
                 <div className="flex-container-row">
-                    <div className="col-6" style={{ height: "300px" }}>
+                    <div className="col-6" style={{ height: "300px", overflow: "auto" }}>
                         <h4 style={{ fontSize: "16px", lineHeight: "19px", color: "#7A9999", fontWeight: "bold", opacity: "60%" }}>
                             <span className="icon-workers" />
                             Workers on project
@@ -344,6 +366,24 @@ export default class ProjectModal extends Component {
                             <span style={{ fontSize: "13px", lineHeight: "15px", paddingLeft: "15%" }}>Add employee on project</span>
                             <span className="icon-add" style={{ color: "#fff" }} />
                         </DefaultClickSoundButton>
+                        {data.project_team_selector === id ? (
+                            <ClickOutside onClickOutside={this.closeSelect} className="">
+                                <Select
+                                    onChange={this.onSelectChange}
+                                    style={{ marginBottom: "10px" }}
+                                    options={(() => {
+                                        let arr = [];
+                                        data.workers.forEach(worker => {
+                                            if (!_.includes(team, worker)) {
+                                                arr.push({ value: worker, label: worker.name });
+                                            }
+                                        });
+                                        return arr;
+                                    })()}
+                                    value={null}
+                                />
+                            </ClickOutside>
+                        ) : null}
                         <div style={{ display: "block", justifyContent: "space-around" }}>
                             {team.map((worker, i) => {
                                 return (
@@ -391,6 +431,9 @@ export default class ProjectModal extends Component {
                                         </span>
                                         <span style={{ width: "2px", height: "24px", backgroundColor: "rgba(0, 51, 51, 0.2)" }} />
                                         <button
+                                            onClick={() => {
+                                                data.helpers.kickWorker(worker, project);
+                                            }}
                                             style={{
                                                 backgroundColor: "transparent",
                                                 outline: "none",
@@ -414,7 +457,7 @@ export default class ProjectModal extends Component {
                             })}
                         </div>
                     </div>
-                    <div className="col-6" style={{ height: "300px" }}>
+                    <div className="col-6" style={{ height: "300px", overflow: "auto" }}>
                         <h4 style={{ fontSize: "16px", lineHeight: "19px", color: "#7A9999", fontWeight: "bold", opacity: "60%" }}>
                             <span className="icon-tech" />
                             Metodologies
@@ -422,7 +465,9 @@ export default class ProjectModal extends Component {
                         <div className="project-techs">{tech_label}</div>
                     </div>
                 </div>
-                <RejectButton onClick={this.onReject} />
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <RejectButton onClick={this.onReject} />
+                </div>
             </section>
         );
     }

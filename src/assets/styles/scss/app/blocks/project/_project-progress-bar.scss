@@ -15,6 +15,21 @@
         }
     }
 
+    .icon-program-own {
+        color: var(--color-program);
+        font-size: 18px;
+    }
+
+    .icon-design-own {
+        color: var(--color-design);
+        font-size: 18px
+    }
+
+    .icon-manage-own {
+        color: var(--color-manage);
+        font-size: 18px;
+    }
+
     [class^='icon-'] {
         margin-right: 4px;
         cursor: initial;

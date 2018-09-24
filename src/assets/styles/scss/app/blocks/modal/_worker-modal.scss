@@ -38,6 +38,7 @@
     width: size(18);
     height: size(18);
     flex-shrink: 0;
+    border-radius: size(2);
   }
 
   .worker-info {
@@ -61,26 +62,37 @@
     align-items: center;
     margin-bottom: size(2);
 
-    .worker-salary, .worker-vacation {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-left: size(3);
-      flex-grow: 1;
-
-      h3 {
-        color: var(--color-success);
-        font-weight: 700;
-        margin: 0;
-        margin-right: size(1);
-        display: inline;
-      }
+    .happiness-bar, .stamina-bar {
+      border-radius: size(1);
     }
+
+      .worker-salary, .worker-vacation {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-left: size(3);
+        flex-grow: 1;
+
+        h3 {
+          color: var(--color-success);
+          font-weight: 700;
+          margin: 0;
+          margin-right: size(1);
+          display: inline;
+        }
+      }
   }
 
   .worker-stats {
     display: flex;
     width: 100%;
+
+    .stats-progress-bar {
+
+      .progress {
+        border-radius: size(2);
+      }
+    }
   }
 
   .statistic-list {
