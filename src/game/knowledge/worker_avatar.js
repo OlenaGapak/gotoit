@@ -191,7 +191,6 @@ export const generateMaleAvatar = () => {
 
 export const generateFemaleAvatar = () => {
     let have_accessories = Boolean(Math.round(Math.random()));
-
     return {
         body: bodySVG(`./${_.sample(female_asset.body).src}.svg`),
         eyes: eyesSVG(`./${_.sample(female_asset.eyes).src}.svg`),
@@ -202,6 +201,25 @@ export const generateFemaleAvatar = () => {
         hair: hairSVG(`./${_.sample(female_asset.hair).src}.svg`),
         clothes: clothesSVG(`./${_.sample(female_asset.clothes).src}.svg`)
     };
+};
+
+export const generateOtherAvatar = () => {
+  let have_accessories = Boolean(Math.round(Math.random()));
+  let have_beard = Boolean(Math.round(Math.random()));
+  let hair = _.sample(male_asset.hair);
+  let beard = _.sample(male_asset.beard);
+
+  return {
+    body: bodySVG(`./${_.sample(female_asset.body.concat(male_asset.body)).src}.svg`),
+    eyes: eyesSVG(`./${_.sample(female_asset.eyes.concat(male_asset.eyes)).src}.svg`),
+    eyebrows: eyebrowsSVG(`./${_.sample(female_asset.eyebrows.concat(male_asset.eyebrows)).src}.svg`),
+    nose: nosesSVG(`./${_.sample(female_asset.nose.concat(male_asset.nose)).src}.svg`),
+    mouth: mouthesSVG(`./${_.sample(female_asset.mouth.concat(male_asset.mouth)).src}.svg`),
+    accessories: have_accessories ? accessoriesSVG(`./${_.sample(female_asset.accessories.concat(male_asset.accessories)).src}.svg`) : null,
+    hair: hair.src ? hairSVG(`./${hair.src}.svg`) : null,
+    beard: have_beard ? beard ? beardsSVG(`./${_.sample(male_asset.beard).src}.svg`) : null : null,
+    clothes: clothesSVG(`./${_.sample(female_asset.clothes.concat(male_asset.clothes)).src}.svg`)
+  };
 };
 
 export const customizeAvatar = (gender, body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes) => {
