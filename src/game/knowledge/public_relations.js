@@ -42,7 +42,7 @@ export const public_relations = {
         long: 24 * 7,
         cost: 500,
         tooltip:
-            "Using contemporary sales CRM and public relations to increase interest in your company",
+            "Using contemporary sales CRM systems and public activity to increase interest in your company",
         onClick: state => {
             state.money -= 500;
             state.statistics.public_relations_costs.buffer += 500;
