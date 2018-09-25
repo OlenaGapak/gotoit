@@ -76,11 +76,6 @@ class StatsProgressBar extends Component {
             stat
         };
     }
-    constructor(props) {
-        super(props);
-
-        this.changeRole = this.changeRole.bind(this);
-    }
 
     shouldComponentUpdate(nextProps) {
         return !isEqual(this.props, nextProps);
