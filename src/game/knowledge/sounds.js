@@ -53,9 +53,9 @@ const makeSoundOnClick = (Component, sound_name) => {
 };
 
 const just_button = props => (
-    <button className={props.className} onClick={props.onClick} style={props.style}>
+    <div className={props.className} onClick={props.onClick} style={props.style}>
         {props.children}
-    </button>
+    </div>
 );
 const just_a_link = props => (
     <a className={props.className} onClick={props.onClick}>
