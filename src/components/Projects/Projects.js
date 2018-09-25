@@ -20,7 +20,7 @@ class Projects extends Component {
             <section className="projects">
                 <div className="column-buttons">
                     <DefaultClickSoundButton
-                        className="btn btn-bold btn-w-lg btn-success"
+                        className="btn btn-bold btn-w-lg btn-success start-project"
                         onClick={() => {
                             data.helpers.changeContent("StartProject");
                         }}

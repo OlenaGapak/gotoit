@@ -131,6 +131,7 @@ class App extends Component {
         this.closeProject = this.closeProject.bind(this);
         this.trainingProject = this.trainingProject.bind(this);
         this.changeTeamSelector = this.changeTeamSelector.bind(this);
+        this.changeTeamModalSelector = this.changeTeamModalSelector.bind(this);
         this.draftProject = this.draftProject.bind(this);
         this.kickWorker = this.kickWorker.bind(this);
         this.unlockTechnology = this.unlockTechnology.bind(this);
@@ -222,6 +223,7 @@ class App extends Component {
         app_state.data.helpers["closeProject"] = this.closeProject;
         app_state.data.helpers["trainingProject"] = this.trainingProject;
         app_state.data.helpers["changeTeamSelector"] = this.changeTeamSelector;
+        app_state.data.helpers["changeTeamModalSelector"] = this.changeTeamModalSelector;
         app_state.data.helpers["draftProject"] = this.draftProject;
         app_state.data.helpers["kickWorker"] = this.kickWorker;
         app_state.data.helpers["unlockTechnology"] = this.unlockTechnology;
@@ -487,6 +489,12 @@ class App extends Component {
         const data = this.state.data;
         data.project_team_selector = project === null ? null : project.id;
         this.setStatedebounce({ data: data });
+    }
+
+    changeTeamModalSelector(project = null) {
+        const data = this.state.data;
+        data.project_team_modal_selector = project === null ? null : project.id;
+        this.setState({ data: data });
     }
 
     modifyHoveredObjects(projects = [], workers = []) {

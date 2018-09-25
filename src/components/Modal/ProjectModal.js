@@ -1,31 +1,18 @@
 import React, { Component } from "react";
 import ProjectName from "../Projects/ProjectName";
 import { Avatar } from "../Projects/Avatar";
-import { skills_names } from "../../game/knowledge/skills";
-import { StartPauseButton } from "../Projects/StartPauseButton";
 import { ReleaseButton } from "../Projects/ReleaseButton";
 import { ProjectReward } from "../Projects/ProjectReward";
-import { TasksProgress } from "../Projects/TasksProgress";
 import { RejectButton } from "../Projects/RejectButton";
 import ProjectProgressBar from "../Projects/ProjectProgressBar";
 import ProjectDeadlineBar from "../Projects/ProjectDeadlineBar";
-
-import ProjectDeadline from "../Projects/ProjectDeadline";
-import { Statistics } from "../Projects/Statistics";
-
-import { Refactoring } from "../Projects/Refactoring";
-import { SkillRow } from "../Projects/SkillRow";
-import { Tests } from "../Projects/Tests";
-import StatsBar from "../StatsBar";
 import TechToggle from "../Projects/TechToggle";
-import { Technology } from "../Projects/Technology";
-import _ from "lodash";
 import { StatsDataItem } from "../Projects/StatsDataItem";
 import { technologies } from "../../game/knowledge/technologies";
-
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
 import ClickOutside from "react-click-outside-component";
 import Select from "react-select";
+import _ from "lodash";
 
 export default class ProjectModal extends Component {
     /*static propTypes = {
@@ -82,11 +69,11 @@ export default class ProjectModal extends Component {
     };
 
     closeSelect = () => {
-        this.props.data.helpers.changeTeamSelector();
+        this.props.data.helpers.changeTeamModalSelector();
     };
 
     onSelectChange = event => {
-        this.props.data.helpers.changeTeamSelector();
+        this.props.data.helpers.changeTeamModalSelector();
         this.props.data.helpers.modifyRelation(event.value.id, this.props.project.id);
         this.props.data.helpers.modifyHoveredObjects();
     };
@@ -156,10 +143,11 @@ export default class ProjectModal extends Component {
         let projectTechnologies = this.props.projectTechnologies;
         const tech_label = (() => {
             let tech_keys = data.projects_known_technologies;
-            return _.map(tech_keys, tech_name => {
+            return _.map(tech_keys, (tech_name, i) => {
                 let enabled = data.projects_technologies[project.id][tech_name];
                 return (
                     <TechToggle
+                        key={i}
                         data={data}
                         name={tech_name}
                         project={project}
@@ -358,16 +346,16 @@ export default class ProjectModal extends Component {
                                 alignItems: "center",
                                 marginBottom: "16px"
                             }}
-                            className={`btn btn-add-worker ${data.project_team_selector === id ? "active" : ""}`}
+                            className={`btn btn-add-worker ${data.project_team_modal_selector === id ? "active" : ""}`}
                             onClick={() => {
-                                data.helpers.changeTeamSelector(project);
+                                data.helpers.changeTeamModalSelector(project);
                             }}
                         >
                             <span style={{ fontSize: "13px", lineHeight: "15px", paddingLeft: "15%" }}>Add employee on project</span>
                             <span className="icon-add" style={{ color: "#fff" }} />
                         </DefaultClickSoundButton>
-                        {data.project_team_selector === id ? (
-                            <ClickOutside onClickOutside={this.closeSelect} className="">
+                        {data.project_team_modal_selector === id ? (
+                            <ClickOutside onClickOutside={this.closeSelect} className="select">
                                 <Select
                                     onChange={this.onSelectChange}
                                     style={{ marginBottom: "10px" }}

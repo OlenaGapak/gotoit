@@ -18,7 +18,14 @@ class StatsProgressBar extends Component {
         type: PropTypes.string,
         workerId: PropTypes.string
     };
+    changeRole(event) {
+        this.props.data.helpers.changeRole(this.props.worker.id, event.target.id, event.target.checked);
+    }
+    constructor(props) {
+        super(props);
 
+        this.changeRole = this.changeRole.bind(this);
+    }
     state = {
         bar_data: {},
         stat: "default"
@@ -85,6 +92,7 @@ class StatsProgressBar extends Component {
         let { stat, bar_data } = this.state;
         const stats = this.props.stats;
         const { workerId, getRole } = this.props;
+        const hideStatIcon = this.props.hideStatIcon;
 
         return (
             <label data-tip data-for={"progress_skill_" + stat} className="stats-progress-bar">
@@ -96,7 +104,7 @@ class StatsProgressBar extends Component {
                         checked={getRole(workerId, stat)}
                         onChange={this.changeRole}
                     />
-                    <span className={"icon-" + stat} />
+                    {hideStatIcon ? "" : <span className={"icon-" + stat} />}
                 </>
                 <ReactTooltip id={"progress_skill_" + stat}>
                     <span>{`${stat}: ${stats[stat].value}`}</span>

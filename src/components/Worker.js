@@ -93,14 +93,6 @@ class Worker extends Component {
       };
     });
 
-
-    /*const stats_data = _.mapValues(worker.stats, (val, stat) => {
-            return {
-                name: stat,
-                val: worker.getStatsData(stat)
-            };
-        });*/
-
     const efficiency_data = {
       work_load: { name: 'Work Load', val: worker.workloadPenalty() },
       work_difficulty: {
