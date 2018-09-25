@@ -9,7 +9,7 @@ class ProjectName extends PureComponent {
     };
 
     static propTypes = {
-        deadlineText: PropTypes.string,
+        //deadlineText: PropTypes.string,
         kind: PropTypes.string,
         name: PropTypes.string,
         penalty: PropTypes.number,
