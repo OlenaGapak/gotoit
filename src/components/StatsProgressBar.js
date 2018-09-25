@@ -59,8 +59,6 @@ class StatsProgressBar extends Component {
                 break;
         }
 
-        console.log(hideStatIcon);
-
         return (
             <label data-tip data-for={"progress_skill_" + stat} className="stats-progress-bar">
                 <>
