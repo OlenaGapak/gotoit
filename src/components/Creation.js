@@ -187,7 +187,16 @@ class Creation extends Component {
 
         // i must hard set :(
         data.helpers.brutalSet({ data: data });
-
+        data.helpers.createMail({
+            type: "Welcome",
+            date: data.current_game_date,
+            favorite: true
+        });
+        data.helpers.createMail({
+            type: "Relations",
+            date: data.current_game_date,
+            favorite: true
+        });
         data.helpers.pushNewProject();
         data.helpers.pushNewProject();
         data.helpers.pushNewProject();

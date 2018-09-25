@@ -47,11 +47,6 @@ class Offer extends Component {
             <section className="offer-modal">
                 <div className="modal-header flexbox">
                     <div>
-                        <p className="fw-700">enterpreneur resume</p>
-                    </div>
-                    <div>
-                        <FormattedDate value={letter.date} weekday="short" day="numeric" month="short" year="numeric" hour="numeric" />
-                        <span className="icon-star-border" />
                         <Avatar className="project-avatar" name={project.name} sources={_.toPairs(project.avatar)} />
                     </div>
                 </div>
@@ -80,7 +75,7 @@ class Offer extends Component {
                                 <h4 className="reward"> Reward:</h4>
 
                                 <div className="quantity" style={{ color: `${colors.salary}` }}>
-                                    {project.reward}
+                                    {project.reward}$
                                     <span className="icon-usd">
                                         <span className="path1" />
                                         <span className="path2" />

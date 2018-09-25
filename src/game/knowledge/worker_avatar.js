@@ -182,7 +182,7 @@ export const generateMaleAvatar = () => {
         eyebrows: eyebrowsSVG(`./${_.sample(male_asset.eyebrows).src}.svg`),
         nose: nosesSVG(`./${_.sample(male_asset.nose).src}.svg`),
         mouth: mouthesSVG(`./${_.sample(male_asset.mouth).src}.svg`),
-        beard: have_beard ? beard ? beardsSVG(`./${_.sample(male_asset.beard).src}.svg`) : null : null,
+        beard: have_beard ? beard.src ? beardsSVG(`./${beard.src}.svg`) : null : null,
         accessories: have_accessories ? accessoriesSVG(`./${_.sample(male_asset.accessories).src}.svg`) : null,
         hair: hair.src ? hairSVG(`./${hair.src}.svg`) : null,
         clothes: clothesSVG(`./${_.sample(male_asset.clothes).src}.svg`)
