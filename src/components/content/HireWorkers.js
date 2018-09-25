@@ -72,24 +72,27 @@ class HireWorkers extends Component {
                                 type={"design"}
                                 max_stat={data.max_candidates_stat}
                                 stats={stats_progressbar_data}
-                                worker={candidate}
-                                data={data}
+                                workerId={candidate.id}
+                                getRole={this.props.data.helpers.getRole}
+                                changeRole={this.props.data.helpers.changeRole}
                             />
                             <StatsProgressBar
                                 hideCheckbox={true}
                                 type={"program"}
                                 max_stat={data.max_candidates_stat}
                                 stats={stats_progressbar_data}
-                                worker={candidate}
-                                data={data}
+                                workerId={candidate.id}
+                                getRole={this.props.data.helpers.getRole}
+                                changeRole={this.props.data.helpers.changeRole}
                             />
                             <StatsProgressBar
                                 hideCheckbox={true}
                                 type={"manage"}
                                 max_stat={data.max_candidates_stat}
                                 stats={stats_progressbar_data}
-                                worker={candidate}
-                                data={data}
+                                workerId={candidate.id}
+                                getRole={this.props.data.helpers.getRole}
+                                changeRole={this.props.data.helpers.changeRole}
                             />
                         </div>
                     </div>
@@ -107,9 +110,9 @@ class HireWorkers extends Component {
         const rumor_bar = [
             {
                 name: "Rumor",
-                width: Math.min(100, data.rumor),
                 color: colors.blue,
-                value: Math.ceil(data.rumor * 100) / 100,
+                width: _.round(Math.min(100, data.rumor), 0),
+                value: _.round(Math.ceil(data.rumor * 100) / 100, 0),
                 id: "rumor"
             }
         ];

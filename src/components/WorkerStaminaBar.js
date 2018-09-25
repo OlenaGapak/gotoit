@@ -1,32 +1,50 @@
-import React, { Component } from "react";
+import PropTypes from "prop-types";
+import React, { PureComponent } from "react";
 //import PropTypes from 'prop-types';
 import { colors } from "../game/knowledge/colors";
 import Bar from "./Bar/Bar";
+import _ from "lodash";
+import isEqual from "react-fast-compare";
+class WorkerStaminaBar extends PureComponent {
+    static defaultProps = {
+        stamina: 0
+    };
 
-class WorkerStaminaBar extends Component {
+    static propTypes = {
+        stamina: PropTypes.number.isRequired
+    };
+    shouldComponentUpdate(nextProps) {
+        return nextProps.stamina !== this.props.stamina;
+    }
+    state = {
+        bar_data: []
+    };
+    static getDerivedStateFromProps(nextProps, prevstate) {
+        let { stamina } = nextProps;
+        if (stamina === prevstate.stamina) return false;
+        return {
+            bar_data: [
+                {
+                    name: "Stamina",
+                    width: _.round(Math.min(100, stamina / 50)),
+                    color: "#F26191",
+                    value: `${Math.floor(stamina / 50)}%`,
+                    showName: true
+                },
+                {
+                    name: "empty",
+                    width: _.round(100 - Math.min(100, stamina / 50)),
+                    color: "#993D5C",
+                    value: "",
+                    showName: false
+                }
+            ]
+        };
+    }
     render() {
-        let { worker } = this.props;
-        const bar_data = [
-            {
-                name: "Stamina",
-                width: Math.min(100, worker.stamina / 50),
-                color: "#F26191",
-                value: `${Math.floor(worker.stamina / 50)}%`,
-                showName: true
-            },
-            {
-                name: "empty",
-                width: 100 - Math.min(100, worker.stamina / 50),
-                color: "#993D5C",
-                value: "",
-                showName: false
-            }
-        ];
-
+        let { bar_data } = this.state;
         return <Bar className="stamina-bar" bar_data={bar_data} />;
     }
 }
-
-WorkerStaminaBar.propTypes = {};
 
 export default WorkerStaminaBar;

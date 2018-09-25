@@ -3,7 +3,8 @@ import { colors } from "../game/knowledge/colors";
 import { public_relations } from "../game/knowledge/public_relations";
 import Bar from "./Bar/Bar";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
-
+import _ from "lodash";
+import _ from "lodash";
 class PRDepartment extends Component {
     constructor(props) {
         super(props);
@@ -17,18 +18,18 @@ class PRDepartment extends Component {
         const rumor_bar = [
             {
                 name: "Rumor",
-                width: Math.min(100, data.rumor),
                 color: colors.blue,
-                value: Math.ceil(data.rumor * 100) / 100,
+                width: _.round(Math.min(100, data.rumor), 0),
+                value: _.round(Math.ceil(data.rumor * 100) / 100, 0),
                 id: "rumor"
             }
         ];
         const reputation_bar = [
             {
                 name: "Reputation",
-                width: Math.min(100, data.rumor),
                 color: colors.orange,
-                value: Math.ceil(data.reputation * 100) / 100,
+                width: _.round(Math.min(100, data.rumor), 0),
+                value: _.round(Math.ceil(data.reputation * 100) / 100, 0),
                 id: "reputation"
             }
         ];

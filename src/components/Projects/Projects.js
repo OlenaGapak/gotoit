@@ -3,13 +3,16 @@ import React, { Component } from "react";
 import Meeting from "../Meeting/Meeting";
 import Project from "./Project";
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
+import isEqual from "react-fast-compare";
 
 class Projects extends Component {
     constructor(props) {
         super(props);
         this.state = { show_archive: true };
     }
-
+    // shouldComponentUpdate(nextProps) {
+    //     return !isEqual(this.props, nextProps);
+    // }
     render() {
         let data = this.props.data;
 

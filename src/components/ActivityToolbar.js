@@ -10,6 +10,7 @@ import loans from "../assets/images/icon/browser/5-loans.png";
 import bsex from "../assets/images/icon/browser/6-bsex.png";
 import archive from "../assets/images/icon/browser/7-archive.png";
 import advertising from "../assets/images/icon/browser/advertising.png";
+import isEqual from "react-fast-compare";
 
 class ActivityToolbar extends Component {
     static propTypes = {
@@ -19,6 +20,9 @@ class ActivityToolbar extends Component {
     };
     // shouldComponentUpdate() {
     //   return false;
+    // }
+    // shouldComponentUpdate(nextProps) {
+    //     return !isEqual(this.props, nextProps);
     // }
     render() {
         let data = this.props.data;

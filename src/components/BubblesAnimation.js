@@ -43,7 +43,7 @@ class BubblesAnimation extends React.Component {
             this.trueAddBubbleAnimation(animation_data);
         } else {
             this.trueAddBubbleAnimation(animation_data);
-            setTimeout(() => {}, 1000 / this.state.items.length);
+            // setTimeout(() => {}, 500 / this.state.items.length);
         }
     }
 
@@ -58,6 +58,7 @@ class BubblesAnimation extends React.Component {
         return (
             <BubbleAnimated
                 key={id}
+                gameSpeed={this.props.gameSpeed}
                 queue={this.state.items.length}
                 size={item.size}
                 color={item.color}
@@ -70,7 +71,22 @@ class BubblesAnimation extends React.Component {
     };
     render() {
         const items = _.map(this.state.items, this.renderItem);
-        return <div>{items}</div>;
+        return (
+            <div
+                style={{
+                    left: 0,
+                    top: 0,
+                    width: "100%",
+                    height: "100%",
+                    overflow: "hidden",
+                    pointerEvents: "none",
+                    zIndex: 11,
+                    position: "fixed"
+                }}
+            >
+                {items}
+            </div>
+        );
     }
 }
 

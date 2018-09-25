@@ -3,10 +3,14 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import DeadLine from "./OverlayTriggers/DeadLine";
 import VacationAndLeave from "./OverlayTriggers/VacationAndLeave";
+import isEqual from "react-fast-compare";
 
 const timelineWidth = window.innerWidth;
 
 export class TimeLineStep extends Component {
+    shouldComponentUpdate(nextProps) {
+        return !isEqual(this.props, nextProps);
+    }
     static propTypes = {
         day: PropTypes.any,
         events: PropTypes.arrayOf(PropTypes.any),

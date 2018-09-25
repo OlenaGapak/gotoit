@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import * as PropTypes from "prop-types";
 import { colors } from "../../game/knowledge/colors";
 import Bar from "../Bar/Bar";
-
+import _ from "lodash";
 export default class Deadline extends PureComponent {
     static propTypes = {
         deadline: PropTypes.number,
@@ -16,9 +16,9 @@ export default class Deadline extends PureComponent {
         const bar_data = [
             {
                 name: "gone",
-                width: 100 - (deadline / deadlineMax) * 100,
+                width: _.round(100 - (deadline / deadlineMax) * 100, 0),
                 color: deadline / deadlineMax < 0.1 ? colors.danger : colors.warning,
-                value: deadlineMax - deadline,
+                value: _.round(deadlineMax - deadline, 0),
                 showName: true
             },
             {

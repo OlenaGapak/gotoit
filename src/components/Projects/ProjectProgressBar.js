@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { project_bars } from "../../game/knowledge/projects";
 import { colors } from "../../game/knowledge/colors";
 import Bar from "../Bar/Bar";
-
+import _ from "lodash";
+import isEqual from "react-fast-compare";
 class ProjectProgressBar extends Component {
     constructor(props) {
         super(props);
@@ -10,6 +11,7 @@ class ProjectProgressBar extends Component {
             items: []
         };
     }
+
     render() {
         let project = this.props.project;
         let sum_design, sum_prog, sum_manage;
@@ -122,23 +124,23 @@ class ProjectProgressBar extends Component {
             manage_data = [
                 {
                     name: "Manage tasks",
-                    width: (100 / sum_manage) * (project.estimate.manage - project.done.manage),
+                    width: _.round((100 / sum_manage) * (project.estimate.manage - project.done.manage), 0),
                     color: colors.manage.colorEstimate,
-                    value: project.estimate.manage - project.done.manage,
+                    value: _.round(project.estimate.manage - project.done.manage, 0),
                     id: project.id + project_bars.manage_tasks.id
                 },
                 {
                     name: "Manage bugs",
-                    width: (100 / sum_manage) * project.bugs.manage,
+                    width: _.round((100 / sum_manage) * project.bugs.manage, 0),
                     color: colors.manage.colorBug,
-                    value: project.bugs.manage,
+                    value: _.round(project.bugs.manage, 0),
                     id: project.id + project_bars.manage_bugs.id
                 },
                 {
                     name: "Manage completed",
-                    width: (100 / sum_manage) * project.done.manage,
+                    width: _.round((100 / sum_manage) * project.done.manage, 0),
                     color: colors.manage.colorCompleted,
-                    value: project.done.manage,
+                    value: _.round(project.done.manage, 0),
                     id: project.id + project_bars.manage_completed.id
                 }
             ];

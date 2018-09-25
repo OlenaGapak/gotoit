@@ -6,7 +6,7 @@ import PublicRelations from "../content/PublicRelations";
 import SalesAgency from "../SalesAgency";
 import Bar from "../Bar/Bar";
 import { colors } from "../../game/knowledge/colors";
-
+import _ from "lodash";
 class ProjectsFind extends Component {
     render() {
         const data = this.props.data;
@@ -16,9 +16,9 @@ class ProjectsFind extends Component {
         const reputation_bar = [
             {
                 name: "Reputation",
-                width: Math.min(100, data.reputation),
+                width: _.round(Math.min(100, data.reputation), 0),
                 color: colors.orange,
-                value: Math.ceil(data.reputation * 100) / 100,
+                value: _.round(Math.ceil(data.reputation * 100) / 100, 0),
                 id: "reputation"
             }
         ];

@@ -193,6 +193,7 @@ module.exports = {
                 use: [
                     {
                         options: {
+                            fix: true,
                             formatter: eslintFormatter,
                             eslintPath: require.resolve("eslint")
                         },

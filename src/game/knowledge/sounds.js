@@ -28,22 +28,25 @@ export const sounds = {
 };
 
 const makeSoundOnClick = (Component, sound_name) => {
-    class HOC extends React.Component {
+    class HOC extends React.PureComponent {
         makeAudio = () => {
             let audio = new Audio(sounds[sound_name]);
             audio.play();
         };
+        onClick = () => {
+            if(this.props.onClick)
+            {
+            this.makeAudio();
+            this.props.onClick();
+            }
+        }
 
         render() {
             let props = this.props;
             return (
                 <Component
                     {...props}
-                    onClick={() => {
-                        if(this.props.onClick){
-                        this.makeAudio();
-                        this.props.onClick();}
-                    }}
+                    onClick={this.onClick}
                 />
             );
         }

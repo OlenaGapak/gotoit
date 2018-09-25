@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Animate } from "react-move";
-import { easeCubicIn } from "d3-ease";
+import { easeLinear } from "d3-ease";
 import { Motion, spring } from "react-motion";
 import SplashAnimated from "./SplashAnimated";
 import { sounds } from "../../game/knowledge/sounds";
 
-class BubbleAnimated extends Component {
+class BubbleAnimated extends PureComponent {
     static propTypes = {
         color: PropTypes.string.isRequired,
         count: PropTypes.number.isRequired,
@@ -30,7 +30,7 @@ class BubbleAnimated extends Component {
             this.state = {
                 ...this.state,
                 step: 1,
-                duration: 700 - 10 * queue,
+                duration: 700 - 50 * props.gameSpeed,
                 size,
                 color,
                 opacity: 1,
@@ -45,17 +45,8 @@ class BubbleAnimated extends Component {
     };
     movingEnd = () => {
         let { step } = this.state;
-        if (step === 2) {
-            return this.setState(() => ({
-                opacity: 0,
-                scale: 2,
-                duration: this.state.duration - 300,
-                step: 3
-            }));
-        }
-        if (step === 3) {
-            return this.props.handleTransitionEnd();
-        }
+        console.info("movingEnd ");
+        return this.props.handleTransitionEnd();
     };
     componentDidMount() {
         let to;
@@ -68,8 +59,7 @@ class BubbleAnimated extends Component {
             to.y -= to.height / 2;
             this.setState({
                 x: to.x,
-                y: to.y,
-                step: 2
+                y: to.y
             });
         }
     }
@@ -83,54 +73,68 @@ class BubbleAnimated extends Component {
         if (!elementFrom || !elementTo) return null;
         return (
             <div>
-                {/*<Animate
-                    start={{
-                        x: x,
-                        y: y,
-                        opacity: 1,
-                        scale: 1,
-                        duration: 700
-                    }}
-                    update={[
-                        {
-                            x: [x],
-                            y: [y],
-                            opacity: [opacity],
-                            scale: [scale],
-                            timing: {
-                                duration: duration
-                                // easy: easeCubicIn
-                            },
-                            events: { end: this.movingEnd }
-                        }
-                    ]}
-                >
-                    {({ x, y, opacity, scale }) => {
-                        return (
-                            <div
-                                style={{
-                                    transform: `translate(${x}px, ${y}px) scale(${scale})`,
-                                    opacity: opacity,
-                                    width: size,
-                                    height: size,
-                                    background: color,
-                                    borderRadius: "50%",
-                                    position: "fixed",
-                                    textAlign: "center",
-                                    lineHeight: size,
-                                    zIndex: 10,
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    color: "white",
-                                    cursor: "pointer"
-                                }}
-                            >
-                                {count}
-                            </div>
-                        );
-                    }}
-                </Animate>*/}
+                {
+                    <Animate
+                        start={{
+                            x: x,
+                            y: y,
+                            opacity: 1,
+                            scale: 1
+                            // duration: 700 - 50 * this.props.gameSpeed
+                        }}
+                        update={[
+                            {
+                                x: [x],
+                                y: [y],
+                                opacity: [opacity],
+                                scale: [scale],
+                                timing: {
+                                    duration: [duration]
+                                    // ease: easeLinear
+                                },
+                                events: { end: this.movingEnd }
+                            }
+                        ]}
+                        leave={[
+                            // an array!
+                            {
+                                opacity: [0],
+                                scale: [2],
+                                timing: {
+                                    duration: 3500
+                                    // ease: easeLinear
+                                }
+                            }
+                        ]}
+                    >
+                        {({ x, y, opacity, scale }) => {
+                            return (
+                                <div
+                                    style={{
+                                        transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+                                        opacity: opacity,
+                                        width: size,
+                                        height: size,
+                                        background: color,
+                                        willChange: "transform, opacity",
+                                        borderRadius: "50%",
+
+                                        textAlign: "center",
+                                        lineHeight: size,
+                                        position: "relative",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        color: "white",
+                                        cursor: "pointer"
+                                    }}
+                                >
+                                    {count}
+                                </div>
+                            );
+                        }}
+                    </Animate>
+                }
             </div>
         );
     }

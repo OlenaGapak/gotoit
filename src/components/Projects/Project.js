@@ -22,6 +22,7 @@ import { StatsDataItem } from "./StatsDataItem";
 import ProjectModal from "../Modal/ProjectModal";
 
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
+import isEqual from "react-fast-compare";
 
 class Project extends Component {
     constructor(props) {
@@ -91,7 +92,9 @@ class Project extends Component {
     finish = () => {
         this.props.data.helpers.finishProject(this.props.project.id);
     };
-
+    // shouldComponentUpdate(nextProps) {
+    //     return !isEqual(this.props, nextProps);
+    // }
     extractTaskProgress = skill => {
         let { project } = this.props;
         let tasks = project.needs(skill);
@@ -173,7 +176,18 @@ class Project extends Component {
         console.log("click outside");
         this.props.data.helpers.changeTeamSelector();
     };
-
+    project_worker = (worker, project) => {
+        return (
+            <WorkerButton
+                id={worker.id}
+                avatar={worker.avatar}
+                name={worker.name}
+                key={worker.id}
+                title={worker.name}
+                action={() => this.props.data.helpers.kickWorker(worker, project)}
+            />
+        );
+    };
     render() {
         const data = this.props.data;
         const project = this.props.project;
@@ -221,19 +235,6 @@ class Project extends Component {
 
         //let unoccupied_workers = data.workers.filter((worker) => {return data.helpers.deepCheckRelation(worker, project)});
 
-        let project_worker = worker => {
-            return (
-                <WorkerButton
-                    id={worker.id}
-                    avatar={worker.avatar}
-                    name={worker.name}
-                    key={worker.id}
-                    title={worker.name}
-                    action={() => kickWorker(worker, project)}
-                />
-            );
-        };
-
         let team_ids = {};
         _.keys(data.relations).forEach(worker_id => {
             let worker_projects = data.relations[worker_id];
@@ -253,7 +254,7 @@ class Project extends Component {
         });
 
         const team_label = team.map(worker => {
-            return project_worker(worker);
+            return this.project_worker(worker, project);
         });
 
         let tech = [];
