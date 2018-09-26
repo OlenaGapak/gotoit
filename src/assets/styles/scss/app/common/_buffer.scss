@@ -1,16 +1,41 @@
 // StartProject.js component styles, added 27.08.18 by Artem
 
+.start-project-modal {
+}
+
 .start-project-name {
+  padding-top: 37px;
+  padding-left: 32px;
+  padding-bottom: 32px;
   margin: size(1) auto;
-  width: 50%;
-  display: flex;
-  justify-content: center;
+
+  p {
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  input {
+    padding-left: size(1);
+    margin-left: 40px;
+    background: var(--gray-100);
+    border: 1px solid Transparent;
+    border-radius: 4px;
+    color: var(--gray);
+    width: 320px;
+    height: 40px;
+  }
+
+  input:hover, input:active, input:focus, input:focus-within {
+    border: 1px solid #6EDBDB !important;
+    box-sizing: border-box;
+  }
 }
 
 .start-project-platform-select,
 .start-project-kind-select {
-  display: flex;
-  flex-flow: row nowrap;
 
   .platform, .kind {
     font-style: normal;
@@ -25,18 +50,18 @@
   }
 
   label.btn.disabled {
+    filter: grayscale(100%);
     background: none;
     border: 0;
     box-sizing: border-box;
     box-shadow: none;
-    opacity: 0.4;
   }
 }
 
 .start-project-platform-select {
   label.btn {
     width: 100%;
-    margin: size(0.5) 0;
+    margin: size(1);
     height: 77px;
     left: 332px;
     top: 209px;
@@ -88,6 +113,10 @@
       width: 32px;
       height: 32px;
     }
+  }
+
+  div.disabled {
+    filter: grayscale(100%);
   }
 }
 

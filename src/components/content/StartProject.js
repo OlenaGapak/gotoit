@@ -82,13 +82,10 @@ class StartProject extends Component {
                 {startProjectButton}
                 {state.modalOpen ? (
                     <Modal closeModal={() => this.closeModal()} showCloseButton={true}>
-                        <h3 className="text-center">Start Project</h3>
-                        <div className="row filement">
+                        <div className="start-project-modal row filement">
                             <div className="slim col-md-12">
-                                <div className="row start-project-name">
-                                    <label htmlFor="project-name">
-                                        <h4>{"Project name: "}</h4>
-                                    </label>
+                                <div className="flex-container-row start-project-name">
+                                    <p>Start your own project </p>
                                     <input
                                         type="text"
                                         id="project-name"
@@ -192,16 +189,6 @@ class StartProject extends Component {
 
                                             return (
                                                 <span className="start-project-workers-list" key={worker.id}>
-                                                    <input
-                                                        type="checkbox"
-                                                        id={worker.id || 0}
-                                                        checked={this.state.selected_workers[worker.id] || false}
-                                                        onChange={event => {
-                                                            let state = JSON.parse(JSON.stringify(this.state));
-                                                            state.selected_workers[worker.id] = event.target.checked;
-                                                            this.setState(state);
-                                                        }}
-                                                    />
                                                     <div className="flex-container-column">
                                                         <div
                                                             onMouseOver={() => {
@@ -218,11 +205,35 @@ class StartProject extends Component {
                                                             className={`
           card worker gap-items-2
           ${data.hovered_workers_id || [].includes(worker.id) ? "hovered" : ""}
-          ${worker.in_vacation ? "vacation" : ""}
+          ${worker.in_vacation ? "disabled" : ""}
         `}
                                                             id={worker.id}
                                                         >
-                                                            <div className="flex-element avatar-wrapper">
+                                                            {/*  <input
+                                                                 type="checkbox"
+                                                                 id={worker.id || 0}
+                                                                 checked={this.state.selected_workers[worker.id] || false}
+                                                                 onChange={event => {
+                                                                     let state = JSON.parse(JSON.stringify(this.state));
+                                                                     state.selected_workers[worker.id] = event.target.checked;
+                                                                     this.setState(state);
+                                                                 }}
+                                                             /> */}
+                                                            <div
+                                                                className={
+                                                                    "flex-element avatar-wrapper " +
+                                                                    `${state.selected_workers[worker.id] ? "" : "disabled"}`
+                                                                }
+                                                                onClick={() => {
+                                                                    let state = JSON.parse(JSON.stringify(this.state));
+                                                                    if (state.selected_workers[worker.id]) {
+                                                                        state.selected_workers[worker.id] = false;
+                                                                    } else {
+                                                                        state.selected_workers[worker.id] = true;
+                                                                    }
+                                                                    this.setState(state);
+                                                                }}
+                                                            >
                                                                 <Avatar
                                                                     className="worker-avatar"
                                                                     name={worker.name}
