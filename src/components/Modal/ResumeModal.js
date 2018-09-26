@@ -56,11 +56,6 @@ class Resume extends Component {
             <section className="resume-modal">
                 <div className="modal-header flexbox">
                     <div>
-                        <p className="fw-700">enterpreneur resume</p>
-                    </div>
-                    <div>
-                        <FormattedDate value={letter.date} weekday="short" day="numeric" month="short" year="numeric" hour="numeric" />
-                        <span className="icon-star_border" />
                         <Avatar
                             className="worker-avatar"
                             name={worker.name}
@@ -76,7 +71,7 @@ class Resume extends Component {
                     <div className="modal-body-container flex-element flex-container-column description">
                         <div className="flex-element flex-container-row">
                             <h1 className="flex-element salary" style={{ color: `${colors.salary}` }}>
-                                {worker.salary}
+                                {worker.salary}$
                             </h1>
                             {_.map(worker.stats, (item, key) => {
                                 return (
