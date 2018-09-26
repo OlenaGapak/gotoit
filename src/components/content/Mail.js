@@ -10,6 +10,7 @@ import Offer from "../Modal/OfferModal";
 import WelcomeMessage from "../Modal/WelcomeMessage";
 import RelationsMessage from "../Modal/RelationsMessage";
 import OfficeMessage from "../Modal/OfficeMessage";
+import NewsMessage from "../Modal/NewsMessage";
 import { FormattedDate } from "react-intl";
 import { Avatar } from "../Projects/Avatar";
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
@@ -205,7 +206,7 @@ class Mail extends Component {
                                     type={letter.type}
                                     date={letter.date}
                                 >
-                                    <HistoricalEvent closeModal={this.closeModal} key={i} content={letter.object} date={letter.date} />
+                                    <NewsMessage closeModal={this.closeModal} key={i} content={letter.object} />
                                 </MailModal>
                             )
                         });
@@ -349,7 +350,7 @@ class Mail extends Component {
                     </span>
                     {letter.favorite ? (
                         <svg
-                            className="done_icon"
+                            className="star_icon"
                             width="20"
                             height="19"
                             viewBox="0 0 20 19"
