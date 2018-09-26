@@ -1,6 +1,9 @@
 // StartProject.js component styles, added 27.08.18 by Artem
 
 .start-project-modal {
+  .flex-container-column {
+    width: 100%;
+  }
 }
 
 .start-project-name {
@@ -32,12 +35,15 @@
     border: 1px solid #6EDBDB !important;
     box-sizing: border-box;
   }
+
 }
 
 .start-project-platform-select,
 .start-project-kind-select {
+  padding: 0 24px 0 24px;
 
   .platform, .kind {
+    margin-left: 25%;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
@@ -56,12 +62,12 @@
     box-sizing: border-box;
     box-shadow: none;
   }
+
 }
 
 .start-project-platform-select {
   label.btn {
     width: 100%;
-    margin: size(1);
     height: 77px;
     left: 332px;
     top: 209px;
@@ -87,36 +93,45 @@
     box-shadow: inset 0px 0px 30px rgba(61, 204, 204, 0.2);
     border-radius: 8px;
   }
+
+  img {
+    top: 50%;
+  }
 }
 
-.start-project-workers-list {
-  width: 197px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: size(0.5) 0;
+.workers-list-column {
+  .start-project-workers-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  .worker-skills {
-    width: 120px;
-  }
-
-  .avatar-wrapper {
-    width: 32px;
-    height: 32px;
-
-    .worker-avatar {
-      width: 32px;
-      height: 32px;
+    .worker {
+      margin: 0 auto;
     }
 
-    img {
+    .worker-skills {
+      width: 120px;
+    }
+
+    .avatar-wrapper {
       width: 32px;
       height: 32px;
-    }
-  }
 
-  div.disabled {
-    filter: grayscale(100%);
+      .worker-avatar {
+        width: 32px;
+        height: 32px;
+      }
+
+      img {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    div.disabled {
+      filter: grayscale(100%);
+    }
   }
 }
 

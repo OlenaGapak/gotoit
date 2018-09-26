@@ -96,8 +96,8 @@ class StartProject extends Component {
                                         }}
                                     />
                                 </div>
-                                <div className="row">
-                                    <div className="card text-center col-md-4">
+                                <div className="flex-container-row">
+                                    <div className="card text-center flex-element flex-container-column">
                                         <h4 className="text-center">Project platform</h4>
                                         {this.props.data.projects_unlocked_platforms.map((platform, i) => {
                                             return (
@@ -138,7 +138,7 @@ class StartProject extends Component {
                                         })}
                                         <p className="filament">{project_platforms[this.state.project_platform].description}</p>
                                     </div>
-                                    <div className="card col-md-4">
+                                    <div className="card flex-element flex-container-column">
                                         <h4 className="text-center">Project type</h4>
                                         {Object.keys(project_kinds).map((kind, i) => {
                                             return (
@@ -176,7 +176,7 @@ class StartProject extends Component {
                                         })}
                                         <p className="filament">{project_kinds[this.state.project_kind].description}</p>
                                     </div>
-                                    <div className="card text-center col-md-4">
+                                    <div className="flex-container-column flex-element card text-center workers-list-column">
                                         <h4 className="text-center">Workers on project</h4>
                                         {this.props.data.workers.map(worker => {
                                             const stats_progressbar_data = _.mapValues(worker.stats, (val, stat) => {
@@ -188,28 +188,26 @@ class StartProject extends Component {
                                             });
 
                                             return (
-                                                <span className="start-project-workers-list" key={worker.id}>
-                                                    <div className="flex-container-column">
-                                                        <div
-                                                            onMouseOver={() => {
-                                                                data.helpers.modifyHoveredObjects(
-                                                                    data.projects.filter(project => {
-                                                                        return data.helpers.deepCheckRelation(worker, project);
-                                                                    }),
-                                                                    [worker]
-                                                                );
-                                                            }}
-                                                            onMouseOut={() => {
-                                                                data.helpers.modifyHoveredObjects();
-                                                            }}
-                                                            className={`
+                                                <div className="start-project-workers-list flex-container-column" key={worker.id}>
+                                                    <div
+                                                        onMouseOver={() => {
+                                                            data.helpers.modifyHoveredObjects(
+                                                                data.projects.filter(project => {
+                                                                    return data.helpers.deepCheckRelation(worker, project);
+                                                                }),
+                                                                [worker]
+                                                            );
+                                                        }}
+                                                        onMouseOut={() => {
+                                                            data.helpers.modifyHoveredObjects();
+                                                        }}
+                                                        className={`
           card worker gap-items-2
-          ${data.hovered_workers_id || [].includes(worker.id) ? "hovered" : ""}
           ${worker.in_vacation ? "disabled" : ""}
         `}
-                                                            id={worker.id}
-                                                        >
-                                                            {/*  <input
+                                                        id={worker.id}
+                                                    >
+                                                        {/*  <input
                                                                  type="checkbox"
                                                                  id={worker.id || 0}
                                                                  checked={this.state.selected_workers[worker.id] || false}
@@ -219,64 +217,63 @@ class StartProject extends Component {
                                                                      this.setState(state);
                                                                  }}
                                                              /> */}
-                                                            <div
-                                                                className={
-                                                                    "flex-element avatar-wrapper " +
-                                                                    `${state.selected_workers[worker.id] ? "" : "disabled"}`
+                                                        <div
+                                                            className={
+                                                                "flex-element avatar-wrapper " +
+                                                                `${state.selected_workers[worker.id] ? "" : "disabled"}`
+                                                            }
+                                                            onClick={() => {
+                                                                let state = JSON.parse(JSON.stringify(this.state));
+                                                                if (state.selected_workers[worker.id]) {
+                                                                    state.selected_workers[worker.id] = false;
+                                                                } else {
+                                                                    state.selected_workers[worker.id] = true;
                                                                 }
-                                                                onClick={() => {
-                                                                    let state = JSON.parse(JSON.stringify(this.state));
-                                                                    if (state.selected_workers[worker.id]) {
-                                                                        state.selected_workers[worker.id] = false;
-                                                                    } else {
-                                                                        state.selected_workers[worker.id] = true;
-                                                                    }
-                                                                    this.setState(state);
-                                                                }}
-                                                            >
-                                                                <Avatar
-                                                                    className="worker-avatar"
-                                                                    name={worker.name}
-                                                                    // style={{ position: 'absolute'}}
-                                                                    sources={_.toPairs(worker.avatar)}
-                                                                />
+                                                                this.setState(state);
+                                                            }}
+                                                        >
+                                                            <Avatar
+                                                                className="worker-avatar"
+                                                                name={worker.name}
+                                                                // style={{ position: 'absolute'}}
+                                                                sources={_.toPairs(worker.avatar)}
+                                                            />
+                                                        </div>
+                                                        <div className="flex-container-column flex-element">
+                                                            <div className="flex-element worker-info">
+                                                                <h2 className="worker-name"> {worker.name} </h2>
                                                             </div>
-                                                            <div className="flex-container-column flex-element">
-                                                                <div className="flex-element worker-info">
-                                                                    <h2 className="worker-name"> {worker.name} </h2>
-                                                                </div>
-                                                                <div className="flex-container-row worker-skills flex-element">
-                                                                    <StatsProgressBar
-                                                                        type={"design"}
-                                                                        max_stat={data.max_stat}
-                                                                        stats={stats_progressbar_data}
-                                                                        worker={worker}
-                                                                        data={data}
-                                                                        hideStatIcon={true}
-                                                                    />
+                                                            <div className="flex-container-row worker-skills flex-element">
+                                                                <StatsProgressBar
+                                                                    type={"design"}
+                                                                    max_stat={data.max_stat}
+                                                                    stats={stats_progressbar_data}
+                                                                    worker={worker}
+                                                                    data={data}
+                                                                    hideStatIcon={true}
+                                                                />
 
-                                                                    <StatsProgressBar
-                                                                        type={"program"}
-                                                                        max_stat={data.max_stat}
-                                                                        stats={stats_progressbar_data}
-                                                                        worker={worker}
-                                                                        data={data}
-                                                                        hideStatIcon={true}
-                                                                    />
+                                                                <StatsProgressBar
+                                                                    type={"program"}
+                                                                    max_stat={data.max_stat}
+                                                                    stats={stats_progressbar_data}
+                                                                    worker={worker}
+                                                                    data={data}
+                                                                    hideStatIcon={true}
+                                                                />
 
-                                                                    <StatsProgressBar
-                                                                        type={"manage"}
-                                                                        max_stat={data.max_stat}
-                                                                        stats={stats_progressbar_data}
-                                                                        worker={worker}
-                                                                        data={data}
-                                                                        hideStatIcon={true}
-                                                                    />
-                                                                </div>
+                                                                <StatsProgressBar
+                                                                    type={"manage"}
+                                                                    max_stat={data.max_stat}
+                                                                    stats={stats_progressbar_data}
+                                                                    worker={worker}
+                                                                    data={data}
+                                                                    hideStatIcon={true}
+                                                                />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </span>
+                                                </div>
                                             );
                                         })}
                                     </div>
