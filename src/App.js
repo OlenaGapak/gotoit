@@ -1072,6 +1072,18 @@ class App extends Component {
             object: _.create(ProjectModel.prototype, project),
             date: data.current_game_date
         });
+        if (data.projects_end_reports.length === 0) {
+            this.createMail({
+                type: "Office",
+                date: data.current_game_date,
+                favorite: true
+            });
+            this.createMail({
+                type: "Analytics",
+                date: data.current_game_date,
+                favorite: true
+            });
+        }
 
         data.projects_end_reports.push(project);
         data.reputation += 50;

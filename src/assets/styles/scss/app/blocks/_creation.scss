@@ -112,6 +112,10 @@
         margin: 0;
       }
 
+      h4 {
+          max-width: 45%;
+      }
+
       h5 {
         letter-spacing: -2%;
       }
@@ -121,7 +125,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 80%;
+      width: 55%;
+      flex-shrink: 0;
     }
 
     .control-arrow {
@@ -130,6 +135,7 @@
       background-color: transparent;
       border: none; 
       color: var(--gray-500);
+      cursor: pointer;
     }
 
     .player-avatar {

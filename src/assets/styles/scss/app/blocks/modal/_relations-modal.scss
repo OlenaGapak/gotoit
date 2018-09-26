@@ -1,0 +1,21 @@
+.relations-modal {
+  position: relative;
+  width: 680px;
+  height: 398px;
+  .modal-header {
+    color: var(--white);
+    background-image: url("../../images/modal/relations-modal-bg.png"),
+    linear-gradient(180deg, #2E99E6 50%, #2483B3 100%);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: bottom;
+    padding: size(2);
+    position: relative;
+    height: size(12);
+
+    div {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

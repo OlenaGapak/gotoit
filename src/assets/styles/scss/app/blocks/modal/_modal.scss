@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow:hidden;
 
   .modal-dialog {
     width: size(85);
@@ -14,24 +15,84 @@
     pointer-events: auto;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3), 0px 8px 16px rgba(0, 0, 0, 0.3);
     background-color: #fff;
-    border-radius: size(2);
+    border-radius: 4.5px;
+  }
+
+  .modal-message {
+    margin-left: 64px;
+    margin-top: 32px;
+    padding-right: 32px;
+    color: #000000;
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .message {
+      font-size: 13px;
+      line-height: 15px;
+      white-space: pre-wrap
+    }
   }
 
   .modal-content {
-    max-height: 670px;
     position: relative;
     background-color: transparent;
-
-    .close {
+    .modal-elements {
       position: absolute;
-      top: 0;
-      right: 0;
-      line-height: 0.5;
-      padding: 12px 16px 12px 0;
-      font-size: 24px;
-      font-weight: 300;
+      z-index: 10000;
+      width: 100%;
+    }
+    .icon {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 32px;
+      height: 32px;
+    }
+    .type {
+      position: absolute;
+      top: 12px;
+      left: 50px;
+      font-size: 10px;
+      color: white;
+      font-weight: bold;
+    }
+    .favorite {
+      position: absolute;
+      top: 8px;
+      right: 45px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: 0.2s linear;
+      &:hover{
+        opacity: 1;
+      }
+    }
+    .date{
+      position: absolute;
+      top: 12px;
+      right: 75px;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
       margin: 0;
       z-index: 1;
+    }
+    .close-icon {
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      line-height: 0.5;
+      font-size: 2.5rem;
+      font-weight: 300;
+      opacity: 0.6;
+      margin: 0;
+      z-index: 1;
+      transition: 0.2s linear;
+      cursor: pointer;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 

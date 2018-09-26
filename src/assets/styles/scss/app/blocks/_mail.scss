@@ -83,16 +83,65 @@
     position: absolute;
     right: 15px;
   }
+  .star_icon {
+    position: absolute;
+    right: 20px;
+  }
 
   .mark-all-btn {
     border: none;
     background: none;
     margin-bottom: 5px;
-    font-size: 11px;
+    font-size: 10px;
+    line-height: 12px;
     font-weight: bold;
-    color: #666666;
+    color: #000000;
+    opacity: 0.6;
+    transition: 1s;
     float: right;
+    cursor: pointer;
+    .done-all-svg {
+      width: 18px;
+      height: 18px;
+      fill: #000000;
+    }
+    &:hover {
+      opacity: 1;
+    }
   }
+  .interested-btn {
+    border: none;
+    background: none;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: bold;
+    color: #000000;
+    opacity: 0.6;
+    transition: 0.2s linear;
+    float: right;
+    cursor: pointer;
+    .star-svg {
+      width: 18px;
+      height: 18px;
+      fill: #000000;
+      transition: 0.2s linear;
+      &.active {
+        fill: #2E99E5;
+      }
+    }
+    .text {
+      margin-left: 5px;
+    }
+    &.active{
+      color: #2E99E5;
+    }
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   .mail-menu {
     width: 100%;
     padding-bottom: 6px;
