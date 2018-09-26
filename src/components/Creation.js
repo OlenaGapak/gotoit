@@ -11,6 +11,7 @@ import ProjectModel from "../models/ProjectModel";
 import { skills_1 } from "../game/knowledge/skills";
 import { technologies } from "../game/knowledge/technologies";
 import { player_backgrounds } from "../game/knowledge/player_backgrounds";
+import { historical_events } from "../game/knowledge/historical_events";
 import { epoch_list } from "../game/knowledge/epoch";
 import { Avatar } from "./Projects/Avatar";
 import {
@@ -122,7 +123,14 @@ class Creation extends Component {
         console.log("embrk");
 
         let data = this.props.data;
+        data.date.tick = epoch_list[this.state.selected_epoch].start_tick;
         data.money += player_backgrounds[this.state.selected_background].money;
+
+        Object.keys(historical_events).map(event => {
+            if (historical_events[event].tick <= data.date.tick) {
+                historical_events[event].updateGameData(data);
+            }
+        });
 
         let stats = this.getPlayerStats();
 
@@ -349,8 +357,8 @@ class Creation extends Component {
                                             </p>
                                         </h4>
                                         <h6 className="warning text-center">
-                                            The game on the early stages of development, bugs are possible! Developers will be grateful if
-                                            in case of any problem you write to the Support.
+                                            The game is on the early stages of development, bugs are possible! Developers will be grateful
+                                            if you report any appeared problem to Support.
                                         </h6>
                                     </div>
                                 </div>
@@ -631,16 +639,7 @@ class Creation extends Component {
                                                         }}
                                                     />
                                                     <label className="btn-epoch" htmlFor={epoch + "-radio-button"}>
-                                                        <img
-                                                            className="epoch-img"
-                                                            src={
-                                                                epoch === "epoch_1" || epoch === "epoch_4"
-                                                                    ? specialistImg
-                                                                    : epoch === "epoch_2" || epoch === "epoch_5"
-                                                                        ? coworkerImg
-                                                                        : bussinessmanImg
-                                                            }
-                                                        />
+                                                        <img className="epoch-img" src={epoch_list[epoch].icon} />
                                                         <h4 className="fw-700 mt-8">{epoch_list[epoch].name}</h4>
                                                     </label>
                                                 </div>
@@ -649,11 +648,9 @@ class Creation extends Component {
                                     </div>
                                     <h5 className=" epoch-description text-center">
                                         {epoch_list[this.state.selected_epoch].description}
-                                        <h5 className="tech text-center">Start tech: {epoch_list[this.state.selected_epoch].start_tech}</h5>
-                                    </h5>
-                                    <h5 className="text-center" style={{ marginTop: "80px", color: "red" }}>
-                                        <p>This feature is in development and does not affect the gameplay yet.</p>
-                                        <p>Choose any and press Embark to start.</p>
+                                        {/*<div className="tech text-center">
+                                            Start tech: {epoch_list[this.state.selected_epoch].start_tech}
+                                        </div>*/}
                                     </h5>
                                 </div>
                                 <div className="modal-footer">

@@ -31,15 +31,19 @@ class SalesAgency extends Component {
             max[skill] = 100;
         });
 
-        this.state = Object.assign(
+        let state = Object.assign(
             {
                 deal_counter: 1,
                 min_stats: JSON.parse(JSON.stringify(min)),
                 max_stats: JSON.parse(JSON.stringify(max)),
-                size: 1
+                size: 1,
+                modalOpen: false
             },
-            this.props.data.sales_agency_state
+            this.props.data.sales_agency_state,
+            { modalOpen: false }
         );
+
+        this.state = state;
 
         this.calcCost = this.calcCost.bind(this);
         this.search = this.search.bind(this);
@@ -87,9 +91,9 @@ class SalesAgency extends Component {
 
     search() {
         let state = this.state;
-        state.deal_counter++;
+        this.setState({ deal_counter: state.deal_counter++, modalOpen: false });
         this.props.data.helpers.contractSearch(state, this.calcCost());
-        //this.setState({ modalOpen: false });
+        this.setState({ modalOpen: false });
     }
 
     openModal() {

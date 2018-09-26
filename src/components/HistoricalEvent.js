@@ -1,12 +1,11 @@
 import React from "react";
 import { FormattedDate } from "react-intl";
-import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 
 const HistoricalEvent = props => {
     return (
         <div>
             <div className="flexbox">
-                <span className="flex-grow">
+                <span className="modal-header flex-grow">
                     <h2>{props.content.name}</h2>
                 </span>
             </div>
