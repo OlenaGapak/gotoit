@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import { IntlProvider } from "react-intl";
 import { hot } from "react-hot-loader";
 import { game_name } from "./game/app_config";
 import { tick } from "./game/tick";
@@ -2157,17 +2158,19 @@ class App extends Component {
 
     render() {
         return (
-            <div
-                id="app"
-                onClick={() => {
-                    let audio = new Audio(sounds.click);
-                    audio.play();
-                }}
-            >
-                <BubblesAnimation onRef={ref => (this.animation = ref)} />
-                <Popup ref={p => (this.popupHandler = p)} />
-                <Layout data={this.state.data} newGame={this.newGame} />
-            </div>
+            <IntlProvider locale="en">
+                <div
+                    id="app"
+                    onClick={() => {
+                        let audio = new Audio(sounds.click);
+                        audio.play();
+                    }}
+                >
+                    <BubblesAnimation onRef={ref => (this.animation = ref)} />
+                    <Popup ref={p => (this.popupHandler = p)} />
+                    <Layout data={this.state.data} newGame={this.newGame} />
+                </div>
+            </IntlProvider>
         );
     }
 }

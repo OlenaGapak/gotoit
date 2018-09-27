@@ -1,0 +1,12 @@
+creation:
+  intro_1: "GoToIT is a game about software development and the rise of your company to the heights."
+  intro_2: "Start with small contracts, save up some money, hire a couple of assistants and try to create something really cool!"
+  beta_warning: "The game on the early stages of development, bugs are possible! Developers will be grateful if in case of any problem you write to the Support."
+  start_game_btn: "Create your company!"
+  character:
+    name: "Name"
+    gender: "gender"
+    male: "Male"
+    female: "Female"
+    other: "Other"
+    body: "" 
