@@ -30,8 +30,8 @@ export default class ModalWorker extends Component {
         let state = this.state;
         let character = (
             <div className="worker-character">
-                <div className="row px-24">
-                    <div className="col-6">
+                <div className="row">
+                    <div className="col-8">
                         {worker.in_vacation || worker.to_vacation ? (
                             worker.in_vacation ? (
                                 <h4>Worker in vacation</h4>
@@ -59,7 +59,7 @@ export default class ModalWorker extends Component {
                             )}
                         </>
                     </div>
-                    <div className="col-6 worker-statistic">
+                    <div className="col-4 worker-statistic">
                         <h4 className="text-center fw-700 text-fade">Employee statistic</h4>
                         {worker.get_monthly_salary ? (
                             ""
@@ -203,30 +203,70 @@ export default class ModalWorker extends Component {
             <div className="worker-instrumentary flexbox flex-justified">
                 {skills_names.map(skill => {
                     return (
-                        <div className="card instrumentary" key={skill}>
+                        <div
+                            className="card instrumentary"
+                            key={skill}
+                            style={
+                                skill === "design"
+                                    ? { border: "2px solid var(--color-pale-orange)" }
+                                    : skill === "program"
+                                        ? { border: "2px solid var(--color-light-purple)" }
+                                        : { border: "2px solid var(--color-pale-cyan)" }
+                            }
+                        >
                             {Object.keys(workers_bonus_items[skill]).map(item_key => {
                                 let item = workers_bonus_items[skill][item_key];
-                                return worker.items[skill][item_key] === true ? (
-                                    <div className="" key={item_key}>
-                                        <h3>{item.name}</h3>
-                                        <p>{item.description}</p>
-                                    </div>
-                                ) : (
-                                    <div className="" key={item_key}>
-                                        <h3>{item.name}</h3>
-                                        <DefaultClickSoundButton
-                                            className={data.money >= item.money ? "btn btn-info btn-sm" : "btn btn-info btn-sm disabled"}
-                                            title={item.description}
-                                            id={item}
-                                            onClick={() => {
-                                                if (data.money >= item.money) {
-                                                    data.helpers.buyItem(worker, skill, item_key);
-                                                }
-                                            }}
-                                        >
-                                            Buy {item.name} ${item.money}
-                                        </DefaultClickSoundButton>
-                                        <p>{item.description}</p>
+                                return (
+                                    <div className="card" key={item_key}>
+                                        <h5>{item.name}</h5>
+                                        <span className="description">{item.description}</span>
+                                        <div className="flex-container-row">
+                                            <div className="flex-element cost">
+                                                <span className="icon-usd">
+                                                    <span className="path1" />
+                                                    <span className="path2" />
+                                                </span>
+                                                <span className="money">{item.money}</span>
+                                            </div>
+
+                                            <div className="flex-element buy-gadget">
+                                                {worker.items[skill][item_key] === true ? (
+                                                    <DefaultClickSoundButton
+                                                        className={
+                                                            data.money >= item.money
+                                                                ? "btn btn-xs btn-danger"
+                                                                : "btn btn-xs btn-danger disabled"
+                                                        }
+                                                        title={item.description}
+                                                        id={item}
+                                                        onClick={() => {
+                                                            if (data.money >= item.money) {
+                                                                data.helpers.buyItem(worker, skill, item_key);
+                                                            }
+                                                        }}
+                                                    >
+                                                        Sell
+                                                    </DefaultClickSoundButton>
+                                                ) : (
+                                                    <DefaultClickSoundButton
+                                                        className={
+                                                            data.money >= item.money
+                                                                ? "btn btn-xs btn-success"
+                                                                : "btn btn-xs btn-success disabled"
+                                                        }
+                                                        title={item.description}
+                                                        id={item}
+                                                        onClick={() => {
+                                                            if (data.money >= item.money) {
+                                                                data.helpers.buyItem(worker, skill, item_key);
+                                                            }
+                                                        }}
+                                                    >
+                                                        Buy
+                                                    </DefaultClickSoundButton>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -239,7 +279,7 @@ export default class ModalWorker extends Component {
         return (
             <section className="worker-modal">
                 <div className="modal-header">
-                    <div style={{ position: "relative", width: "200px", height: "200px" }}>
+                    <div style={{ position: "relative" }}>
                         <Avatar
                             className="worker-avatar"
                             name={worker.name}

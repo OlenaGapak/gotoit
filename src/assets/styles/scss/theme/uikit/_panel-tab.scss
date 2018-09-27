@@ -19,7 +19,7 @@
   .nav-link {
     position: relative;
     border: none;
-    font-size: 13px;
+    //font-size: 13px;
     text-align: center;
     background-color: transparent;
     padding: 10px 5px;
@@ -28,26 +28,15 @@
     box-shadow:
     0px 4px 8px rgba(0, 0, 0, 0.3),
     0px 0px 16px rgba(0, 0, 0, 0.2);
-    font-weight: 700;
+    font-weight: 500;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 28px;
     
     h2, h3, h4, h5, h6 {
       color: var(--color-text-secondary);
     }
 
-    // FOR SHADOW-BOTTOM OVERFLOW
-    &::after {
-      content: '';
-      position: absolute;
-      width: 106%;
-      height: 32%;
-      top: 100%;
-      left: -3%;
-      background-color: var(--white);
-    }
 
 
     @include media-down(sm) {
@@ -59,7 +48,7 @@
     &.active:focus,
     &.active:hover {
       border-color: var(--color-primary);
-      
+
       h2, h3, h4, h5, h6 {
         color: var(--color-text);
       }
@@ -77,15 +66,16 @@
     }
 
     .badge {
-      margin-top: 4px;
+      margin-top: 6px;
       background-color: rgba(255, 103, 89, 1);
-      width: 26px;
-      height: 20px;
-      line-height: 20px;
-      font-size: 13px;
+      height: 16px;
+      font-size: 9px;
       color: white;
-      font-weight: bold;
-      padding: 0;
+      padding: 4px 6px;
+      line-height: 8px;
+      text-align: right;
+      position: relative;
+      right: 1px;
     }
 
     .tab-content {
@@ -134,7 +124,7 @@
 //
 .nav-tabs-light-mode {
   border-bottom: none;
-  background-color: var(--color-bg-lighter);
+  background-color: var(--white);
 
   .nav-link {
     border-bottom: none;

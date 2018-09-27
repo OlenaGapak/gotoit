@@ -3,12 +3,20 @@
     overflow: hidden;
 }
 
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 //====СТИЛИЗАЦИЯ СКРОЛЛА====
 .card-body {
 overflow-y: auto;
 
     &::-webkit-scrollbar {
-        background-color: var(--light);
+        //background-color: var(--light);
         width: size(0.5);
         border-radius: size(1);
     }
@@ -38,9 +46,125 @@ display: flex;
 }
 
 .hovered {
-box-shadow: inset 0 0 0 size(0.5) rgba(var(--color-success), 0.5);
+    box-shadow: inset 0 0 0 size(0.5) rgba(var(--color-success), 0.5);
 }
 
-.tab-content {
-padding: 0;
+//.tab-content {
+//
+//padding: size(1);
+//}
+
+.flex-element {
+    display: flex;
+}
+
+.flex-container-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-container-column {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.card{
+    .card-content-center {
+        margin: 0 8px 0;
+        padding: 4px 4px 2px 4px;
+        text-align: center;
+        height: 100%;
+        display: flex;
+
+        .office-actions{
+            flex-direction: column;
+        }
+
+        h4 {
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .pr-actions button {
+            position:relative;
+            height: 32px;
+            width: 120px;
+            margin-bottom: 26px;
+            margin-top: 16px;
+        }
+
+        .search {
+            margin-top: 16px;
+            height: 32px;
+            width: 172px;
+        }
+        .btn-wrapper{
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+    }
+    .btn-wrapper{
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+}
+
+.office {
+    padding: 32px;
+}
+
+.office-buttons {
+    button {
+        width: 160px;
+        height: 32px;
+    }
+}
+
+.small-heading {
+    font-size: 11px;
+    color: rgba(0, 51, 51, 0.6);
+    font-weight: bold;
+}
+
+.office {
+    padding: 8px;
+
+    .column-buttons {
+        display: flex;
+
+    & > button {
+            flex: 1 1 50%;
+            margin: 0 auto;
+        }
+    }
+
+    h3 {
+        margin: auto 32px;
+
+        .icon-usd {
+            vertical-align: text-bottom;
+        }
+    }
+
+    h4 {
+        margin-bottom: 16px;
+    }
+
+}
+.office-disabled {
+    opacity: 0.5;
+}
+
+.circle-text {
+    margin-left: 26px;
+    text-align: left;
+
+    h3 {
+        font-weight: bold;
+    }
 }

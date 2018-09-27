@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-
-import { loans } from "../../game/knowledge/loans";
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
+import { loans } from "../../game/knowledge/loans";
 
 class Loans extends Component {
     constructor(props) {
@@ -55,73 +54,81 @@ class Loans extends Component {
             <div className="text-center">
                 <h3 className="text-center">Loans</h3>
                 Your credit score: {this.calcCreditScore()}
-                <div className="">
-                    {Object.keys(loans).map(size => {
-                        let loan = loans[size];
-                        return (
-                            <div className=" flex-container-column" key={size}>
-                                <h4 className="">
-                                    {loan.min_credit_score <= this.calcCreditScore() ? (
-                                        <DefaultClickSoundButton className="btn btn-success btn-sm" onClick={() => this.take(size)}>
-                                            take
-                                        </DefaultClickSoundButton>
-                                    ) : (
-                                        <DefaultClickSoundButton className="btn btn-success btn-sm disabled">
-                                            need {loan.min_credit_score} score
-                                        </DefaultClickSoundButton>
-                                    )}
-                                    <span> {loan.name} </span>
-                                </h4>
-                                <span className=""> Money: {loan.money}$ </span>
-                                <span className=""> Time: {loan.time} month </span>
-                                <span className=""> Interest: {loan.interest}% </span>
-                            </div>
-                        );
-                    })}
-                </div>
-                <div className="card">
-                    {data.taken_loans.map((loan, i) => {
-                        let paid_percent = Math.ceil(((loan.time - loan.timer) / loan.time) * 100);
-
-                        return (
-                            <div className="card" key={i}>
-                                <div className="">
-                                    <h4 className=""> {loan.name} </h4>
+                <div>
+                    <div className=" flex-container-row flex-element">
+                        {Object.keys(loans).map(size => {
+                            let loan = loans[size];
+                            return (
+                                <div key={size} style={{ padding: "15px" }}>
+                                    <h4 className="">
+                                        <span> {loan.name} </span>
+                                    </h4>
                                     <span className=""> Money: {loan.money}$ </span>
                                     <span className=""> Time: {loan.time} month </span>
                                     <span className=""> Interest: {loan.interest}% </span>
-                                    <span className={paid_percent ? "" : " hidden"}>
-                                        <DefaultClickSoundButton
-                                            className={
-                                                this.getEarlyCost(loan) <= data.money
-                                                    ? "btn btn-success btn-sm"
-                                                    : "btn btn-success btn-sm disabled"
-                                            }
-                                            onClick={() => {
-                                                if (this.getEarlyCost(loan) <= data.money) this.earlyRepayment(i);
-                                            }}
-                                        >
-                                            early repayment {this.getEarlyCost(loan)}$
-                                        </DefaultClickSoundButton>
-                                    </span>
+                                    <div>
+                                        {loan.min_credit_score <= this.calcCreditScore() ? (
+                                            <DefaultClickSoundButton className="btn btn-success btn-sm" onClick={() => this.take(size)}>
+                                                take
+                                            </DefaultClickSoundButton>
+                                        ) : (
+                                            <DefaultClickSoundButton className="btn btn-success btn-sm disabled">
+                                                need {loan.min_credit_score} score
+                                            </DefaultClickSoundButton>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="filament">
-                                    <div className="progress">
-                                        <div
-                                            className="progress-bar bg-warning"
-                                            role="progressbar"
-                                            style={{ width: 100 - paid_percent + "%" }}
-                                        >
-                                            debt
-                                        </div>
-                                        <div className="progress-bar bg-success" role="progressbar" style={{ width: paid_percent + "%" }}>
-                                            paid
+                            );
+                        })}
+                    </div>
+                    <div className="card">
+                        {data.taken_loans.map((loan, i) => {
+                            let paid_percent = Math.ceil(((loan.time - loan.timer) / loan.time) * 100);
+
+                            return (
+                                <div className="card" key={i}>
+                                    <div className="flex-container-column" style={{ margin: "0 auto" }}>
+                                        <h4 className=""> {loan.name} </h4>
+                                        <span className="flex-element"> Money: {loan.money}$ </span>
+                                        <span className="flex-element"> Time: {loan.time} month </span>
+                                        <span className="flex-element"> Interest: {loan.interest}% </span>
+                                        <span className={paid_percent ? "" : " hidden"}>
+                                            <DefaultClickSoundButton
+                                                className={
+                                                    this.getEarlyCost(loan) <= data.money
+                                                        ? "btn btn-success btn-sm"
+                                                        : "btn btn-success btn-sm disabled"
+                                                }
+                                                onClick={() => {
+                                                    if (this.getEarlyCost(loan) <= data.money) this.earlyRepayment(i);
+                                                }}
+                                            >
+                                                early repayment {this.getEarlyCost(loan)}$
+                                            </DefaultClickSoundButton>
+                                        </span>
+                                    </div>
+                                    <div className="filament">
+                                        <div className="progress">
+                                            <div
+                                                className="progress-bar bg-warning"
+                                                role="progressbar"
+                                                style={{ width: 100 - paid_percent + "%" }}
+                                            >
+                                                debt
+                                            </div>
+                                            <div
+                                                className="progress-bar bg-success"
+                                                role="progressbar"
+                                                style={{ width: paid_percent + "%" }}
+                                            >
+                                                paid
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
         );

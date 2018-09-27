@@ -7,8 +7,15 @@
   flex-flow: row nowrap;
   border-radius: size(0.5);
   padding: size(1);
-  transition: background-color 0.33s ease-out;
+  transition: 0.2s ease-out;
   position: relative;
+  background: linear-gradient(180deg, var(--gray-100) 0%, var(--gray-200) 100%);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 1px var(--white);
+
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%);
+  }
 
   &.vacation {
     &::before {
@@ -19,7 +26,9 @@
       border-radius: size(0.5);
       width: 100%;
       height: 100%;
-      background-image: linear-gradient(to right, #FFFFFF 0%, transparent 100%)
+      background-color: var(--color-pink);
+      opacity: 0.3;
+      z-index: 1;
     }
 
     &::after {
@@ -27,16 +36,20 @@
       content: "vacation";
       text-transform: uppercase;
       font-size: size(2);
-      color: #2E99E5;
-      font-weight: 900;
-      transform: rotate(-45deg);
+      color: var(--white);
+      font-weight: 700;
+      letter-spacing: 3px;
+      transform: rotate(-30deg);
       top: 30px;
+      left: 33%;
+      z-index: 2;
+      text-shadow: 0px 0px 16px var(--color-pink), 0px 0px 12px var(--color-pink), 0px 0px 8px var(--color-pink), 0px 0px 4px var(--color-pink);
     }
   }
 
   .worker-info {
-    width: calc(100% - var(--worker-avatar-size);
-    margin-left: size(1);
+    width: 100%;
+    //margin-left: size(1);
   }
 
 
@@ -47,8 +60,9 @@
   }
 
   .worker-name {
-    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
     font-size: size(1.5);
+    font-weight: 500;
     margin: 0;
   }
 
@@ -73,6 +87,7 @@
 
     .progress-bar-name {
       font-size: 0;
+      margin-bottom: 0;
     }
   }
 }

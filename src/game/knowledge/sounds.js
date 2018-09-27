@@ -1,30 +1,30 @@
-import default_click from "../../assets/sounds/button_click.wav";
-import fast_flat_click from "../../assets/sounds/fast-flat-click.wav";
-import click2 from "../../assets/sounds/click2.wav";
-import bell from "../../assets/sounds/bell.wav";
-import pop_reverse from "../../assets/sounds/pop-reverse.wav";
-import pop from "../../assets/sounds/pop.wav";
-import alarm1 from "../../assets/sounds/alarm1.wav";
-import fx_coins from "../../assets/sounds/fx-coins.wav";
-import coins_slide from "../../assets/sounds/coins_slide.wav";
-import success from "../../assets/sounds/success2.wav";
-import fail from "../../assets/sounds/fail.wav";
-import steps_and_door from "../../assets/sounds/steps-and-door.wav";
+import button from "../../assets/sounds/button.wav";
+import click from "../../assets/sounds/click.wav";
+import tab from "../../assets/sounds/tab.wav";
+import new_mail from "../../assets/sounds/new-mail.wav";
+import bubble_add from "../../assets/sounds/buble-add.wav";
+import bubble_colapse from "../../assets/sounds/buble-colapse.wav";
+import new_day from "../../assets/sounds/new-day.wav";
+import price_down from "../../assets/sounds/price-down.wav";
+import price_up from "../../assets/sounds/price-up.wav";
+import success from "../../assets/sounds/success.wav";
+import failed from "../../assets/sounds/failed.wav";
+import dismission from "../../assets/sounds/dismission.wav";
 import React from "react";
 
 export const sounds = {
-    default_click: default_click, //кнопки
-    click: fast_flat_click, //Клик по иконке (изменение скорости, закрытия, навыка и пр.)
-    tab_click: click2,
-    new_message: bell,
-    bubble_appear: pop_reverse,
-    bubble_burst: pop,
-    new_day_alarm: alarm1,
-    charge_money: fx_coins,
-    earn_money: coins_slide,
+    button_click: button, //кнопки
+    click: click, //Клик по иконке (изменение скорости, закрытия, навыка и пр.)
+    tab_click: tab,
+    new_message: new_mail,
+    bubble_appear: bubble_add,
+    bubble_burst: bubble_colapse,
+    new_day_alarm: new_day,
+    charge_money: price_down,
+    earn_money: price_up,
     finish_project: success,
-    fail_project: fail,
-    dismissal: steps_and_door
+    fail_project: failed,
+    dismissal: dismission
 };
 
 const makeSoundOnClick = (Component, sound_name) => {
@@ -40,8 +40,9 @@ const makeSoundOnClick = (Component, sound_name) => {
                 <Component
                     {...props}
                     onClick={() => {
+                        if(this.props.onClick){
                         this.makeAudio();
-                        this.props.onClick();
+                        this.props.onClick();}
                     }}
                 />
             );
@@ -52,9 +53,9 @@ const makeSoundOnClick = (Component, sound_name) => {
 };
 
 const just_button = props => (
-    <button className={props.className} onClick={props.onClick}>
+    <div className={props.className} onClick={props.onClick} style={props.style}>
         {props.children}
-    </button>
+    </div>
 );
 const just_a_link = props => (
     <a className={props.className} onClick={props.onClick}>
@@ -62,5 +63,5 @@ const just_a_link = props => (
     </a>
 );
 
-export const DefaultClickSoundButton = makeSoundOnClick(just_button, "default_click");
+export const DefaultClickSoundButton = makeSoundOnClick(just_button, "button_click");
 export const TabClickSoundButton = makeSoundOnClick(just_a_link, "tab_click");

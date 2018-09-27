@@ -4,6 +4,8 @@ import { FormattedDate } from "react-intl";
 import { resume_will_expire_after } from "../../game/knowledge/workers";
 import { Avatar } from "../Projects/Avatar";
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
+import CircularProgressbar from "react-circular-progressbar";
+import { colors } from "../../game/knowledge/colors";
 
 class Resume extends Component {
     render() {
@@ -21,7 +23,19 @@ class Resume extends Component {
         const DefaultClickSoundButtons = (
             <div>
                 <DefaultClickSoundButton
-                    className="btn btn-success"
+                    className="btn btn-md btn-danger"
+                    id={worker.id}
+                    onClick={e => {
+                        this.props.data.helpers.rejectCandidate(e.target.id, "resumes");
+                        expired = true;
+                        this.props.closeModal();
+                    }}
+                >
+                    Reject
+                </DefaultClickSoundButton>
+
+                <DefaultClickSoundButton
+                    className="btn btn-md btn-success"
                     id={worker.id}
                     onClick={e => {
                         if (data.workers.length !== data.office.space) {
@@ -35,17 +49,6 @@ class Resume extends Component {
                 >
                     Accept
                 </DefaultClickSoundButton>
-                <DefaultClickSoundButton
-                    className="btn btn-danger"
-                    id={worker.id}
-                    onClick={e => {
-                        this.props.data.helpers.rejectCandidate(worker.id, "resumes");
-                        expired = true;
-                        this.props.closeModal();
-                    }}
-                >
-                    Reject
-                </DefaultClickSoundButton>
             </div>
         );
 
@@ -53,11 +56,6 @@ class Resume extends Component {
             <section className="resume-modal">
                 <div className="modal-header flexbox">
                     <div>
-                        <p className="fw-700">enterpreneur resume</p>
-                    </div>
-                    <div>
-                        <FormattedDate value={letter.date} weekday="short" day="numeric" month="short" year="numeric" hour="numeric" />
-                        <span className="icon-star_border" />
                         <Avatar
                             className="worker-avatar"
                             name={worker.name}
@@ -69,23 +67,84 @@ class Resume extends Component {
                 </div>
 
                 <div className="modal-body">
-                    <h3 className="fw-700">{worker.name}</h3>
-                    <div>
-                        <p>Salary {worker.salary}</p>
-                        <p>Design {worker.stats.design}</p>
-                        <p>Program {worker.stats.program}</p>
-                        <p>Manage {worker.stats.manage}</p>
+                    <h3 className="fw-700 name">{worker.name}</h3>
+                    <div className="modal-body-container flex-element flex-container-column description">
+                        <div className="flex-element flex-container-row">
+                            <h1 className="flex-element salary" style={{ color: `${colors.salary}` }}>
+                                {worker.salary}$
+                            </h1>
+                            {_.map(worker.stats, (item, key) => {
+                                return (
+                                    <div className="stats-column">
+                                        <CircularProgressbar
+                                            className="skills-circle flex-element"
+                                            initialAnimation={true}
+                                            strokeWidth={8}
+                                            styles={{
+                                                path: {
+                                                    stroke: `${
+                                                        key === "program"
+                                                            ? colors.program.colorCompleted
+                                                            : key === "design"
+                                                                ? colors.design.colorCompleted
+                                                                : colors.manage.colorCompleted
+                                                    }`
+                                                },
+                                                text: {
+                                                    fill: `${
+                                                        key === "program"
+                                                            ? colors.program.colorCompleted
+                                                            : key === "design"
+                                                                ? colors.design.colorCompleted
+                                                                : colors.manage.colorCompleted
+                                                    }`,
+                                                    fontSize: "38px"
+                                                },
+                                                trail: {
+                                                    stroke: `${
+                                                        key === "program"
+                                                            ? colors.program.colorTrail
+                                                            : key === "design"
+                                                                ? colors.design.colorTrail
+                                                                : colors.manage.colorTrail
+                                                    }`
+                                                }
+                                            }}
+                                            percentage={Math.ceil(item * 100) / 100}
+                                            text={`${(Math.ceil(item * 100) / 100).toFixed(0)}`}
+                                        />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div className="flex-container-row flex-element">
+                            <p className="flex-element salary" style={{ color: `${colors.salary}` }}>
+                                Salary
+                            </p>
+                            <p className="flex-element stats-column" style={{ color: `${colors.design.colorCompleted}` }}>
+                                Design
+                            </p>
+                            <p className="flex-element stats-column" style={{ color: `${colors.program.colorCompleted}` }}>
+                                Program
+                            </p>
+                            <p className="flex-element stats-column" style={{ color: `${colors.manage.colorCompleted}` }}>
+                                Manage
+                            </p>
+                        </div>
                     </div>
+
+                    <h6 className="character">Character:</h6>
                     <h5 className="">{worker.character.description}</h5>
-                    {!expired ? <h2 className="fw-700">Enterpreneur offer has expired</h2> : ""}
-                    {!worker.hired ? (
+                    {expired ? (
+                        <h2 className="fw-700 expired">Enterpreneur offer has expired</h2>
+                    ) : !worker.hired ? (
                         !expired ? (
                             DefaultClickSoundButtons
                         ) : (
-                            <h2 className="fw-700">This employer found another job</h2>
+                            <h2 className="fw-700 hired">This employer found another job</h2>
                         )
                     ) : (
-                        <h2 className="fw-700">{`You already hired ${gender_pointer}`}</h2>
+                        <h2 className="fw-700 hired">{`You already hired ${gender_pointer}`}</h2>
                     )}
                 </div>
             </section>

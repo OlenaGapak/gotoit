@@ -23,25 +23,41 @@ export const colors = {
         name: "design",
         colorEstimate: "#ffc299",
         colorCompleted: "#ff954d",
-        colorBug: "#c47640"
+        colorBug: "#c47640",
+        colorTrail: "#FFF0E5"
     },
     program: {
         name: "program",
         colorEstimate: "#ffb2f2",
         colorCompleted: "#cc6cbc",
-        colorBug: "#99518d"
+        colorBug: "#99518d",
+        colorTrail: "#FFE5FB"
     },
     manage: {
         name: "manage",
         colorEstimate: "#a9f2ee",
         colorCompleted: "#57d9d1",
-        colorBug: "#43918d"
+        colorBug: "#43918d",
+        colorTrail: "#DAF2F0"
     },
     success: "#5cb85c",
     warning: "#f0ad4e",
     danger: "#d9534f",
     blue: "#33cabb",
     orange: "#fbb264",
+    salary: "#71B247",
+
+    rumor: {
+        name: "rumor",
+        colorCompleted: "#F56293",
+        colorTrail: "#F5DCE4"
+    },
+
+    reputation: {
+        name: "reputation",
+        colorCompleted: "#2E99E5",
+        colorTrail: "#DCEDF5"
+    },
 
     backgrounds: {
         Achievements: "#C0E5ED",

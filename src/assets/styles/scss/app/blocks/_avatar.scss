@@ -1,7 +1,7 @@
 .worker-avatar, .project-avatar {
   position: relative;
   background-color: var(--color-darkest-blue);
-  border-radius: size(0.5);
+  border-radius: size(0.25);
   height: 100%;
   width: 100%;
   display: flex;
@@ -21,6 +21,16 @@
   width: size(8);
   height: size(8);
 
+  & > img {
+    position: absolute;
+  }
+}
+
+.project-avatar-big {
+  background-color: var(--white);
+  position: relative;
+  width: size(16);
+  height: size(20);
   & > img {
     position: absolute;
   }

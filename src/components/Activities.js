@@ -47,7 +47,7 @@ class Activities extends Component {
         const ContentComponent = components[this.props.data.content];
 
         return (
-            <div className="card-body">
+            <div className="card-body browser">
                 <ContentComponent data={this.props.data} />
             </div>
         );

@@ -97,9 +97,22 @@
   --gray-900:               #333333;
   --black:                  #000;
 
+  // Alpha colors
+  --color-black-090:        rgba(0,0,0,0.9);
+  --color-black-080:        rgba(0,0,0,0.8);
+  --color-black-070:        rgba(0,0,0,0.7);
+  --color-black-060:        rgba(0,0,0,0.6);
+  --color-black-050:        rgba(0,0,0,0.5);
+  --color-black-040:        rgba(0,0,0,0.4);
+  --color-black-030:        rgba(0,0,0,0.3);
+  --color-black-020:        rgba(0,0,0,0.2);
+  --color-black-010:        rgba(0,0,0,0.1);
+  --color-black-005:        rgba(0,0,0,0.05);
+
   // Base colors
   --color-red:              #f76456;
   --color-orange:           #ff954d;
+  --color-pale-orange:      #ffc299;
   --color-yellow:           #f5b431;
   --color-pale-yellow:      #ffdd99;
   --color-green:            #81cc52;
@@ -111,6 +124,7 @@
   --color-darkest-blue:     #2E7599;
   --color-indigo:           #bb66cc;
   --color-purple:           #cc66bb;
+  --color-light-purple:     #f2c8fa;
   --color-pale-purple:      #fac8f2;
   --color-pink:             #f26191;
   --color-pale-pink:        #fac8d9;

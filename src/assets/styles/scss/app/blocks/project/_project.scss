@@ -5,9 +5,11 @@
   flex-flow: column nowrap;
   border-radius: size(0.5);
   padding: size(0.5);
-  transition: background-color 0.33s ease-out;
+  transition: 0.2s ease-out;
+  background: linear-gradient(180deg, var(--gray-100) 0%, var(--gray-200) 100%);
   position: relative;
   overflow: visible;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 1px var(--white);
 
   .card-header {
     align-items: start;
@@ -16,9 +18,8 @@
   }
 
   .select {
-    position: absolute;
     width: 100%;
-    z-index: 100;
+    margin-top: 10px;
   }
 
   // .project_icon {
@@ -35,9 +36,11 @@
     padding: size(0.25) size(0.5);
   }
 
+
   .project-name {
     font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
     font-size: size(1.5);
+    font-weight: bold;
   }
 
 
@@ -46,7 +49,7 @@
     height: 24px;
     border: 2px solid var(--color-darken-cyan);
     padding: 0;
-    margin: 0 size(0.5);
+    margin-right: size(0.5);
     position: relative;
 
     .icon-close {
@@ -69,7 +72,7 @@
     height: 24px;
     border: 2px solid var(--color-darken-cyan);
     padding: 0;
-    margin: 0 size(0.5);
+    margin-right: size(0.5);
     position: relative;
 
     .desaturate {
@@ -80,22 +83,22 @@
   .project-team, project-techs {
     margin-bottom: 0;
 
-    button {
-      margin-right: size(0.25);
-      margin-left: size(0.25);
-    }
+    //button {
+    //  margin-right: size(0.25);
+    //  margin-left: size(0.25);
+    //}
   }
 
   .worker-avatar {
-    border-radius: 0;
+    border-radius: 2px;
   }
 
   .icon-tech {
-    margin-right: 2px;
+    margin-right: 5px;
   }
   
   .icon-workers {
-    margin-right: 4px;
+    margin-right: 8px;
   }
 
   .btn-add-worker {
@@ -106,4 +109,9 @@
     background-color: var(--color-darken-cyan);
     
   }
+}
+
+.project:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%);
 }

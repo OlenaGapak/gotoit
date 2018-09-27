@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import BarItem from "./BarItem";
 import _ from "lodash";
+import { stat } from "fs";
 
 class Bar extends Component {
     static defaultProps = {
@@ -15,8 +16,13 @@ class Bar extends Component {
 
     render() {
         let { bar_data } = this.props; //must be array!
+        let { freelance_modal } = this.props;
+        let { own_modal } = this.props;
         return (
-            <div className={`progress ${this.props.className}`}>
+            <div
+                className={`progress ${this.props.className}`}
+                style={Object.assign({ width: "100%" }, own_modal ? { height: "18px", marginBottom: "8px" } : {})}
+            >
                 {_.map(bar_data, (item, i) => {
                     const { id, name = "", showName = false, color = "#fff", value, width = 0 } = item;
                     return (
