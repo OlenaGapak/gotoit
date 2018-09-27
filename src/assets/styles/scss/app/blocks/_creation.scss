@@ -76,6 +76,7 @@
     }
 
     .portrait {
+      width: 256px;
       margin-right: 24px;
       height: 336px;
       display: flex;
@@ -333,7 +334,7 @@
 
   .player-name {
     height: 40px;
-    width: 272px;
+    width: 256px;
     background-color: var(--gray-100);
     border: none;
   }
