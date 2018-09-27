@@ -79,16 +79,16 @@ $font-weight-list: 100 200 300 400 500 600 700 800 900;
 //-----------------------------------------------------------------
 // Letter spacing
 //
-$letter-spacing-list: 0 1 2 3 4 5;
-@each $value in $letter-spacing-list {
-  .letter-spacing-#{$value} {
-    letter-spacing: #{$value}px !important;
-  }
-
-  .ls-#{$value} {
-    letter-spacing: #{$value}px !important;
-  }
-}
+//$letter-spacing-list: 0 1 2 3 4 5;
+//@each $value in $letter-spacing-list {
+//  .letter-spacing-#{$value} {
+//    letter-spacing: #{$value}px !important;
+//  }
+//
+//  .ls-#{$value} {
+//    letter-spacing: #{$value}px !important;
+//  }
+//}
 
 
 
