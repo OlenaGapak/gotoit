@@ -27,8 +27,6 @@ class WorkerModel {
 
         this.is_player = is_player;
         this.expirience = JSON.parse(JSON.stringify(skills));
-        this.standing = 0;
-        this.standing_after_salary_rising = 0;
         this.morale = 100;
         this.accept_default = true;
         this.avatar = gender === "male" ? generateMaleAvatar() : gender === "female" ? generateFemaleAvatar() : generateOtherAvatar();
@@ -86,6 +84,13 @@ class WorkerModel {
         this.motivation_pull = 0;
 
         this.effects = {};
+
+        this.standing = 100 * ((_.sum(_.values(this.stats)) / 3 + _.max(_.values(this.stats))) / 2) - 100;
+
+        console.log(this.standing);
+        console.log((_.sum(_.values(this.stats)) / 3 + _.max(_.values(this.stats))) / 2);
+
+        this.standing_after_salary_rising = 0;
     }
 
     tick() {
@@ -164,7 +169,8 @@ class WorkerModel {
             return 0;
         } else {
             //    console.log("standing " + this.standing + " means " + (1 + (this.standing/(12*4*7*8*Math.PI))));
-            return Math.floor((this.statsSum() + _.max(_.values(this.stats))) * (1 + this.getOverrate() / 100) * 160);
+            //return 1000 + Math.floor((this.statsSum() + _.max(_.values(this.stats))) * (1 + this.getOverrate() / 100) * 160);
+            return Math.floor(1000 * (1 + this.getOverrate() / 100) * 1);
         }
     }
 
@@ -313,14 +319,12 @@ class WorkerModel {
             console.log(tasks_stream, tasks_difficulty, education_stream, collective);
             console.log(this.getOverrate(), this.getMotivate(), getData().office_things.gadget);
         }
-
-        return this.get_monthly_salary === false ? Math.ceil(happiness / 2) : Math.ceil(happiness);
-
+        return this.is_player === false ? Math.ceil(happiness * this.getSalaryMod()) : Math.ceil(happiness);
         //return 100;
     }
     getEfficiencyArray() {
         // happinessReal
-        let salary_mod = this.get_monthly_salary === false ? 0.5 : 1;
+        let salary_mod = this.getSalaryMod();
 
         //  const stamina = this.staminaPenalty();
         const tasks_stream = this.workloadPenalty();
@@ -365,6 +369,12 @@ class WorkerModel {
         return happiness_array;
 
         //return 100;
+    }
+    getSalaryMod() {
+        let salary_mod = this.standing / (1 + (100 * ((_.sum(_.values(this.stats)) / 3 + _.max(_.values(this.stats))) / 2) - 100)); // (1000 + this.statsSum() + _.max(_.values(this.stats)));
+        console.log(salary_mod);
+        salary_mod *= this.get_monthly_salary === false ? 0.5 : 1;
+        return Math.min(salary_mod, 1);
     }
 
     getStatsData(stat) {
