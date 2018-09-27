@@ -88,7 +88,7 @@ class Offer extends Component {
                                         <h4 className="reward"> Penalty:</h4>
                                         <div className="quantity penalty">
                                             {project.penalty}
-                                            <span className="icon-usd penalty">
+                                            <span className="icon-usd-penalty">
                                                 <span className="path1" />
                                                 <span className="path2" />
                                             </span>

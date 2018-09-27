@@ -76,6 +76,7 @@
     }
 
     .portrait {
+      margin-right: 24px;
       height: 336px;
       display: flex;
       flex-flow: column nowrap;
@@ -102,7 +103,6 @@
       min-height: size(45);
       display: flex;
       flex-flow: column nowrap;
-      margin-right: 24px;
     }
 
     .customizator-item {
@@ -131,10 +131,11 @@
     }
 
     .customizator-controls {
+      padding-left: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 55%;
+      width: size(24);
       flex-shrink: 0;
 
       h5 {
@@ -148,6 +149,8 @@
     }
 
     .control-arrow {
+      width: 24px;
+      height: 24px;
       font-size: 20px;
       font-family: monospace;
       background-color: transparent;
@@ -329,12 +332,14 @@
   }
 
   .player-name {
+    height: 40px;
     width: 272px;
     background-color: var(--gray-100);
     border: none;
   }
 
   .background-description {
+    margin-top: 16px;
     width: 100%;
     height: size(7);
   }
