@@ -57,6 +57,7 @@ var default_state = {
         },
 
         offered_projects: [],
+        npc_offered_projects: [],
 
         rumor: 0,
         meetup: 0,

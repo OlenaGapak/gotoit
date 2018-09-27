@@ -253,6 +253,14 @@ export const rules = {
                 }
             });
 
+            _.each(data.npc_offered_projects, offer => {
+                let { project, offeredTick } = offer;
+                if (current_tick > offeredTick + project.deadline_max) {
+                    this.npcMadeProject(project.id);
+                    return false;
+                }
+            });
+
             return state;
         }
     },
@@ -352,6 +360,11 @@ export const rules = {
                 this.pushNewProject();
             }
 
+            let probability_npc = Math.min(10, 1 + data.workers.length * projects_done * 0.1) / 24;
+            if (data.npc_offered_projects.length < 10 && _.random(0.0, 100.0) < probability_npc) {
+                this.npcNewOffer();
+            }
+
             /*
              if (data.candidates.resumes.length > 0) { //  WTF section
              if (_.random(1, 100) < Math.sqrt(probability)) {
@@ -414,7 +427,6 @@ export const rules = {
                     // worker quiting
                     if (worker.to_leave) {
                         if (worker.to_leave_ticker <= 0) {
-                            hired--;
                             addAction(
                                 worker.name + " resigned from your company",
                                 {

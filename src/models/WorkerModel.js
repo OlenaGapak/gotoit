@@ -308,12 +308,6 @@ class WorkerModel {
         //console.log(happiness);
         //console.log(tasks_stream, tasks_difficulty, education_stream, collective);
 
-        if (isNaN(happiness)) {
-            console.log(happiness);
-            console.log(tasks_stream, tasks_difficulty, education_stream, collective);
-            console.log(this.getOverrate(), this.getMotivate(), getData().office_things.gadget);
-        }
-
         return this.get_monthly_salary === false ? Math.ceil(happiness / 2) : Math.ceil(happiness);
 
         //return 100;
