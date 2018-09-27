@@ -2,6 +2,8 @@
     display: flex;
     padding: size(0.5);
     height: calc(100% - 74px);
+    max-width: 1400px;
+    margin: auto;
 
     .workers,
     .projects {
