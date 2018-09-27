@@ -5,8 +5,6 @@ import _ from "lodash";
 import ReactBootstrapSlider from "react-bootstrap-slider";
 import "../../node_modules/react-bootstrap-slider/src/css/bootstrap-slider.min.css";
 
-import TeamDialog from "./TeamDialog";
-
 import { roles } from "../game/knowledge/workers";
 import { project_sizes } from "../game/knowledge/projects";
 import { skills, skills_names } from "../game/knowledge/skills";
@@ -16,10 +14,6 @@ import { colors } from "../game/knowledge/colors";
 class SalesAgency extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            modalOpen: false
-        };
-
         let min = JSON.parse(JSON.stringify(skills));
         let max = JSON.parse(JSON.stringify(skills));
 
@@ -93,7 +87,6 @@ class SalesAgency extends Component {
         let state = this.state;
         this.setState({ deal_counter: state.deal_counter++, modalOpen: false });
         this.props.data.helpers.contractSearch(state, this.calcCost());
-        this.setState({ modalOpen: false });
     }
 
     openModal() {
