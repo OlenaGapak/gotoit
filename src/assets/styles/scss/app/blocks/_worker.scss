@@ -7,10 +7,15 @@
   flex-flow: row nowrap;
   border-radius: size(0.5);
   padding: size(1);
-  transition: 0.33s ease-out;
+  transition: 0.2s ease-out;
   position: relative;
-  background: linear-gradient(180deg, #F5F5F5 0%, #EBEBEB 100%);
+  background: linear-gradient(180deg, var(--gray-100) 0%, var(--gray-200) 100%);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.1), inset 0px 1px 1px var(--white);
+
+  &:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(180deg, var(--white) 0%, var(--gray-100) 100%);
+  }
 
   &.vacation {
     &::before {
@@ -85,9 +90,4 @@
       margin-bottom: 0;
     }
   }
-}
-
-.worker:hover {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%);
 }
