@@ -9,7 +9,7 @@ class Modal extends Component {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             {this.props.showCloseButton ? (
-                                <DefaultClickSoundButton className="close" onClick={this.props.closeModal}>
+                                <DefaultClickSoundButton className="close-modal" onClick={this.props.closeModal}>
                                     ×
                                 </DefaultClickSoundButton>
                             ) : (
