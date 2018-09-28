@@ -143,7 +143,7 @@ class Mail extends Component {
                         this.setState({ show_modal: true });
                         letter.isRead = true;
                     };
-                    letter.title = "Employee offer: " + letter.object.name;
+                    letter.title = "CV: " + letter.object.name;
                     letter.description =
                         "Salary: $" +
                         letter.object.salary +

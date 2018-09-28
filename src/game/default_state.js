@@ -107,9 +107,9 @@ var default_state = {
         on_tick_effects: [],
         exchange_statistics: {
             btc: { buffer: 0, values: [] },
-            share0: { buffer: 0, values: [] },
-            share1: { buffer: 0, values: [] },
-            share2: { buffer: 0, values: [] }
+            share0: { buffer: 0, values: [100] },
+            share1: { buffer: 0, values: [100] },
+            share2: { buffer: 0, values: [100] }
         },
         exchange_unlocked_shares: [],
         share0_unlock: false,

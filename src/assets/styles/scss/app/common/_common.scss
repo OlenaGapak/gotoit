@@ -37,13 +37,16 @@ overflow-y: auto;
 //===========================
 
 .column-buttons {
-display: flex;
+    display: flex;
     width: 100%;
 
-& > btn {
-    flex: 1 1 50%;
-    margin: size(0.5);
-}
+    & > btn {
+        flex: 1 1 50%;
+        margin: size(0.5);
+    }
+    .start-project-btn{
+        width: 100%;
+    }
 }
 
 .hovered {

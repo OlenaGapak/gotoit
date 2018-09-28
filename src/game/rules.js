@@ -307,22 +307,24 @@ export const rules = {
             if (data.share0_unlock) {
                 (() => {
                     const x = data.date.tick - 40490;
-                    data.current_share0_price = ((100 * data.company0_done) / average).toFixed(2);
+                    let newValue = parseFloat(((100 * data.company0_done) / average).toFixed(2));
+                    data.current_share0_price = isNaN(newValue) ? data.current_share0_price : newValue;
                 })();
             }
             if (data.share1_unlock) {
                 (() => {
                     const x = data.date.tick - 40490;
-                    data.current_share1_price = ((100 * data.company1_done) / average).toFixed(2);
+                    let newValue = parseFloat(((100 * data.company1_done) / average).toFixed(2));
+                    data.current_share1_price = isNaN(newValue) ? data.current_share1_price : newValue;
                 })();
             }
             if (data.share2_unlock) {
                 (() => {
                     const x = data.date.tick - 40490;
-                    data.current_share2_price = ((100 * data.company2_done) / average).toFixed(2);
+                    let newValue = parseFloat(((100 * data.company2_done) / average).toFixed(2));
+                    data.current_share2_price = isNaN(newValue) ? data.current_share2_price : newValue;
                 })();
             }
-
             //data.current_btc_price = Math.abs(Math.sin(x/19)) * x + Math.abs(Math.sin(Math.sqrt(x))) * x + Math.abs(Math.sin(Math.sqrt(x/7))) * x + Math.abs(Math.sin(Math.sqrt(x/227))) * x + x;
 
             //data.current_btc_price = Math.floor(Math.abs(Math.sin(Math.sqrt(x))) * x + Math.abs(Math.sin(Math.sqrt(x/7))) * x + Math.abs(Math.sin(Math.sqrt(x/227))) * x);
