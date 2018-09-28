@@ -7,6 +7,8 @@ import bulkStyler from "../services/bulkStyler";
 
 import WorkerModel from "../models/WorkerModel";
 import ProjectModel from "../models/ProjectModel";
+import BarItem from "./Bar/BarItem";
+import { colors } from "../game/knowledge/colors";
 
 import { skills_1 } from "../game/knowledge/skills";
 import { technologies } from "../game/knowledge/technologies";
@@ -562,38 +564,33 @@ class Creation extends Component {
                                         })}
                                         <h5 className="background-description text-center">
                                             {player_backgrounds[this.state.selected_background].text}
-                                            <br />
-                                            <br />
-                                            {player_backgrounds[this.state.selected_background].start_tech.length > 0 ? (
-                                                <span>
-                                                    Start tech:{" "}
-                                                    {technologies[player_backgrounds[this.state.selected_background].start_tech].name}
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
-                                            Start {selected_background.might}:
-                                            {player_backgrounds[this.state.selected_background].spices[
-                                                this.state[this.state.selected_background]
-                                            ].start_tech.length > 0 ? (
-                                                <span>
-                                                    Start tech:{" "}
-                                                    {
-                                                        technologies[
-                                                            player_backgrounds[this.state.selected_background].spices[
-                                                                this.state[this.state.selected_background]
-                                                            ].start_tech
-                                                        ].name
-                                                    }
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
                                         </h5>
                                     </div>
 
-                                    <div className="creation-skills">
-                                        <StatsBar stats={stats_data} data={data} />
+                                    <div className="creation-skills flex-container-row">
+                                        {_.map(stats_data, (item, key) => {
+                                            return (
+                                                <div className="flex-container-column" style={{ width: "120px" }}>
+                                                    <h4>{item.name}</h4>
+
+                                                    <div className="flex-container-row project-progress-bar">
+                                                        <span className={`flex-element icon-${item.name}`}> </span>
+                                                        <div
+                                                            className="flex-element progress bar-style"
+                                                            style={Object.assign({ width: "100%" })}
+                                                        >
+                                                            <BarItem
+                                                                className="flex-element"
+                                                                showName={false}
+                                                                color={colors[key].colorCompleted}
+                                                                value={`${item.val}`}
+                                                                width={`${item.val * 12}`}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
 
                                     <div className="bonus-select pt-16 bt-1 border-secondary">
@@ -613,7 +610,7 @@ class Creation extends Component {
                                                             this.setState(state);
                                                         }}
                                                     />
-                                                    <label className="btn-background" htmlFor={spice + "-radio-button"}>
+                                                    <label className="btn-background text-center" htmlFor={spice + "-radio-button"}>
                                                         <img className="bonus-img mb-8" src={this.getBonusIcon(spice)} />
                                                         <h5 className="fw-700">{selected_background.spices[spice].name}</h5>
                                                         <h6>{selected_background.spices[spice].description}</h6>
@@ -682,18 +679,18 @@ class Creation extends Component {
                                                         }}
                                                     />
                                                     <label className="btn-epoch" htmlFor={epoch + "-radio-button"}>
-                                                        <img className="epoch-img" src={epoch_list[epoch].icon} />
                                                         <h4 className="fw-700 mt-8">{epoch_list[epoch].name}</h4>
+                                                        <img className="epoch-img" src={epoch_list[epoch].icon} />
+                                                        <h4 className="fw-700 mt-8">{epoch_list[epoch].description}</h4>
                                                     </label>
                                                 </div>
                                             );
                                         })}
                                     </div>
                                     <h5 className=" epoch-description text-center">
-                                        {epoch_list[this.state.selected_epoch].description}
-                                        {/*<div className="tech text-center">
-                                            Start tech: {epoch_list[this.state.selected_epoch].start_tech}
-                                        </div>*/}
+                                        <div className="tech text-center">
+                                            <h4>{epoch_list[this.state.selected_epoch].start_tech}</h4>
+                                        </div>
                                     </h5>
                                 </div>
                                 <div className="modal-footer">

@@ -1,4 +1,5 @@
 .creation {
+  background-color: rgba(0,0,0, 0.95) !important;
 
   .welcome {
     .modal-body {
@@ -212,6 +213,7 @@
     }
 
     .btn-background {
+      cursor: initial;
       width: size(23);
       height: size(17);
       border-radius: size(1);
@@ -219,6 +221,10 @@
       flex-direction: column;
       align-items: center;
       padding: size(2) 0 size(1);
+
+      h6 {
+        padding: 8px;
+      }
 
     }
 
@@ -259,7 +265,7 @@
 
     .btn-epoch {
       width: size(14);
-      height: size(17);
+      height: 100%;
       border-radius: size(1);
       display: flex;
       flex-direction: column;
@@ -278,7 +284,7 @@
     display: none;
 
     &:checked + label {
-      box-shadow: inset 0 0 30px rgba(61, 204, 204, 0.2); 
+      box-shadow: inset 0 0 30px rgba(61, 204, 204, 0.2);
       border: 1px solid var(--color-cyan);
     }
   }
@@ -357,7 +363,26 @@
   }
 
   .creation-skills {
+    padding-top: 16px;
+    padding-bottom: 25px;
     text-align: center;
+    justify-content: center;
+
+    .flex-container-column {
+      margin-right: 47px;
+    }
+    .flex-container-column:last-of-type{
+      margin-right: 0;
+    }
+
+    .bar-style {
+      box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.1), inset 0px 0px 3px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    span {
+      margin-right: 8px;
+    }
   }
 
   .skills-circle  {
