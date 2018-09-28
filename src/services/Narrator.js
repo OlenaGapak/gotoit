@@ -49,25 +49,50 @@ class Narrator {
             let num = worker.calcEfficiency();
             switch (true) {
                 case num < 20:
-                    return worker.name + " hates" + drawNum(num) + " the job.";
+                    return worker.name + " hates" + drawNum(num) + " the job";
                 case num < 30:
-                    return worker.name + " is extremely unhappy with" + drawNum(num) + " the job.";
+                    return worker.name + " is extremely unhappy with" + drawNum(num) + " the job";
                 case num < 40:
-                    return worker.name + " doesn't like" + drawNum(num) + " the job.";
+                    return worker.name + " doesn't like" + drawNum(num) + " the job";
                 case num < 50:
-                    return worker.name + " is a little disappointed" + drawNum(num) + " with the job.";
+                    return worker.name + " is a little disappointed" + drawNum(num) + " with the job";
                 case num < 60:
-                    return worker.name + " thinks there's nothing wrong with" + drawNum(num) + " the job.";
+                    return worker.name + " thinks there's nothing wrong with" + drawNum(num) + " the job";
                 case num < 70:
-                    return worker.name + " is satisfied with" + drawNum(num) + " the job.";
+                    return worker.name + " is satisfied with" + drawNum(num) + " the job";
                 case num < 80:
-                    return worker.name + " likes" + drawNum(num) + " the job.";
+                    return worker.name + " likes" + drawNum(num) + " the job";
                 case num < 90:
-                    return worker.name + " is happy" + drawNum(num) + " with the job.";
+                    return worker.name + " is happy" + drawNum(num) + " with the job";
                 case num < 100:
-                    return worker.name + " is extremely happy " + drawNum(num) + "with the job.";
+                    return worker.name + " is extremely happy " + drawNum(num) + "with the job";
                 case num >= 100:
-                    return worker.name + " loves" + drawNum(num) + " the job.";
+                    return worker.name + " loves" + drawNum(num) + " the job";
+                default:
+                    console.log("error case: " + num);
+            }
+        };
+
+        const aboutSalary = () => {
+            if (worker.is_player) return ". ";
+
+            let num = worker.getSalaryMod();
+
+            switch (true) {
+                case num < 0.3:
+                    return " and works for pennies.";
+                case num < 0.5:
+                    return " and receive half of the well-deserved.";
+                case num < 0.7:
+                    return " and is seriously dissatisfied with salary.";
+                case num < 0.9:
+                    return " and is slightly dissatisfied with salary.";
+                case num < 1.1:
+                    return " and is satisfied with salary.";
+                case num < 1.5:
+                    return " and is proud of salary.";
+                case num >= 1.5:
+                    return " and is overpaid.";
                 default:
                     console.log("error case: " + num);
             }
@@ -200,7 +225,9 @@ class Narrator {
         });
         //    console.log(penalties);
 
-        let tale = aboutHappiness();
+        let tale = "";
+        tale += aboutHappiness();
+        tale += aboutSalary() + " ";
 
         tale += penalties_names.reduce((string, penalty_name) => {
             return string + " " + tellers[penalty_name](penalties[penalty_name]);

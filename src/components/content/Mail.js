@@ -146,7 +146,7 @@ class Mail extends Component {
                     letter.title = "CV: " + letter.object.name;
                     letter.description =
                         "Salary: $" +
-                        letter.object.salary +
+                        letter.object.getSalary() +
                         ". Skills: Design: " +
                         letter.object.stats.design +
                         ", Program: " +
