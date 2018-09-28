@@ -11,10 +11,22 @@ import ProjectModel from "../models/ProjectModel";
 import { skills_1 } from "../game/knowledge/skills";
 import { technologies } from "../game/knowledge/technologies";
 import { player_backgrounds } from "../game/knowledge/player_backgrounds";
+import { historical_events } from "../game/knowledge/historical_events";
+import { epoch_list } from "../game/knowledge/epoch";
 import { Avatar } from "./Projects/Avatar";
-import { generateFemaleAvatar, generateMaleAvatar, customizeAvatar, male_asset, female_asset } from "../game/knowledge/worker_avatar";
+import {
+    generateFemaleAvatar,
+    generateMaleAvatar,
+    customizeAvatar,
+    male_asset,
+    female_asset,
+    other_asset
+} from "../game/knowledge/worker_avatar";
 import logo from "../assets/images/go2it-logo.png";
-import backgroundImg from "../assets/images/creation/backgrounds/specialist.png";
+import bdcLogo from "../assets/images/bdc-logo_light.png";
+import specialistImg from "../assets/images/creation/backgrounds/specialist.png";
+import coworkerImg from "../assets/images/creation/backgrounds/coworker.png";
+import bussinessmanImg from "../assets/images/creation/backgrounds/bussinessman.png";
 import bonusImg from "../assets/images/creation/bonuses/cash.png";
 import { DefaultClickSoundButton, sounds } from "../game/knowledge/sounds";
 
@@ -25,12 +37,13 @@ class Creation extends Component {
         super(props);
 
         let back = _.sample(_.keys(player_backgrounds));
+        let default_epoch = _.keys(epoch_list)[0];
 
         let gender = ["male", "female", "other"][_.random(0, 1)];
 
-        let avatar = null;
+        let avatar_nums = null;
         if (gender === "male") {
-            avatar = {
+            avatar_nums = {
                 body: _.random(0, male_asset.body.length - 1),
                 eyes: _.random(0, male_asset.eyes.length - 1),
                 eyebrows: _.random(0, male_asset.eyebrows.length - 1),
@@ -41,8 +54,8 @@ class Creation extends Component {
                 hair: _.random(0, male_asset.hair.length - 1),
                 clothes: _.random(0, male_asset.clothes.length - 1)
             };
-        } else {
-            avatar = {
+        } else if (gender === "female") {
+            avatar_nums = {
                 body: _.random(0, female_asset.body.length - 1),
                 eyes: _.random(0, female_asset.eyes.length - 1),
                 eyebrows: _.random(0, female_asset.eyebrows.length - 1),
@@ -53,9 +66,21 @@ class Creation extends Component {
                 hair: _.random(0, female_asset.hair.length - 1),
                 clothes: _.random(0, female_asset.clothes.length - 1)
             };
+        } else {
+            avatar_nums = {
+                body: _.random(0, other_asset.body.length - 1),
+                eyes: _.random(0, other_asset.eyes.length - 1),
+                eyebrows: _.random(0, other_asset.eyebrows.length - 1),
+                nose: _.random(0, other_asset.nose.length - 1),
+                mouth: _.random(0, other_asset.mouth.length - 1),
+                beard: _.random(0, other_asset.beard.length - 1),
+                accessories: _.random(0, other_asset.accessories.length - 1),
+                hair: _.random(0, other_asset.hair.length - 1),
+                clothes: _.random(0, other_asset.clothes.length - 1)
+            };
         }
         let realAvatar = (() => {
-            let { body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes } = avatar;
+            let { body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes } = avatar_nums;
             return customizeAvatar(gender, body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes);
         })();
 
@@ -64,12 +89,13 @@ class Creation extends Component {
             gender: gender,
             suggest_name: WorkerModel.genName(gender),
             selected_background: back, //'specialist',
+            selected_epoch: default_epoch,
             specialist: _.sample(_.keys(player_backgrounds["specialist"].spices)),
             coworker: _.sample(_.keys(player_backgrounds["coworker"].spices)),
             businessman: _.sample(_.keys(player_backgrounds["businessman"].spices)),
-            avatar: avatar,
+            avatarNums: avatar_nums,
             realAvatar: realAvatar,
-            asset: gender === "male" ? male_asset : female_asset
+            asset: gender === "male" ? male_asset : gender === "female" ? female_asset : other_asset
         };
 
         this.embark = this.embark.bind(this);
@@ -78,11 +104,6 @@ class Creation extends Component {
     // shouldComponentUpdate() {
     //   return false;
     // }
-    genAvatar = () => {
-        let gender = this.state.gender;
-        let { body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes } = this.state.avatar;
-        this.setState({ realAvatar: customizeAvatar(gender, body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes) });
-    };
     getPlayerStats() {
         let stats = JSON.parse(JSON.stringify(skills_1));
 
@@ -103,7 +124,14 @@ class Creation extends Component {
         console.log("embrk");
 
         let data = this.props.data;
+        data.date.tick = epoch_list[this.state.selected_epoch].start_tick;
         data.money += player_backgrounds[this.state.selected_background].money;
+
+        Object.keys(historical_events).map(event => {
+            if (historical_events[event].tick <= data.date.tick) {
+                historical_events[event].updateGameData(data);
+            }
+        });
 
         let stats = this.getPlayerStats();
 
@@ -168,7 +196,16 @@ class Creation extends Component {
 
         // i must hard set :(
         data.helpers.brutalSet({ data: data });
-
+        data.helpers.createMail({
+            type: "Welcome",
+            date: data.current_game_date,
+            favorite: true
+        });
+        data.helpers.createMail({
+            type: "Relations",
+            date: data.current_game_date,
+            favorite: true
+        });
         data.helpers.pushNewProject();
         data.helpers.pushNewProject();
         data.helpers.pushNewProject();
@@ -178,10 +215,10 @@ class Creation extends Component {
         this.props.data.helpers.playGame();
     }
 
-    generateAvatar = gender => {
-        let avatar;
+    generateAvatarNums = gender => {
+        let avatar_nums;
         if (gender === "male") {
-            avatar = {
+            avatar_nums = {
                 body: _.random(0, male_asset.body.length - 1),
                 eyes: _.random(0, male_asset.eyes.length - 1),
                 eyebrows: _.random(0, male_asset.eyebrows.length - 1),
@@ -192,8 +229,8 @@ class Creation extends Component {
                 hair: _.random(0, male_asset.hair.length - 1),
                 clothes: _.random(0, male_asset.clothes.length - 1)
             };
-        } else {
-            avatar = {
+        } else if (gender === "female") {
+            avatar_nums = {
                 body: _.random(0, female_asset.body.length - 1),
                 eyes: _.random(0, female_asset.eyes.length - 1),
                 eyebrows: _.random(0, female_asset.eyebrows.length - 1),
@@ -204,46 +241,68 @@ class Creation extends Component {
                 hair: _.random(0, female_asset.hair.length - 1),
                 clothes: _.random(0, female_asset.clothes.length - 1)
             };
+        } else {
+            avatar_nums = {
+                body: _.random(0, other_asset.body.length - 1),
+                eyes: _.random(0, other_asset.eyes.length - 1),
+                eyebrows: _.random(0, other_asset.eyebrows.length - 1),
+                nose: _.random(0, other_asset.nose.length - 1),
+                mouth: _.random(0, other_asset.mouth.length - 1),
+                beard: _.random(0, other_asset.beard.length - 1),
+                accessories: _.random(0, other_asset.accessories.length - 1),
+                hair: _.random(0, other_asset.hair.length - 1),
+                clothes: _.random(0, other_asset.clothes.length - 1)
+            };
         }
-        return avatar;
+        return avatar_nums;
     };
-    generateRealAvatar = (avatar, gender) => {
-        let { body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes } = avatar;
+    generateRealAvatar = (avatarNums, gender) => {
+        let { body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes } = avatarNums;
         let newRealAvatar = customizeAvatar(gender, body, eyes, eyebrows, nose, mouth, beard, accessories, hair, clothes);
         this.setState({
             gender: gender,
-            avatar: avatar,
+            avatarNums: avatarNums,
             realAvatar: newRealAvatar
         });
     };
-    handleGenderChange = changeEvent => {
-        let newGender = changeEvent.target.value; //randomize
+    handleGenderChange = gender => {
+        let newGender = gender; //randomize
         this.setState({ suggest_name: WorkerModel.genName(newGender) });
-        this.generateRealAvatar(this.generateAvatar(newGender), newGender);
+        this.generateRealAvatar(this.generateAvatarNums(newGender), newGender);
     };
     randomize = () => {
-        this.generateRealAvatar(this.generateAvatar(this.state.gender), this.state.gender);
+        this.generateRealAvatar(this.generateAvatarNums(this.state.gender), this.state.gender);
     };
     fragmentDec = fragment => {
         let state = this.state;
-        let fragmentLength = state.gender === "male" ? male_asset[fragment].length - 1 : female_asset[fragment].length - 1;
+        let fragmentLength =
+            state.gender === "male"
+                ? male_asset[fragment].length - 1
+                : state.gender === "female"
+                    ? female_asset[fragment].length - 1
+                    : other_asset[fragment].length - 1;
 
-        if (state.avatar[fragment] !== 0) {
-            state.avatar[fragment]--;
+        if (state.avatarNums[fragment] !== 0) {
+            state.avatarNums[fragment]--;
         } else {
-            state.avatar[fragment] = fragmentLength;
+            state.avatarNums[fragment] = fragmentLength;
         }
-        this.generateRealAvatar(state.avatar, state.gender);
+        this.generateRealAvatar(state.avatarNums, state.gender);
     };
     fragmentInc = fragment => {
         let state = this.state;
-        let fragmentLength = state.gender === "male" ? male_asset[fragment].length - 1 : female_asset[fragment].length - 1;
-        if (state.avatar[fragment] !== fragmentLength) {
-            state.avatar[fragment]++;
+        let fragmentLength =
+            state.gender === "male"
+                ? male_asset[fragment].length - 1
+                : state.gender === "female"
+                    ? female_asset[fragment].length - 1
+                    : other_asset[fragment].length - 1;
+        if (state.avatarNums[fragment] !== fragmentLength) {
+            state.avatarNums[fragment]++;
         } else {
-            state.avatar[fragment] = 0;
+            state.avatarNums[fragment] = 0;
         }
-        this.generateRealAvatar(state.avatar, state.gender);
+        this.generateRealAvatar(state.avatarNums, state.gender);
     };
     /*handleAvatarInc(type, value){
 
@@ -260,19 +319,20 @@ class Creation extends Component {
             return { name: key, val: stats[key] };
         });
 
-        let asset = this.state.gender === "male" ? male_asset : female_asset;
+        let asset = this.state.gender === "male" ? male_asset : this.state.gender === "female" ? female_asset : other_asset;
         let keys = _.keys(asset);
         //SELECTORS FOR THE CONSTRUCTOR
         let selectors = _.map(keys, key => {
+            let key_lower = key;
+            let key_upper = key_lower.charAt(0).toUpperCase() + key_lower.substr(1);
             return (
                 <div className="customizator-item" key={key}>
-                    <h4 className="fw-700">Test</h4>
+                    <h5 className="fw-700">{key_upper}</h5>
                     <div className="customizator-controls">
                         <DefaultClickSoundButton className="control-arrow" onClick={() => this.fragmentDec(key)}>
                             {"<"}
                         </DefaultClickSoundButton>
-
-                        <h5 className="text-center">{asset[key][this.state.avatar[key]].name}</h5>
+                        <h5 className="text-center">{asset[key][this.state.avatarNums[key]].name}</h5>
 
                         <DefaultClickSoundButton className="control-arrow" onClick={() => this.fragmentInc(key)}>
                             {">"}
@@ -298,19 +358,20 @@ class Creation extends Component {
                                             </p>
                                         </h4>
                                         <h6 className="warning text-center">
-                                            The game on the early stages of development, bugs are possible! Developers will be grateful if
-                                            in case of any problem you write to the Support.
+                                            The game is on the early stages of development, bugs are possible! Developers will be grateful
+                                            if you report any appeared problem to Support.
                                         </h6>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
+                                    <img className="bdc-logo" src={bdcLogo} />
                                     <DefaultClickSoundButton
                                         className="btn btn-success btn-lg ml-auto fw-700"
                                         onClick={() => {
                                             this.setState({ step: "appearance" });
                                         }}
                                     >
-                                        Create Your Company!
+                                        Create Your Company
                                     </DefaultClickSoundButton>
                                 </div>
                             </div>
@@ -323,67 +384,70 @@ class Creation extends Component {
                                 <div className="modal-header">
                                     <h2 className="modal-title text-center fw-300">Create your character</h2>
                                 </div>
-                                <div className="modal-body">
-                                    <div className="inputs mr-48">
-                                        <h4 className="fw-500">Name</h4>
-                                        <input
-                                            type="text"
-                                            name="background"
-                                            className="form-control player-name"
-                                            value={this.state.suggest_name}
-                                            onChange={event => {
-                                                this.setState({
-                                                    suggest_name: event.target.value
-                                                });
-                                            }}
-                                        />
-                                        <div className="gender-select mb-32">
-                                            <h4 className="fw-500 mt-24">Gender</h4>
-                                            <DefaultClickSoundButton
-                                                className="btn btn-sm btn-primary flex-grow"
-                                                value="male"
-                                                onChange={this.handleGenderChange}
-                                                onClick={() => {
-                                                    this.setState({ gender: "male" });
+                                <div className="flex-container-column modal-body">
+                                    <div className="flex-container-row">
+                                        <div className="player-name-wrapper flex-container-column">
+                                            <h4 className="fw-500">Name</h4>
+                                            <input
+                                                type="text"
+                                                name="background"
+                                                className="form-control player-name"
+                                                value={this.state.suggest_name}
+                                                onChange={event => {
+                                                    this.setState({
+                                                        suggest_name: event.target.value
+                                                    });
                                                 }}
-                                            >
-                                                <span className="icon-gender-men text-white" />
-                                                 Male
-                                            </DefaultClickSoundButton>
-                                            <DefaultClickSoundButton
-                                                className="btn btn-sm btn-primary flex-grow"
-                                                value="female"
-                                                onChange={this.handleGenderChange}
-                                                onClick={() => {
-                                                    this.setState({ gender: "female" });
-                                                }}
-                                            >
-                                                <span className="icon-gender-women text-white" />
-                                                 Female
-                                            </DefaultClickSoundButton>
-                                            <DefaultClickSoundButton
-                                                className="btn btn-sm btn-primary flex-grow"
-                                                value="other"
-                                                onChange={this.handleGenderChange}
-                                                onClick={() => {
-                                                    this.setState({ gender: "other" });
-                                                }}
-                                            >
-                                                <span className="icon-gender-other text-white" />
-                                                 Other
+                                            />
+                                        </div>
+                                        <div className="flex-container-column gender-select">
+                                            <h4 className="fw-500">Gender</h4>
+                                            <div className="flex-container-row">
+                                                <DefaultClickSoundButton
+                                                    className={`btn btn-sm btn-primary flex-grow ${
+                                                        this.state.gender === "male" ? "active" : ""
+                                                    }`}
+                                                    value="male"
+                                                    onClick={() => this.handleGenderChange("male")}
+                                                >
+                                                    <span className="icon-gender-men text-white" />
+                                                    Male
+                                                </DefaultClickSoundButton>
+                                                <DefaultClickSoundButton
+                                                    className={`btn btn-sm btn-primary flex-grow ${
+                                                        this.state.gender === "female" ? "active" : ""
+                                                    }`}
+                                                    value="female"
+                                                    onClick={() => this.handleGenderChange("female")}
+                                                >
+                                                    <span className="icon-gender-women text-white" />
+                                                    Female
+                                                </DefaultClickSoundButton>
+                                                <DefaultClickSoundButton
+                                                    className={`btn btn-sm btn-primary flex-grow ${
+                                                        this.state.gender === "other" ? "active" : ""
+                                                    }`}
+                                                    value="other"
+                                                    onClick={() => this.handleGenderChange("other")}
+                                                >
+                                                    <span className="icon-gender-other text-white" />
+                                                    Other
+                                                </DefaultClickSoundButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex-container-row inputs">
+                                        <div className="customizator">{selectors}</div>
+                                        <div className="portrait">
+                                            <Avatar
+                                                className="player-avatar worker-avatar"
+                                                name={"player avatar"}
+                                                sources={_.toPairs(this.state.realAvatar)}
+                                            />
+                                            <DefaultClickSoundButton className="btn btn-lg btn-primary" onClick={this.randomize}>
+                                                Randomise
                                             </DefaultClickSoundButton>
                                         </div>
-                                        <div className="customizator">{selectors}</div>
-                                    </div>
-                                    <div className="portrait">
-                                        <Avatar
-                                            className="player-avatar worker-avatar"
-                                            name={"player avatar"}
-                                            sources={_.toPairs(this.state.realAvatar)}
-                                        />
-                                        <DefaultClickSoundButton className="btn btn-lg btn-primary" onClick={this.randomize}>
-                                            Randomise
-                                        </DefaultClickSoundButton>
                                     </div>
                                 </div>
 
@@ -399,6 +463,12 @@ class Creation extends Component {
                                             className={`btn-dot ${this.state.step === "background" ? "active" : ""}`}
                                             onClick={() => {
                                                 this.setState({ step: "background" });
+                                            }}
+                                        />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "epoch" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "epoch" });
                                             }}
                                         />
                                     </div>
@@ -440,7 +510,16 @@ class Creation extends Component {
                                                         }}
                                                     />
                                                     <label className="btn-background" htmlFor={background + "-radio-button"}>
-                                                        <img className="background-img" src={backgroundImg} />
+                                                        <img
+                                                            className="background-img"
+                                                            src={
+                                                                background === "specialist"
+                                                                    ? specialistImg
+                                                                    : background === "coworker"
+                                                                        ? coworkerImg
+                                                                        : bussinessmanImg
+                                                            }
+                                                        />
                                                         <h4 className="fw-700 mt-8">{player_backgrounds[background].name}</h4>
                                                     </label>
                                                 </div>
@@ -523,10 +602,89 @@ class Creation extends Component {
                                                 this.setState({ step: "background" });
                                             }}
                                         />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "epoch" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "epoch" });
+                                            }}
+                                        />
                                     </div>
-                                    <DefaultClickSoundButton className="btn btn-success btn-lg btn-w-lg embark" onClick={this.embark}>
-                                        Embark
+                                    <DefaultClickSoundButton
+                                        className="btn btn-lg btn-success btn-w-lg next-partition"
+                                        onClick={() => {
+                                            this.setState({ step: "epoch" });
+                                        }}
+                                    >
+                                        Next
                                     </DefaultClickSoundButton>
+                                </div>
+                            </div>
+                        ) : (
+                            ""
+                        )}
+
+                        {this.state.step === "epoch" ? (
+                            <div className="modal-content epoch">
+                                <div className="modal-header">
+                                    <h2 className="modal-title text-center fw-300">Choose Epoch</h2>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="epoch-select pb-16 bb-1 border-secondary">
+                                        {Object.keys(epoch_list).map(epoch => {
+                                            return (
+                                                <div key={epoch}>
+                                                    <input
+                                                        className=""
+                                                        id={epoch + "-radio-button"}
+                                                        type="radio"
+                                                        name="epoch"
+                                                        value={epoch}
+                                                        checked={this.state.selected_epoch === epoch}
+                                                        onChange={event => {
+                                                            this.setState({
+                                                                selected_epoch: event.target.value
+                                                            });
+                                                        }}
+                                                    />
+                                                    <label className="btn-epoch" htmlFor={epoch + "-radio-button"}>
+                                                        <img className="epoch-img" src={epoch_list[epoch].icon} />
+                                                        <h4 className="fw-700 mt-8">{epoch_list[epoch].name}</h4>
+                                                    </label>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <h5 className=" epoch-description text-center">
+                                        {epoch_list[this.state.selected_epoch].description}
+                                        {/*<div className="tech text-center">
+                                            Start tech: {epoch_list[this.state.selected_epoch].start_tech}
+                                        </div>*/}
+                                    </h5>
+                                </div>
+                                <div className="modal-footer">
+                                    <div className="partition-switch">
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "appearance" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "appearance" });
+                                            }}
+                                        />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "background" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "background" });
+                                            }}
+                                        />
+                                        <DefaultClickSoundButton
+                                            className={`btn-dot ${this.state.step === "epoch" ? "active" : ""}`}
+                                            onClick={() => {
+                                                this.setState({ step: "epoch" });
+                                            }}
+                                        />
+                                        <DefaultClickSoundButton className="btn btn-success btn-lg btn-w-lg embark" onClick={this.embark}>
+                                            Embark
+                                        </DefaultClickSoundButton>
+                                    </div>
                                 </div>
                             </div>
                         ) : (

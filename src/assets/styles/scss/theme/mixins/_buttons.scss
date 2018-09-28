@@ -12,7 +12,6 @@
     color: #fff;
   }
 
-
   &:focus,
   &.focus {
     color: #fff;
@@ -32,7 +31,6 @@
     background-color: color-mod($color shade($percentage));
     border-color: color-mod($color shade($percentage));
     color: #fff;
-    box-shadow: none !important;
   }
 
 }
@@ -58,7 +56,6 @@
   .show > &.dropdown-toggle {
     background-color: color-mod($color shade($percentage));
     border-color: color-mod($color shade($percentage));
-    box-shadow: none;
   }
 
 }
@@ -76,7 +73,6 @@
   &:not([disabled]):not(.disabled):active,
   .show > &.dropdown-toggle {
     color: color-mod($color shade(10%));
-    box-shadow: none;
   }
 
 }

@@ -47,11 +47,6 @@ class Offer extends Component {
             <section className="offer-modal">
                 <div className="modal-header flexbox">
                     <div>
-                        <p className="fw-700">enterpreneur resume</p>
-                    </div>
-                    <div>
-                        <FormattedDate value={letter.date} weekday="short" day="numeric" month="short" year="numeric" hour="numeric" />
-                        <span className="icon-star-border" />
                         <Avatar className="project-avatar" name={project.name} sources={_.toPairs(project.avatar)} />
                     </div>
                 </div>
@@ -76,29 +71,37 @@ class Offer extends Component {
                                 </p>
                             </div>
 
-                            <span>
-                                <h4 className="reward"> Reward:</h4>
+                            <span className="flex-container-row">
+                                <span className="reward-container flex-element flex-container-column">
+                                    <h4 className="reward"> Reward:</h4>
 
-                                <div className="quantity" style={{ color: `${colors.salary}` }}>
-                                    {project.reward}
-                                    <span className="icon-usd">
-                                        <span className="path1" />
-                                        <span className="path2" />
-                                    </span>
-                                </div>
-                            </span>
-                            {project.penalty > 0 ? (
-                                <span>
-                                    <h4 className="text-warning">Penalty : ${project.penalty}</h4>
+                                    <div className="quantity" style={{ color: `${colors.salary}` }}>
+                                        {project.reward}
+                                        <span className="icon-usd">
+                                            <span className="path1" />
+                                            <span className="path2" />
+                                        </span>
+                                    </div>
                                 </span>
-                            ) : (
-                                " "
-                            )}
+                                {project.penalty > 0 ? (
+                                    <span className="reward-container flex-element flex-container-column">
+                                        <h4 className="reward"> Penalty:</h4>
+                                        <div className="quantity penalty">
+                                            {project.penalty}
+                                            <span className="icon-usd penalty">
+                                                <span className="path1" />
+                                                <span className="path2" />
+                                            </span>
+                                        </div>
+                                    </span>
+                                ) : (
+                                    " "
+                                )}
+                            </span>
 
                             {project.stage === "ready" ? (
                                 !expired ? (
                                     <div className="flex-element flex-container-column expired">
-                                        <h3>{`Will expire in ${hours_to_expire} hours`}</h3>
                                         <div className="btn_group">
                                             <DefaultClickSoundButton
                                                 className="btn btn-danger"

@@ -41,11 +41,12 @@
 
   .now {
     position: absolute;
-    height: 12px;
-    width: 6px;
-    border-radius: 25%;
+    height: auto;
+    width: size(5);
+    border: 2px solid var(--white);
+    border-radius: 2px;
     background-color: rgba(255, 255, 255, 1);
-    margin-left: 0;
+    margin-bottom: 4px;
   }
 
   .worker-portrait {

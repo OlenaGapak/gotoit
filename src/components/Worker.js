@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { Component } from "react";
+import ReactDOM from 'react-dom';
 import _ from "lodash";
 import StatsProgressBar from "./StatsProgressBar";
 import { colors } from "../game/knowledge/colors";
@@ -10,7 +11,6 @@ import Modal from "./Modal/Modal";
 import WorkerModal from "./Modal/WorkerModal";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 
-//import {addAction} from '../components/ToastNest';
 
 
 class Worker extends Component {
@@ -89,14 +89,6 @@ class Worker extends Component {
       };
     });
 
-
-    /*const stats_data = _.mapValues(worker.stats, (val, stat) => {
-            return {
-                name: stat,
-                val: worker.getStatsData(stat)
-            };
-        });*/
-
     const efficiency_data = {
       work_load: { name: 'Work Load', val: worker.workloadPenalty() },
       work_difficulty: {
@@ -127,7 +119,7 @@ class Worker extends Component {
         `}
         id={worker.id}
       >
-        <div style={{ position: 'relative', width: '80px', height: '80px'}}>
+        <div>
           <Avatar
             className="worker-avatar"
             name={worker.name}
@@ -156,6 +148,7 @@ class Worker extends Component {
                 worker={worker}
                 data={data}
               />
+
               <StatsProgressBar
                 type={'program'}
                 max_stat={data.max_stat}
@@ -163,6 +156,7 @@ class Worker extends Component {
                 worker={worker}
                 data={data}
               />
+
               <StatsProgressBar
                 type={'manage'}
                 max_stat={data.max_stat}
@@ -180,6 +174,7 @@ class Worker extends Component {
           </Modal>
           ) : ''
         }
+
       </div>
     );
   }

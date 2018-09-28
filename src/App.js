@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import { IntlProvider } from "react-intl";
 import { hot } from "react-hot-loader";
 import { game_name } from "./game/app_config";
 import { tick } from "./game/tick";
@@ -128,6 +129,7 @@ class App extends Component {
         this.closeProject = this.closeProject.bind(this);
         this.trainingProject = this.trainingProject.bind(this);
         this.changeTeamSelector = this.changeTeamSelector.bind(this);
+        this.changeTeamModalSelector = this.changeTeamModalSelector.bind(this);
         this.draftProject = this.draftProject.bind(this);
         this.kickWorker = this.kickWorker.bind(this);
         this.unlockTechnology = this.unlockTechnology.bind(this);
@@ -219,6 +221,7 @@ class App extends Component {
         app_state.data.helpers["closeProject"] = this.closeProject;
         app_state.data.helpers["trainingProject"] = this.trainingProject;
         app_state.data.helpers["changeTeamSelector"] = this.changeTeamSelector;
+        app_state.data.helpers["changeTeamModalSelector"] = this.changeTeamModalSelector;
         app_state.data.helpers["draftProject"] = this.draftProject;
         app_state.data.helpers["kickWorker"] = this.kickWorker;
         app_state.data.helpers["unlockTechnology"] = this.unlockTechnology;
@@ -478,6 +481,12 @@ class App extends Component {
     changeTeamSelector(project = null) {
         const data = this.state.data;
         data.project_team_selector = project === null ? null : project.id;
+        this.setState({ data: data });
+    }
+
+    changeTeamModalSelector(project = null) {
+        const data = this.state.data;
+        data.project_team_modal_selector = project === null ? null : project.id;
         this.setState({ data: data });
     }
 
@@ -1064,6 +1073,18 @@ class App extends Component {
             object: _.create(ProjectModel.prototype, project),
             date: data.current_game_date
         });
+        if (data.projects_end_reports.length === 0) {
+            this.createMail({
+                type: "Office",
+                date: data.current_game_date,
+                favorite: true
+            });
+            this.createMail({
+                type: "Analytics",
+                date: data.current_game_date,
+                favorite: true
+            });
+        }
 
         data.projects_end_reports.push(project);
         data.reputation += 50;
@@ -2137,17 +2158,19 @@ class App extends Component {
 
     render() {
         return (
-            <div
-                id="app"
-                onClick={() => {
-                    let audio = new Audio(sounds.click);
-                    audio.play();
-                }}
-            >
-                <BubblesAnimation onRef={ref => (this.animation = ref)} />
-                <Popup ref={p => (this.popupHandler = p)} />
-                <Layout data={this.state.data} newGame={this.newGame} />
-            </div>
+            <IntlProvider locale="en">
+                <div
+                    id="app"
+                    onClick={() => {
+                        let audio = new Audio(sounds.click);
+                        audio.play();
+                    }}
+                >
+                    <BubblesAnimation onRef={ref => (this.animation = ref)} />
+                    <Popup ref={p => (this.popupHandler = p)} />
+                    <Layout data={this.state.data} newGame={this.newGame} />
+                </div>
+            </IntlProvider>
         );
     }
 }

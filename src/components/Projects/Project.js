@@ -271,9 +271,11 @@ class Project extends Component {
 
         const tech_label = (() => {
             let tech_keys = data.projects_known_technologies;
-            return _.map(tech_keys, tech_name => {
+            return _.map(tech_keys, (tech_name, i) => {
                 let enabled = data.projects_technologies[project.id][tech_name];
-                return <TechToggle data={data} name={tech_name} project={project} tech={technologies[tech_name]} enabled={enabled} />;
+                return (
+                    <TechToggle data={data} name={tech_name} project={project} tech={technologies[tech_name]} enabled={enabled} key={i} />
+                );
             });
         })();
 

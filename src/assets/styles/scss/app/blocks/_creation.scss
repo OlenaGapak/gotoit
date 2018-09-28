@@ -2,7 +2,7 @@
 
   .welcome {
     .modal-body {
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.85);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -10,12 +10,17 @@
     }
 
     .modal-footer {
-      padding: size(5) size(7);
+      padding: 24px 0 24px 32px;
     }
 
     .logo {
       width: size(25);
       margin-right: size(6);
+    }
+
+    .bdc-logo {
+      width: 80px;
+      height: 80px;
     }
 
     .lead {
@@ -32,11 +37,16 @@
     }
 
     .btn-success {
+      margin-right: 56px;
       font-size: 13px;
     }
   }
 
   .appearance {
+
+    .flex-container-row {
+      width: 100%;
+    }
     .modal-header {
       font-size: 24px;
       border-bottom: none;
@@ -59,25 +69,24 @@
     }
 
     .inputs {
-      display: flex;
-      flex-flow: column nowrap;
-
+      margin-top: 24px;
       h4 {
         width: 100%;
       }
     }
 
     .portrait {
+      height: 336px;
       display: flex;
       flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
-      padding: size(3);
-      border: 1px solid var(--gray-300);
+      padding: 24px 32px 24px;
+      border: 1px solid var(--gray-90);
       border-radius: size(4);
 
       .btn {
-        margin: size(5) auto size(2) auto; 
+        margin-top: 32px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -89,27 +98,31 @@
     }
 
     .customizator {
-      width: 100%;
+      width: 272px;
       min-height: size(45);
       display: flex;
       flex-flow: column nowrap;
+      margin-right: 24px;
     }
 
     .customizator-item {
-      width: 100%;
       height: size(5);
-      border-top: 1px solid var(--gray-300);
+      border-top: 1px solid var(--gray-90);
       display: flex;
       justify-content: space-between;
       align-items: center;
 
       &:last-of-type {
-        border-bottom: 1px solid var(--gray-300);
+        border-bottom: 1px solid var(--gray-90);
       }
 
       h4, h5 {
         width: auto;
         margin: 0;
+      }
+
+      h4 {
+          max-width: 45%;
       }
 
       h5 {
@@ -121,7 +134,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 80%;
+      width: 55%;
+      flex-shrink: 0;
+
+      h5 {
+        font-style: normal;
+        font-weight: normal;
+        line-height: normal;
+        font-size: 13px;
+        text-align: center;
+        letter-spacing: -0.02em;
+      }
     }
 
     .control-arrow {
@@ -130,6 +153,7 @@
       background-color: transparent;
       border: none; 
       color: var(--gray-500);
+      cursor: pointer;
     }
 
     .player-avatar {
@@ -138,11 +162,13 @@
     }
 
     .gender-select {
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
 
-      button {
+      .btn {
+        font-size: 13px;
+        line-height: 2.5em;
+        justify-content: center;
+        width: 80px;
+        height: 40px;
 
         &:first-of-type {
           margin-left: 0;
@@ -202,6 +228,48 @@
     }
   }
 
+  .epoch {
+    height: size(85);
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-body {
+      padding-top: size(4);
+    }
+
+    .modal-footer {
+      padding: size(4) size(7) size(7);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .epoch-select {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    .btn-epoch {
+      width: size(14);
+      height: size(17);
+      border-radius: size(1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: size(2) 0 size(1);
+
+    }
+
+    .epoch-img {
+      width: size(10);
+      border-radius: size(1);
+    }
+  }
+
   input[type="radio"] {
     display: none;
 
@@ -255,7 +323,13 @@
     margin-bottom: size(1);
   }
 
+  .player-name-wrapper {
+    margin-right: 24px;
+
+  }
+
   .player-name {
+    width: 272px;
     background-color: var(--gray-100);
     border: none;
   }
@@ -263,6 +337,17 @@
   .background-description {
     width: 100%;
     height: size(7);
+  }
+
+  .epoch-description {
+    width: 100%;
+    font-size: 13px;
+    line-height: 15px;
+    margin-top: 32px;
+
+    .tech {
+      margin-top: 18px;
+    }
   }
 
   .creation-skills {

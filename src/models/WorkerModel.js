@@ -16,7 +16,7 @@ import { getData } from "../App";
 
 import { get_worker_dream } from "../game/knowledge/workers_dreams";
 
-import { generateFemaleAvatar, generateMaleAvatar } from "../game/knowledge/worker_avatar";
+import { generateFemaleAvatar, generateMaleAvatar, generateOtherAvatar } from "../game/knowledge/worker_avatar";
 
 class WorkerModel {
     constructor(name = "Default", stats = skills_1, gender = "male", is_player = false) {
@@ -31,7 +31,7 @@ class WorkerModel {
         this.standing_after_salary_rising = 0;
         this.morale = 100;
         this.accept_default = true;
-        this.avatar = gender === "male" ? generateMaleAvatar() : generateFemaleAvatar();
+        this.avatar = gender === "male" ? generateMaleAvatar() : gender === "female" ? generateFemaleAvatar() : generateOtherAvatar();
         this.hired = false;
 
         this.temper = {
@@ -453,7 +453,7 @@ class WorkerModel {
     }
 
     static generateGender() {
-        return _.random(1, 100) > 70 ? "female" : "male";
+        return _.random(1, 100) > 70 ? (_.random(1, 100) > 70 ? "other" : "female") : "male";
     }
 
     static generate(quality = 1) {
@@ -524,7 +524,7 @@ class WorkerModel {
                 "Aleksandr",
                 "Peter"
             ];
-        } else {
+        } else if (gender === "female") {
             first_names = [
                 "Eve",
                 "Olga",
@@ -542,6 +542,42 @@ class WorkerModel {
                 "Anna",
                 "Aurora",
                 "Audrey"
+            ];
+        } else {
+            first_names = [
+                "Eve",
+                "Olga",
+                "Jenny",
+                "Olivia",
+                "Jane",
+                "Amelia",
+                "Emily",
+                "Mia",
+                "Madison",
+                "Grace",
+                "Sofia",
+                "Maya",
+                "Alice",
+                "Anna",
+                "Aurora",
+                "Audrey",
+                "Oleg",
+                "Elliott",
+                "Igor",
+                "Jack",
+                "Kristofer",
+                "Mike",
+                "Micheal",
+                "John",
+                "Loris",
+                "Eugene",
+                "Gregorio",
+                "Freddy",
+                "Devin",
+                "Nicol",
+                "Alexey",
+                "Aleksandr",
+                "Peter"
             ];
         }
         const second_names = [

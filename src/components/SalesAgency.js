@@ -5,8 +5,6 @@ import _ from "lodash";
 import ReactBootstrapSlider from "react-bootstrap-slider";
 import "../../node_modules/react-bootstrap-slider/src/css/bootstrap-slider.min.css";
 
-import TeamDialog from "./TeamDialog";
-
 import { roles } from "../game/knowledge/workers";
 import { project_sizes } from "../game/knowledge/projects";
 import { skills, skills_names } from "../game/knowledge/skills";
@@ -16,10 +14,6 @@ import { colors } from "../game/knowledge/colors";
 class SalesAgency extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            modalOpen: false
-        };
-
         let min = JSON.parse(JSON.stringify(skills));
         let max = JSON.parse(JSON.stringify(skills));
 
@@ -31,15 +25,19 @@ class SalesAgency extends Component {
             max[skill] = 100;
         });
 
-        this.state = Object.assign(
+        let state = Object.assign(
             {
                 deal_counter: 1,
                 min_stats: JSON.parse(JSON.stringify(min)),
                 max_stats: JSON.parse(JSON.stringify(max)),
-                size: 1
+                size: 1,
+                modalOpen: false
             },
-            this.props.data.sales_agency_state
+            this.props.data.sales_agency_state,
+            { modalOpen: false }
         );
+
+        this.state = state;
 
         this.calcCost = this.calcCost.bind(this);
         this.search = this.search.bind(this);
@@ -87,9 +85,8 @@ class SalesAgency extends Component {
 
     search() {
         let state = this.state;
-        state.deal_counter++;
+        this.setState({ deal_counter: state.deal_counter++, modalOpen: false });
         this.props.data.helpers.contractSearch(state, this.calcCost());
-        //this.setState({ modalOpen: false });
     }
 
     openModal() {

@@ -489,6 +489,7 @@ h1, h2, h3, h4, h5, h6,
   color: var(--color-title);
   line-height: 1.5;
   letter-spacing: .5px;
+  cursor: default;
 }
 
 h1 b,
@@ -5308,8 +5309,8 @@ progress {
   background-color: color(var(--color-primary) shade(percentage));
   border-color: color(var(--color-primary) shade(percentage));
   color: #fff;
-  box-shadow: none;
 }
+
 
 .btn-success {
   background-color: var(--color-success);
@@ -10268,7 +10269,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .form-type-line .form-control.is-invalid:focus,
 .form-type-line .was-validated .custom-select:invalid:focus,
 .form-type-line .was-validated .form-control:invalid:focus {
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 .form-type-line .custom-select.is-valid,
@@ -10283,7 +10284,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .form-type-line .form-control.is-valid:focus,
 .form-type-line .was-validated .custom-select:valid:focus,
 .form-type-line .was-validated .form-control:valid:focus {
-  box-shadow: none !important;
+  box-shadow: none;
 }
 
 .form-type-material.form-control,
