@@ -10,6 +10,7 @@ import { Avatar } from "./Projects/Avatar";
 import Modal from "./Modal/Modal";
 import WorkerModal from "./Modal/WorkerModal";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
+import ReactTooltip from "react-tooltip";
 
 
 
@@ -141,13 +142,16 @@ class Worker extends Component {
             <WorkerHappinessBar worker={worker} />
             <WorkerStaminaBar worker={worker} />
             <div className="worker-skills">
+
               <StatsProgressBar
+                data-tip data-for={"progress_skill_design"}
                 type={'design'}
                 max_stat={data.max_stat}
                 stats={stats_progressbar_data}
                 worker={worker}
                 data={data}
               />
+
 
               <StatsProgressBar
                 type={'program'}
@@ -164,6 +168,9 @@ class Worker extends Component {
                 worker={worker}
                 data={data}
               />
+              <ReactTooltip id={"progress_skill_design"}>
+                <span>{`Design: ${stats_progressbar_data.design.value}`}</span>
+              </ReactTooltip>
             </div>
           </div>
         </div>

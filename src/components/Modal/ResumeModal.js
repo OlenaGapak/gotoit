@@ -71,7 +71,7 @@ class Resume extends Component {
                     <div className="modal-body-container flex-element flex-container-column description">
                         <div className="flex-element flex-container-row">
                             <h1 className="flex-element salary" style={{ color: `${colors.salary}` }}>
-                                {worker.salary}$
+                                {worker.getSalary()}$
                             </h1>
                             {_.map(worker.stats, (item, key) => {
                                 return (

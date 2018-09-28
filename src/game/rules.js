@@ -152,6 +152,11 @@ export const rules = {
                 if (data.btc_unlock) data.exchange_statistics.btc.values.push(data.current_btc_price);
             }
 
+            let real_tick = data.date.tick - data.started_tick;
+            if (real_tick === 5 || real_tick === 10 || real_tick === 15) {
+                this.pushNewProject();
+            }
+
             //MAX STATS UPDATE
             //workers hired
             data.workers.forEach(worker => {
@@ -253,6 +258,14 @@ export const rules = {
                 }
             });
 
+            _.each(data.npc_offered_projects, offer => {
+                let { project, offeredTick } = offer;
+                if (current_tick > offeredTick + project.deadline_max) {
+                    this.npcMadeProject(project.id);
+                    return false;
+                }
+            });
+
             return state;
         }
     },
@@ -299,22 +312,24 @@ export const rules = {
             if (data.share0_unlock) {
                 (() => {
                     const x = data.date.tick - 40490;
-                    data.current_share0_price = ((100 * data.company0_done) / average).toFixed(2);
+                    let newValue = parseFloat(((100 * data.company0_done) / average).toFixed(2));
+                    data.current_share0_price = isNaN(newValue) ? data.current_share0_price : newValue;
                 })();
             }
             if (data.share1_unlock) {
                 (() => {
                     const x = data.date.tick - 40490;
-                    data.current_share1_price = ((100 * data.company1_done) / average).toFixed(2);
+                    let newValue = parseFloat(((100 * data.company1_done) / average).toFixed(2));
+                    data.current_share1_price = isNaN(newValue) ? data.current_share1_price : newValue;
                 })();
             }
             if (data.share2_unlock) {
                 (() => {
                     const x = data.date.tick - 40490;
-                    data.current_share2_price = ((100 * data.company2_done) / average).toFixed(2);
+                    let newValue = parseFloat(((100 * data.company2_done) / average).toFixed(2));
+                    data.current_share2_price = isNaN(newValue) ? data.current_share2_price : newValue;
                 })();
             }
-
             //data.current_btc_price = Math.abs(Math.sin(x/19)) * x + Math.abs(Math.sin(Math.sqrt(x))) * x + Math.abs(Math.sin(Math.sqrt(x/7))) * x + Math.abs(Math.sin(Math.sqrt(x/227))) * x + x;
 
             //data.current_btc_price = Math.floor(Math.abs(Math.sin(Math.sqrt(x))) * x + Math.abs(Math.sin(Math.sqrt(x/7))) * x + Math.abs(Math.sin(Math.sqrt(x/227))) * x);
@@ -350,6 +365,11 @@ export const rules = {
             let probability = Math.min(10, 1 + data.workers.length * projects_done * 0.1) / 24;
             if (data.offered_projects.length < 5 && _.random(0.0, 100.0) < probability) {
                 this.pushNewProject();
+            }
+
+            let probability_npc = Math.min(10, 1 + data.workers.length * projects_done * 0.1) / 24;
+            if (data.npc_offered_projects.length < 10 && _.random(0.0, 100.0) < probability_npc) {
+                this.npcNewOffer();
             }
 
             /*
@@ -414,7 +434,6 @@ export const rules = {
                     // worker quiting
                     if (worker.to_leave) {
                         if (worker.to_leave_ticker <= 0) {
-                            hired--;
                             addAction(
                                 worker.name + " resigned from your company",
                                 {

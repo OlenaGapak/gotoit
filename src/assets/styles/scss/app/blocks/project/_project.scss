@@ -18,8 +18,9 @@
   }
 
   .select {
-    width: 100%;
-    margin-top: 10px;
+    position: absolute;
+    width: 95%;
+    z-index: 100;
   }
 
   // .project_icon {
