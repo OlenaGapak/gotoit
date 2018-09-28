@@ -84,8 +84,6 @@
 .btn-xs {
   font-size: 10px;
   padding: 0 size(1);
-  line-height: calc(var(--line-height-xs) - 2px);
-
   &.btn-bold {
     font-size: 9px;
   }
