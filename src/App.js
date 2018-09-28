@@ -1773,7 +1773,7 @@ class App extends Component {
 
     pushNewProject() {
         const data = this.state.data;
-        let quality = Math.ceil(_.random(1, data.date.tick / (24 * 30) + projects_done * 0.1));
+        let quality = Math.ceil(_.random(1, (data.date.tick - data.started_tick) / (24 * 30) + projects_done * 0.1));
 
         let size =
             quality < 3
@@ -1871,7 +1871,7 @@ class App extends Component {
 
     pushNewCandidate() {
         const data = this.state.data;
-        let worker = WorkerModel.generate(_.random(1, Math.floor(3 + projects_done * 0.1 + data.date.tick * 0.001)));
+        let worker = WorkerModel.generate(_.random(1, Math.floor(3 + projects_done * 0.1 + (data.date.tick - data.started_tick) * 0.001)));
 
         data.candidates.resumes.push(worker);
         this.createMail({

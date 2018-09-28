@@ -125,6 +125,7 @@ class Creation extends Component {
 
         let data = this.props.data;
         data.date.tick = epoch_list[this.state.selected_epoch].start_tick;
+        data.started_tick = epoch_list[this.state.selected_epoch].start_tick;
         data.money += player_backgrounds[this.state.selected_background].money;
 
         Object.keys(historical_events).map(event => {
@@ -206,9 +207,6 @@ class Creation extends Component {
             date: data.current_game_date,
             favorite: true
         });
-        data.helpers.pushNewProject();
-        data.helpers.pushNewProject();
-        data.helpers.pushNewProject();
 
         data.stage = "game";
 

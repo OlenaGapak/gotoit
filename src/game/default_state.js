@@ -16,6 +16,7 @@ var default_state = {
         game_paused: true,
         stage: "start",
         current_game_date: new Date(GAME_START_UNIXTIME),
+        started_tick: 0,
         date: {
             tick: 0,
             hour: 0,

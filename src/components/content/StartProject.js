@@ -68,7 +68,7 @@ class StartProject extends Component {
         const data = this.props.data;
         let startProjectButton = (
             <DefaultClickSoundButton
-                className="btn btn-success start-project-button"
+                className="btn btn-success start-project-btn"
                 onClick={() => {
                     this.openModal();
                 }}
@@ -78,7 +78,7 @@ class StartProject extends Component {
         );
 
         return (
-            <div>
+            <div className="start-project-btn">
                 {startProjectButton}
                 {state.modalOpen ? (
                     <Modal closeModal={() => this.closeModal()} showCloseButton={true}>

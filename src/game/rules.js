@@ -152,6 +152,11 @@ export const rules = {
                 if (data.btc_unlock) data.exchange_statistics.btc.values.push(data.current_btc_price);
             }
 
+            let real_tick = data.date.tick - data.started_tick;
+            if (real_tick === 5 || real_tick === 10 || real_tick === 15) {
+                this.pushNewProject();
+            }
+
             //MAX STATS UPDATE
             //workers hired
             data.workers.forEach(worker => {

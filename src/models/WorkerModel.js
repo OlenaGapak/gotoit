@@ -367,7 +367,6 @@ class WorkerModel {
     }
     getSalaryMod() {
         let salary_mod = this.standing / (1 + (100 * ((_.sum(_.values(this.stats)) / 3 + _.max(_.values(this.stats))) / 2) - 100)); // (1000 + this.statsSum() + _.max(_.values(this.stats)));
-        console.log(salary_mod);
         salary_mod *= this.get_monthly_salary === false ? 0.5 : 1;
         return Math.min(salary_mod, 1);
     }
