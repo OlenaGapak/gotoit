@@ -69,8 +69,6 @@ class MarketTop extends Component {
         });
         kind_options.push({ value: "all", label: "All" });
 
-        console.log(this.state.selected_platform);
-
         return (
             <div>
                 <div className="">

@@ -154,6 +154,8 @@ class App extends Component {
         this.addTimelineEvent = this.addTimelineEvent.bind(this);
 
         this.createPopup = this.createPopup.bind(this);
+        this.npcNewOffer = this.npcNewOffer.bind(this);
+        this.npcMadeProject = this.npcMadeProject.bind(this);
 
         let app_state = getDefaultState();
 
@@ -242,6 +244,8 @@ class App extends Component {
         app_state.data.helpers["modifyHoveredObjects"] = this.modifyHoveredObjects;
 
         app_state.data.helpers["createPopup"] = this.createPopup;
+        app_state.data.helpers["npcNewOffer"] = this.npcNewOffer;
+        app_state.data.helpers["npcMadeProject"] = this.npcMadeProject;
 
         this.state = app_state;
 
@@ -306,6 +310,10 @@ class App extends Component {
 
             _.each(loaded_app_state.data.projects, project => {
                 loaded_app_state.data.projects_technologies[project.id] = {};
+            });
+
+            _.each(loaded_app_state.data.npc_offered_projects, (offer, id) => {
+                loaded_app_state.data.npc_offered_projects[id].project = _.create(ProjectModel.prototype, offer.project);
             });
 
             loaded_app_state.data.helpers = helpers;
@@ -781,7 +789,6 @@ class App extends Component {
     }
 
     startOffered(id) {
-        console.log("START");
         const data = this.state.data;
         let project = _.remove(data.offered_projects, candidate => {
             return candidate.id === id;
@@ -799,7 +806,6 @@ class App extends Component {
         this.setState({ data: data });
 
         data.helpers.addTimelineEvent("deadline", "Deadline", project, project.deadline_max / 24);
-        console.log("start");
     }
 
     acceptAndMoveProject(project) {
@@ -1767,7 +1773,7 @@ class App extends Component {
 
     pushNewProject() {
         const data = this.state.data;
-        let quality = Math.ceil(_.random(1, data.date.tick / (24 * 30) + projects_done * 0.1));
+        let quality = Math.ceil(_.random(1, (data.date.tick - data.started_tick) / (24 * 30) + projects_done * 0.1));
 
         let size =
             quality < 3
@@ -1811,10 +1817,61 @@ class App extends Component {
         });
         addAction("New job!", { timeOut: 3000, extendedTimeOut: 1000 });
     }
+    npcNewOffer() {
+        const data = this.state.data;
+        let quality = Math.ceil(_.random(1, data.date.tick / (24 * 30) + projects_done * 0.1));
+
+        let size =
+            quality < 3
+                ? 1
+                : quality < 5
+                    ? _.random(1, _.random(1, 2))
+                    : quality < 10
+                        ? _.random(1, 2)
+                        : quality < 15
+                            ? _.random(0, 1)
+                                ? _.random(1, 2)
+                                : _.random(1, 3)
+                            : quality < 20
+                                ? _.random(1, 3)
+                                : quality < 25
+                                    ? _.random(0, 1)
+                                        ? _.random(1, 3)
+                                        : _.random(1, 4)
+                                    : quality < 30
+                                        ? _.random(1, 4)
+                                        : quality < 35
+                                            ? _.random(0, 1)
+                                                ? _.random(1, 4)
+                                                : _.random(2, 4)
+                                            : quality < 40
+                                                ? _.random(2, 4)
+                                                : quality < 45
+                                                    ? _.random(_.random(2, 4), 4)
+                                                    : quality < 50
+                                                        ? _.random(3, 4)
+                                                        : 4;
+        let this_project = ProjectModel.generate(_.sample(companies), quality, size, "history");
+        //console.log('probability: ' + probability.toFixed(2) + ' quality: ' + quality + ' size: ' + size);
+        this.state.data.npc_offered_projects.push({
+            project: this_project,
+            offeredTick: data.date.tick
+        });
+        console.log("new_offer");
+    }
+
+    npcMadeProject(id) {
+        let data = this.state.data;
+        let project = _.remove(data.npc_offered_projects, offer => {
+            return offer.project.id === id;
+        })[0].project;
+        data.simplified_reports.push(project.generateReport(false));
+        this.setState({ data: data });
+    }
 
     pushNewCandidate() {
         const data = this.state.data;
-        let worker = WorkerModel.generate(_.random(1, Math.floor(3 + projects_done * 0.1 + data.date.tick * 0.001)));
+        let worker = WorkerModel.generate(_.random(1, Math.floor(3 + projects_done * 0.1 + (data.date.tick - data.started_tick) * 0.001)));
 
         data.candidates.resumes.push(worker);
         this.createMail({
