@@ -390,7 +390,7 @@ class Mail extends Component {
                             <SVGInline
                                 className="done-all-svg"
                                 svg={
-                                    '<svg className="done-all-ico" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" > <path d="M0 13.4062L1.40625 12L6.98438 17.5781L5.57812 18.9844L0 13.4062ZM21.7969 5.57812L23.25 6.98438L11.25 18.9844L5.625 13.4062L7.07812 12L11.25 16.1719L21.7969 5.57812ZM17.5781 6.98438L11.25 13.3594L9.84375 11.9531L16.1719 5.57812L17.5781 6.98438Z" /> </svg>'
+                                    '<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M0 13.4062L1.40625 12L6.98438 17.5781L5.57812 18.9844L0 13.4062ZM21.7969 5.57812L23.25 6.98438L11.25 18.9844L5.625 13.4062L7.07812 12L11.25 16.1719L21.7969 5.57812ZM17.5781 6.98438L11.25 13.3594L9.84375 11.9531L16.1719 5.57812L17.5781 6.98438Z"/> </svg>'
                                 }
                             />
                         </div>
@@ -404,7 +404,7 @@ class Mail extends Component {
                                 <SVGInline
                                     className={`star-svg ${this.state.onlyFavorites ? "active" : ""}`}
                                     svg={
-                                        '<svg width="20" height="19" viewBox="0 0 20 19" xmlns="http://www.w3.org/2000/svg" > <path d="M19.9844 7.23438L14.5469 11.9688L16.1875 19L10 15.25L3.8125 19L5.45312 11.9688L0.015625 7.23438L7.1875 6.625L10 0.015625L12.8125 6.625L19.9844 7.23438Z" /> </svg>'
+                                        '<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M21.9844 9.23438L16.5469 13.9688L18.1875 21L12 17.25L5.8125 21L7.45312 13.9688L2.01562 9.23438L9.1875 8.625L12 2.01562L14.8125 8.625L21.9844 9.23438Z"/> </svg>'
                                     }
                                 />
                                 {" Interested"}
