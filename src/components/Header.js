@@ -20,10 +20,10 @@ class Header extends Component {
                             }}
                         >
                             {/* <Icon name="logo" />  TODO: commented until webpack.config appears*/}
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none">
                                 <use xlinkHref="#icon-logo" />
                             </svg>
-                            Go to IT
+                            {/*Go to IT*/}
                         </div>
                         <DefaultClickSoundButton
                             className="topbar-btn"
