@@ -4,9 +4,13 @@ import _ from "lodash";
 import ProjectEndScreen from "../Projects/ProjectEndScreen";
 import HistoricalEvent from "../HistoricalEvent";
 import HotOffer from "../HotOffer";
-import Modal from "../Modal/Modal";
+import MailModal from "../Modal/MailModal";
 import Resume from "../Modal/ResumeModal";
 import Offer from "../Modal/OfferModal";
+import WelcomeMessage from "../Modal/WelcomeMessage";
+import RelationsMessage from "../Modal/RelationsMessage";
+import OfficeMessage from "../Modal/OfficeMessage";
+import NewsMessage from "../Modal/NewsMessage";
 import { FormattedDate } from "react-intl";
 import { Avatar } from "../Projects/Avatar";
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
@@ -25,6 +29,7 @@ import DefaultEmailTemplate from "../Letters/DefaultEmailTemplate";
 import news from "../../assets/images/icon/service/news.png";
 
 import SVGInline from "react-svg-inline";
+import AnalyticsMessage from "../Modal/AnalyticsMessage";
 
 class Mail extends Component {
     static propTypes = {
@@ -36,7 +41,8 @@ class Mail extends Component {
         this.state = {
             current_modal: null,
             letters: null,
-            show_modal: false
+            show_modal: false,
+            onlyFavorites: false
         };
     }
     closeModal = () => {
@@ -115,14 +121,30 @@ class Mail extends Component {
             <div className="mail">
                 <div className="mail-menu">
                     <DefaultClickSoundButton className="mark-all-btn" onClick={this.markAllAsRead}>
-                        Mark all as read
+                        <div>
+                            {"Mark all as read "}
+                            <SVGInline
+                                className="done-all-svg"
+                                svg={
+                                    '<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M0 13.4062L1.40625 12L6.98438 17.5781L5.57812 18.9844L0 13.4062ZM21.7969 5.57812L23.25 6.98438L11.25 18.9844L5.625 13.4062L7.07812 12L11.25 16.1719L21.7969 5.57812ZM17.5781 6.98438L11.25 13.3594L9.84375 11.9531L16.1719 5.57812L17.5781 6.98438Z"/> </svg>'
+                                }
+                            />
+                        </div>
                     </DefaultClickSoundButton>
                     <div className="left-side">
-                        <DefaultClickSoundButton className="mark-all-btn" onClick={this.markAllAsRead}>
-                            Mark all as read
-                        </DefaultClickSoundButton>
-                        <DefaultClickSoundButton className="mark-all-btn" onClick={this.markAllAsRead}>
-                            Mark all as read
+                        <DefaultClickSoundButton
+                            className={`interested-btn ${this.state.onlyFavorites ? "active" : ""}`}
+                            onClick={this.toggleFavoriteFilter}
+                        >
+                            <div>
+                                <SVGInline
+                                    className={`star-svg ${this.state.onlyFavorites ? "active" : ""}`}
+                                    svg={
+                                        '<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <path d="M21.9844 9.23438L16.5469 13.9688L18.1875 21L12 17.25L5.8125 21L7.45312 13.9688L2.01562 9.23438L9.1875 8.625L12 2.01562L14.8125 8.625L21.9844 9.23438Z"/> </svg>'
+                                    }
+                                />
+                                {" Interested"}
+                            </div>
                         </DefaultClickSoundButton>
                     </div>
                 </div>

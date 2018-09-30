@@ -23,6 +23,7 @@ import {
     other_asset
 } from "../game/knowledge/worker_avatar";
 import logo from "../assets/images/go2it-logo.png";
+import bdcLogo from "../assets/images/bdc-logo_light.png";
 import specialistImg from "../assets/images/creation/backgrounds/specialist.png";
 import coworkerImg from "../assets/images/creation/backgrounds/coworker.png";
 import bussinessmanImg from "../assets/images/creation/backgrounds/bussinessman.png";
@@ -124,6 +125,7 @@ class Creation extends Component {
 
         let data = this.props.data;
         data.date.tick = epoch_list[this.state.selected_epoch].start_tick;
+        data.started_tick = epoch_list[this.state.selected_epoch].start_tick;
         data.money += player_backgrounds[this.state.selected_background].money;
 
         Object.keys(historical_events).map(event => {
@@ -195,10 +197,16 @@ class Creation extends Component {
 
         // i must hard set :(
         data.helpers.brutalSet({ data: data });
-
-        data.helpers.pushNewProject();
-        data.helpers.pushNewProject();
-        data.helpers.pushNewProject();
+        data.helpers.createMail({
+            type: "Welcome",
+            date: data.current_game_date,
+            favorite: true
+        });
+        data.helpers.createMail({
+            type: "Relations",
+            date: data.current_game_date,
+            favorite: true
+        });
 
         data.stage = "game";
 
@@ -317,7 +325,7 @@ class Creation extends Component {
             let key_upper = key_lower.charAt(0).toUpperCase() + key_lower.substr(1);
             return (
                 <div className="customizator-item" key={key}>
-                    <h4 className="fw-700">{key_upper}</h4>
+                    <h5 className="fw-700">{key_upper}</h5>
                     <div className="customizator-controls">
                         <DefaultClickSoundButton className="control-arrow" onClick={() => this.fragmentDec(key)}>
                             {"<"}
@@ -354,13 +362,14 @@ class Creation extends Component {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
+                                    <img className="bdc-logo" src={bdcLogo} />
                                     <DefaultClickSoundButton
                                         className="btn btn-success btn-lg ml-auto fw-700"
                                         onClick={() => {
                                             this.setState({ step: "appearance" });
                                         }}
                                     >
-                                        Create Your Company!
+                                        Create Your Company
                                     </DefaultClickSoundButton>
                                 </div>
                             </div>
@@ -373,64 +382,70 @@ class Creation extends Component {
                                 <div className="modal-header">
                                     <h2 className="modal-title text-center fw-300">Create your character</h2>
                                 </div>
-                                <div className="modal-body">
-                                    <div className="inputs mr-48">
-                                        <h4 className="fw-500">Name</h4>
-                                        <input
-                                            type="text"
-                                            name="background"
-                                            className="form-control player-name"
-                                            value={this.state.suggest_name}
-                                            onChange={event => {
-                                                this.setState({
-                                                    suggest_name: event.target.value
-                                                });
-                                            }}
-                                        />
-                                        <div className="gender-select mb-32">
-                                            <h4 className="fw-500 mt-24">Gender</h4>
-                                            <DefaultClickSoundButton
-                                                className={`btn btn-sm btn-primary flex-grow ${
-                                                    this.state.gender === "male" ? "active" : ""
-                                                }`}
-                                                value="male"
-                                                onClick={() => this.handleGenderChange("male")}
-                                            >
-                                                <span className="icon-gender-men text-white" />
-                                                 Male
-                                            </DefaultClickSoundButton>
-                                            <DefaultClickSoundButton
-                                                className={`btn btn-sm btn-primary flex-grow ${
-                                                    this.state.gender === "female" ? "active" : ""
-                                                }`}
-                                                value="female"
-                                                onClick={() => this.handleGenderChange("female")}
-                                            >
-                                                <span className="icon-gender-women text-white" />
-                                                 Female
-                                            </DefaultClickSoundButton>
-                                            <DefaultClickSoundButton
-                                                className={`btn btn-sm btn-primary flex-grow ${
-                                                    this.state.gender === "other" ? "active" : ""
-                                                }`}
-                                                value="other"
-                                                onClick={() => this.handleGenderChange("other")}
-                                            >
-                                                <span className="icon-gender-other text-white" />
-                                                 Other
+                                <div className="flex-container-column modal-body">
+                                    <div className="flex-container-row">
+                                        <div className="player-name-wrapper flex-container-column">
+                                            <h4 className="fw-500">Name</h4>
+                                            <input
+                                                type="text"
+                                                name="background"
+                                                className="form-control player-name"
+                                                value={this.state.suggest_name}
+                                                onChange={event => {
+                                                    this.setState({
+                                                        suggest_name: event.target.value
+                                                    });
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="flex-container-column gender-select">
+                                            <h4 className="fw-500">Gender</h4>
+                                            <div className="flex-container-row">
+                                                <DefaultClickSoundButton
+                                                    className={`btn btn-sm btn-primary flex-grow ${
+                                                        this.state.gender === "male" ? "active" : ""
+                                                    }`}
+                                                    value="male"
+                                                    onClick={() => this.handleGenderChange("male")}
+                                                >
+                                                    <span className="icon-gender-men text-white" />
+                                                    Male
+                                                </DefaultClickSoundButton>
+                                                <DefaultClickSoundButton
+                                                    className={`btn btn-sm btn-primary flex-grow ${
+                                                        this.state.gender === "female" ? "active" : ""
+                                                    }`}
+                                                    value="female"
+                                                    onClick={() => this.handleGenderChange("female")}
+                                                >
+                                                    <span className="icon-gender-women text-white" />
+                                                    Female
+                                                </DefaultClickSoundButton>
+                                                <DefaultClickSoundButton
+                                                    className={`btn btn-sm btn-primary flex-grow ${
+                                                        this.state.gender === "other" ? "active" : ""
+                                                    }`}
+                                                    value="other"
+                                                    onClick={() => this.handleGenderChange("other")}
+                                                >
+                                                    <span className="icon-gender-other text-white" />
+                                                    Other
+                                                </DefaultClickSoundButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex-container-row inputs">
+                                        <div className="customizator">{selectors}</div>
+                                        <div className="portrait">
+                                            <Avatar
+                                                className="player-avatar worker-avatar"
+                                                name={"player avatar"}
+                                                sources={_.toPairs(this.state.realAvatar)}
+                                            />
+                                            <DefaultClickSoundButton className="btn btn-lg btn-primary" onClick={this.randomize}>
+                                                Randomise
                                             </DefaultClickSoundButton>
                                         </div>
-                                        <div className="customizator">{selectors}</div>
-                                    </div>
-                                    <div className="portrait">
-                                        <Avatar
-                                            className="player-avatar worker-avatar"
-                                            name={"player avatar"}
-                                            sources={_.toPairs(this.state.realAvatar)}
-                                        />
-                                        <DefaultClickSoundButton className="btn btn-lg btn-primary" onClick={this.randomize}>
-                                            Randomise
-                                        </DefaultClickSoundButton>
                                     </div>
                                 </div>
 

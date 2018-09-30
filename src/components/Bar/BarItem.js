@@ -36,7 +36,8 @@ class BarItem extends PureComponent {
             <div
                 style={{
                     background: color,
-                    width: `${width}%`
+                    width: `${width}%`,
+                    transition: "1s"
                 }}
                 id={id}
                 className="progress-bar transition"

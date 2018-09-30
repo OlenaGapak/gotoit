@@ -10,6 +10,7 @@ import { Avatar } from "./Projects/Avatar";
 import Modal from "./Modal/Modal";
 import WorkerModal from "./Modal/WorkerModal";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
+import ReactTooltip from "react-tooltip";
 import isEqual from "react-fast-compare";
 
 
@@ -145,7 +146,9 @@ class Worker extends Component {
             <WorkerHappinessBar happiness_real={worker.calcEfficiencyReal()} />
             <WorkerStaminaBar stamina={worker.stamina} />
             <div className="worker-skills">
+
               <StatsProgressBar
+                data-tip data-for={"progress_skill_design"}
                 type={'design'}
                 max_stat={data.max_stat}
                 stats={stats_progressbar_data}
@@ -153,6 +156,7 @@ class Worker extends Component {
                 getRole={this.props.data.helpers.getRole}
                 changeRole={this.props.data.helpers.changeRole}
               />
+
 
               <StatsProgressBar
                 type={'program'}
@@ -171,6 +175,9 @@ class Worker extends Component {
                 getRole={this.props.data.helpers.getRole}
                 changeRole={this.props.data.helpers.changeRole}
               />
+              <ReactTooltip id={"progress_skill_design"}>
+                <span>{`Design: ${stats_progressbar_data.design.value}`}</span>
+              </ReactTooltip>
             </div>
           </div>
         </div>

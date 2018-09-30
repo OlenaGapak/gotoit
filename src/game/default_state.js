@@ -16,6 +16,7 @@ var default_state = {
         game_paused: true,
         stage: "start",
         current_game_date: new Date(GAME_START_UNIXTIME),
+        started_tick: 0,
         date: {
             tick: 0,
             hour: 0,
@@ -57,6 +58,7 @@ var default_state = {
         },
 
         offered_projects: [],
+        npc_offered_projects: [],
 
         rumor: 0,
         meetup: 0,
@@ -106,9 +108,9 @@ var default_state = {
         on_tick_effects: [],
         exchange_statistics: {
             btc: { buffer: 0, values: [] },
-            share0: { buffer: 0, values: [] },
-            share1: { buffer: 0, values: [] },
-            share2: { buffer: 0, values: [] }
+            share0: { buffer: 0, values: [100] },
+            share1: { buffer: 0, values: [100] },
+            share2: { buffer: 0, values: [100] }
         },
         exchange_unlocked_shares: [],
         share0_unlock: false,

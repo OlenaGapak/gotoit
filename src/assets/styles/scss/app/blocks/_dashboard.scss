@@ -1,16 +1,18 @@
 .dashboard {
     display: flex;
     padding: size(0.5);
-    height: calc(100% - 74px);
+    //height: calc(100% - 74px);
+    max-width: 1400px;
+    margin: auto;
 
     .workers,
     .projects {
         height: 100%;
         padding: size(0.5);
-        overflow-y: auto;
-        overflow-x: hidden;
-        background-color: rgba(0, 0, 0, 0.3);
-        backdrop-filter: blur(10px);
+        overflow-y: visible;
+        overflow-x: visible;
+        background-color: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(30px);
         border-radius: size(1);
     }
 
@@ -20,15 +22,17 @@
 
     .activity {
         width: 66%;
+        height: 80vh;
         margin: 0 size(0.5);
     }
 
     .projects {
         width: 33%;
+
+        .text-center {
+          color: var(--gray-300);
+        }
     }
 
-    .start-project {
-        width: 306px;
-        height: 32px;
-    }
+
 }
