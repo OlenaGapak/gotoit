@@ -23,9 +23,9 @@ export default class Deadline extends PureComponent {
             },
             {
                 name: "to deadline",
-                width: (deadline / deadlineMax) * 100,
+                width: _.round((deadline / deadlineMax) * 100, 0),
                 color: colors.success,
-                value: deadline,
+                value: _.round(deadline, 0),
                 showName: true
             }
         ];

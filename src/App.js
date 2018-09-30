@@ -253,10 +253,10 @@ class App extends Component {
     }
 
     setStatedebounce = _.throttle(state => {
-        localStorage.setItem(game_name + "_app_state", JSON.stringify(state));
-
-        this.setState(() => state);
-    }, 700);
+        this.setState(state, () => {
+            localStorage.setItem(game_name + "_app_state", JSON.stringify(state));
+        });
+    }, 600);
     UNSAFE_componentWillMount() {
         let helpers = this.state.data.helpers;
 

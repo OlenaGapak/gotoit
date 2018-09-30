@@ -162,6 +162,8 @@ class StartProject extends Component {
                                                         worker={worker}
                                                         data={data}
                                                         stat_icon={true}
+                                                        getRole={this.props.data.helpers.getRole}
+                                                        changeRole={this.props.data.helpers.changeRole}
                                                     />
 
                                                     <StatsProgressBar
@@ -171,6 +173,8 @@ class StartProject extends Component {
                                                         worker={worker}
                                                         data={data}
                                                         stat_icon={true}
+                                                        getRole={this.props.data.helpers.getRole}
+                                                        changeRole={this.props.data.helpers.changeRole}
                                                     />
 
                                                     <StatsProgressBar
@@ -180,6 +184,8 @@ class StartProject extends Component {
                                                         worker={worker}
                                                         data={data}
                                                         hideStatIcon={true}
+                                                        getRole={this.props.data.helpers.getRole}
+                                                        changeRole={this.props.data.helpers.changeRole}
                                                     />
                                                 </div>
                                             </div>

@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import classNames from "classnames";
 import * as PropTypes from "prop-types";
+import _ from "lodash";
 
 export default class ProjectDeadline extends PureComponent {
     static propTypes = {
@@ -20,7 +21,7 @@ export default class ProjectDeadline extends PureComponent {
                         )}
                         role="progressbar"
                         style={{
-                            width: 100 - (this.props.deadline / this.props.deadlineMax) * 100 + "%"
+                            width: _.round(100 - (this.props.deadline / this.props.deadlineMax) * 100, 0) + "%"
                         }}
                     >
                         {this.props.deadlineMax - this.props.deadline} hours
@@ -29,7 +30,7 @@ export default class ProjectDeadline extends PureComponent {
                         className="progress-bar bg-success"
                         role="progressbar"
                         style={{
-                            width: (this.props.deadline / this.props.deadlineMax) * 100 + "%"
+                            width: _.round((this.props.deadline / this.props.deadlineMax) * 100, 0) + "%"
                         }}
                     >
                         {this.props.deadline} hours

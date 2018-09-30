@@ -5,7 +5,7 @@ import { easeLinear } from "d3-ease";
 import { Motion, spring } from "react-motion";
 import SplashAnimated from "./SplashAnimated";
 import { sounds } from "../../game/knowledge/sounds";
-
+import { easeExpInOut } from "d3-ease";
 class BubbleAnimated extends PureComponent {
     static propTypes = {
         color: PropTypes.string.isRequired,
@@ -17,7 +17,7 @@ class BubbleAnimated extends PureComponent {
     };
     constructor(props) {
         super(props);
-        let { size, color, queue } = props;
+        let { size, color } = props;
         let from = { x: 0, y: 0 };
         let elementFrom = document.getElementById(props.from);
         let elementTo = document.getElementById(props.to);
@@ -30,7 +30,7 @@ class BubbleAnimated extends PureComponent {
             this.state = {
                 ...this.state,
                 step: 1,
-                duration: 700 - 50 * props.gameSpeed,
+                duration: 600 - 50,
                 size,
                 color,
                 opacity: 1,
@@ -46,6 +46,7 @@ class BubbleAnimated extends PureComponent {
     movingEnd = () => {
         let { step } = this.state;
         console.info("movingEnd ");
+
         return this.props.handleTransitionEnd();
     };
     componentDidMount() {
@@ -68,7 +69,7 @@ class BubbleAnimated extends PureComponent {
         audio.play();
     }
     render() {
-        let { count, queue } = this.props;
+        let { count } = this.props;
         let { size, color, x, y, elementFrom, elementTo, opacity, scale, duration } = this.state;
         if (!elementFrom || !elementTo) return null;
         return (
@@ -86,23 +87,47 @@ class BubbleAnimated extends PureComponent {
                             {
                                 x: [x],
                                 y: [y],
-                                opacity: [opacity],
-                                scale: [scale],
                                 timing: {
-                                    duration: [duration]
-                                    // ease: easeLinear
-                                },
-                                events: { end: this.movingEnd }
-                            }
-                        ]}
-                        leave={[
-                            // an array!
+                                    duration: 500
+                                    // easy: easeExpInOut
+                                    // easy: easeCubicIn
+                                }
+                                // events: {
+                                // end: this.movingEnd
+                                // }
+                            },
                             {
                                 opacity: [0],
                                 scale: [2],
                                 timing: {
-                                    duration: 3500
-                                    // ease: easeLinear
+                                    delay: 500,
+                                    duration: 500
+                                },
+                                events: {
+                                    end: this.movingEnd
+                                }
+                            }
+                        ]}
+                        // enter={{
+                        //     x: [x],
+                        //     y: [y],
+                        //
+                        //     timing: {
+                        //         duration: [600],
+                        //         ease: easeExpInOut
+                        //     }
+                        //     // events: { end: this.movingEnd }
+                        // }}
+                        leave={[
+                            // an array!
+                            {
+                                x: x,
+                                y: y,
+                                opacity: [1],
+                                scale: 3,
+                                timing: {
+                                    duration: 1000,
+                                    ease: easeExpInOut
                                 }
                             }
                         ]}
@@ -110,23 +135,13 @@ class BubbleAnimated extends PureComponent {
                         {({ x, y, opacity, scale }) => {
                             return (
                                 <div
+                                    className="bubbles-item"
                                     style={{
                                         transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
                                         opacity: opacity,
                                         width: size,
                                         height: size,
-                                        background: color,
-                                        willChange: "transform, opacity",
-                                        borderRadius: "50%",
-
-                                        textAlign: "center",
-                                        lineHeight: size,
-                                        position: "relative",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        color: "white",
-                                        cursor: "pointer"
+                                        background: color
                                     }}
                                 >
                                     {count}

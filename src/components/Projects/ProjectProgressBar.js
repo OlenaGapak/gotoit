@@ -22,16 +22,16 @@ class ProjectProgressBar extends Component {
             design_data = [
                 {
                     name: "Design bugs",
-                    width: (100 / sum_design) * project.bugs.design,
+                    width: _.round((100 / sum_design) * project.bugs.design, 0),
                     color: colors.design.colorBug,
-                    value: project.bugs.design,
+                    value: _.round(project.bugs.design, 0),
                     id: project.id + project_bars.design_bugs.id
                 },
                 {
                     name: "Design completed",
-                    width: (100 / sum_design) * project.done.design,
+                    width: _.round((100 / sum_design) * project.done.design, 0),
                     color: colors.design.colorCompleted,
-                    value: project.done.design,
+                    value: _.round(project.done.design, 0),
                     id: project.id + project_bars.design_completed.id
                 }
             ];
@@ -39,16 +39,16 @@ class ProjectProgressBar extends Component {
             prog_data = [
                 {
                     name: "Program bugs",
-                    width: (100 / sum_prog) * project.bugs.program,
+                    width: _.round((100 / sum_prog) * project.bugs.program, 0),
                     color: colors.program.colorBug,
-                    value: project.bugs.program,
+                    value: _.round(project.bugs.program, 0),
                     id: project.id + project_bars.program_bugs.id
                 },
                 {
                     name: "Program completed",
-                    width: (100 / sum_prog) * project.done.program,
+                    width: _.round((100 / sum_prog) * project.done.program, 0),
                     color: colors.program.colorCompleted,
-                    value: project.done.program,
+                    value: _.round(project.done.program, 0),
                     id: project.id + project_bars.program_completed.id
                 }
             ];
@@ -56,16 +56,16 @@ class ProjectProgressBar extends Component {
             manage_data = [
                 {
                     name: "Manage bugs",
-                    width: (100 / sum_manage) * project.bugs.manage,
+                    width: _.round((100 / sum_manage) * project.bugs.manage, 0),
                     color: colors.manage.colorBug,
-                    value: project.bugs.manage,
+                    value: _.round(project.bugs.manage, 0),
                     id: project.id + project_bars.manage_bugs.id
                 },
                 {
                     name: "Manage completed",
-                    width: (100 / sum_manage) * project.done.manage,
+                    width: _.round((100 / sum_manage) * project.done.manage, 0),
                     color: colors.manage.colorCompleted,
-                    value: project.done.manage,
+                    value: _.round(project.done.manage, 0),
                     id: project.id + project_bars.manage_completed.id
                 }
             ];
@@ -75,23 +75,23 @@ class ProjectProgressBar extends Component {
             design_data = [
                 {
                     name: "Design tasks",
-                    width: (100 / sum_design) * (project.estimate.design - project.done.design),
+                    width: _.round((100 / sum_design) * (project.estimate.design - project.done.design), 0),
                     color: colors.design.colorEstimate,
-                    value: project.estimate.design - project.done.design,
+                    value: _.round(project.estimate.design - project.done.design, 0),
                     id: project.id + project_bars.design_tasks.id
                 },
                 {
                     name: "Design bugs",
-                    width: (100 / sum_design) * project.bugs.design,
+                    width: _.round((100 / sum_design) * project.bugs.design, 0),
                     color: colors.design.colorBug,
-                    value: project.bugs.design,
+                    value: _.round(project.bugs.design, 0),
                     id: project.id + project_bars.design_bugs.id
                 },
                 {
                     name: "Design completed",
-                    width: (100 / sum_design) * project.done.design,
+                    width: _.round((100 / sum_design) * project.done.design, 0),
                     color: colors.design.colorCompleted,
-                    value: project.done.design,
+                    value: _.round(project.done.design, 0),
                     id: project.id + project_bars.design_completed.id
                 }
             ];
@@ -100,23 +100,23 @@ class ProjectProgressBar extends Component {
             prog_data = [
                 {
                     name: "Program tasks",
-                    width: (100 / sum_prog) * (project.estimate.program - project.done.program),
+                    width: _.round((100 / sum_prog) * (project.estimate.program - project.done.program), 0),
                     color: colors.program.colorEstimate,
-                    value: project.estimate.program - project.done.program,
+                    value: _.round(project.estimate.program - project.done.program, 0),
                     id: project.id + project_bars.program_tasks.id
                 },
                 {
                     name: "Program bugs",
-                    width: (100 / sum_prog) * project.bugs.program,
+                    width: _.round((100 / sum_prog) * project.bugs.program, 0),
                     color: colors.program.colorBug,
-                    value: project.bugs.program,
+                    value: _.round(project.bugs.program, 0),
                     id: project.id + project_bars.program_bugs.id
                 },
                 {
                     name: "Program completed",
-                    width: (100 / sum_prog) * project.done.program,
+                    width: _.round((100 / sum_prog) * project.done.program),
                     color: colors.program.colorCompleted,
-                    value: project.done.program,
+                    value: _.round(project.done.program, 0),
                     id: project.id + project_bars.program_completed.id
                 }
             ];

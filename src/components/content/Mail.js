@@ -21,7 +21,7 @@ import archive from "../../assets/images/icon/browser/7-archive.png";
 
 import clients from "../../assets/images/icon/service/pr/clients.png";
 import employees from "../../assets/images/icon/service/pr/employees.png";
-
+import DefaultEmailTemplate from "../Letters/DefaultEmailTemplate";
 import news from "../../assets/images/icon/service/news.png";
 
 import SVGInline from "react-svg-inline";
@@ -47,175 +47,70 @@ class Mail extends Component {
             letter.isRead = true;
         });
     };
-
+    getState = (index, letter) => {
+        let object = letter.object || {};
+        let _states = {
+            "Project report": {
+                content: <ProjectEndScreen closeModal={this.closeModal} key={index} letter={letter} data={this.props.data} />,
+                title: `Project report: ${_.get(object, "name")} `,
+                description: `Customer: ${_.get(object, "company")}. 
+                Stage: ${_.get(object, "stage")}.`,
+                iconSrc: pr
+            },
+            "Hot offer": {
+                content: <HotOffer closeModal={this.closeModal} key={index} letter={letter} data={this.props.data} />,
+                title: `Hot project offer: ${_.get(object, "name")}`,
+                description: `Reward: $${_.get(object, "reward")}. Estimate: Design ${_.get(object, "estimate.design")} Program 
+                ${_.get(object, "estimate.program")} Manage ${_.get(object, "estimate.program")}`,
+                iconSrc: clients
+            },
+            Resume: {
+                content: <Resume closeModal={this.closeModal} key={index} letter={letter} data={this.props.data} />,
+                title: `Employee offer: ${_.get(object, "name")}`,
+                description: `Salary: $${_.get(object, "salary")}.
+                 Skills: Design: ${_.get(object, "stats.design")}, Program:  ${_.get(object, "stats.program")}, Manage: ${_.get(
+                    object,
+                    "stats.manage"
+                )}.`,
+                iconSrc: employees
+            },
+            Offer: {
+                content: (
+                    <Offer
+                        letter={letter}
+                        closeModal={this.closeModal}
+                        key={index}
+                        expired={letter.expired}
+                        createdAt={letter.createdAt}
+                        project={object}
+                        data={this.props.data}
+                    />
+                ),
+                title: `Project offer: ${_.get(object, "company")}
+                 ${_.get(object, "name")}`,
+                description: `Reward: $${_.get(object, "reward")}. Estimate: Design:
+                 ${_.get(object, "estimate.design")}, Program:  ${_.get(object, "estimate.program")}, Manage: ${_.get(
+                    object,
+                    "estimate.manage"
+                )}.`,
+                iconSrc: clients
+            },
+            Event: {
+                content: <HistoricalEvent closeModal={this.closeModal} key={index} content={object} date={letter.date} />,
+                title: `World news: ${_.get(object, "name")}`,
+                description: _.get(object, "description"),
+                iconSrc: news
+            }
+        };
+        return {
+            ..._states[letter.type],
+            date: letter.date
+        };
+    };
     render() {
         const data = this.props.data;
-        const inverted_mailbox = (() => {
-            let array = [];
-            for (let i = data.mailbox.length - 1; i >= 0; i--) {
-                array.push(data.mailbox[i]);
-            }
-            return array;
-        })();
+        const inverted_mailbox = _.reverse([...data.mailbox]);
         let handleClick;
-
-        const letters = _.map(inverted_mailbox, (letter, i) => {
-            switch (letter.type) {
-                case "Project report":
-                    handleClick = () => {
-                        this.setState({
-                            current_modal: <ProjectEndScreen closeModal={this.closeModal} key={i} letter={letter} data={this.props.data} />
-                        });
-                        this.setState({ show_modal: true });
-                        letter.isRead = true;
-                    };
-                    letter.title = "Project report: " + letter.object.name;
-                    letter.description = "Customer: " + letter.object.company + ". Stage: " + letter.object.stage + ".";
-                    break;
-
-                case "Hot offer":
-                    handleClick = () => {
-                        this.setState({
-                            current_modal: <HotOffer closeModal={this.closeModal} key={i} letter={letter.object} data={this.props.data} />
-                        });
-                        this.setState({ show_modal: true });
-                        letter.isRead = true;
-                    };
-                    letter.title = "Hot project offer: " + letter.object.name;
-                    letter.description =
-                        "Reward: $" +
-                        letter.object.reward +
-                        ". Estimate: Design " +
-                        letter.object.estimate.design +
-                        " Program " +
-                        letter.object.estimate.program +
-                        " Manage " +
-                        letter.object.estimate.program;
-                    break;
-                case "Resume":
-                    handleClick = () => {
-                        this.setState({
-                            current_modal: <Resume closeModal={this.closeModal} key={i} letter={letter} data={this.props.data} />
-                        });
-                        this.setState({ show_modal: true });
-                        letter.isRead = true;
-                    };
-                    letter.title = "Employee offer: " + letter.object.name;
-                    letter.description =
-                        "Salary: $" +
-                        letter.object.salary +
-                        ". Skills: Design: " +
-                        letter.object.stats.design +
-                        ", Program: " +
-                        letter.object.stats.program +
-                        ", Manage: " +
-                        letter.object.stats.manage +
-                        ".";
-                    break;
-                case "Offer":
-                    handleClick = () => {
-                        this.setState({
-                            current_modal: (
-                                <Offer
-                                    letter={letter}
-                                    closeModal={this.closeModal}
-                                    key={i}
-                                    expired={letter.expired}
-                                    createdAt={letter.createdAt}
-                                    project={letter.object}
-                                    data={this.props.data}
-                                />
-                            )
-                        });
-                        this.setState({ show_modal: true });
-                        letter.isRead = true;
-                    };
-                    letter.title = "Project offer: " + letter.object.company + " " + letter.object.name;
-                    letter.description =
-                        "Reward: $" +
-                        letter.object.reward +
-                        ". Estimate: Design: " +
-                        letter.object.estimate.design +
-                        ", Program: " +
-                        letter.object.estimate.program +
-                        ", Manage: " +
-                        letter.object.estimate.manage +
-                        ".";
-                    break;
-                case "Event":
-                    handleClick = () => {
-                        this.setState({
-                            current_modal: (
-                                <HistoricalEvent closeModal={this.closeModal} key={i} content={letter.object} date={letter.date} />
-                            )
-                        });
-                        this.setState({ show_modal: true });
-
-                        letter.isRead = true;
-                    };
-                    letter.title = "World news: " + letter.object.name;
-                    letter.description = letter.object.description;
-                    break;
-                default:
-                    break;
-            }
-            return (
-                <div className="letter card" onClick={handleClick} key={i}>
-                    {(() => {
-                        switch (letter.type) {
-                            case "Resume":
-                                return <img src={employees} className="mail-icon" />;
-                            case "Offer":
-                                return <img src={clients} className="mail-icon" />;
-                            case "Hot offer":
-                                return <img src={clients} className="mail-icon" />;
-                            case "Event":
-                                return <img src={news} className="mail-icon" />;
-                            case "Office":
-                                return <img src={office} className="mail-icon" />;
-                            default:
-                                return <img src={pr} className="mail-icon" />;
-                        }
-                    })()}
-                    <h6 className="letter-title">{letter.title}</h6>
-                    <p className="letter-description">{letter.description}</p>
-                    <span className="formatted-date">
-                        <FormattedDate
-                            value={letter.date}
-                            // weekday="short"
-                            day="numeric"
-                            month="short"
-                            // year="numeric"
-                            hour="numeric"
-                        />
-                    </span>
-                    <svg className="done_icon" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M9 16.2188L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.78125 12L9 16.2188Z"
-                            fill={letter.isRead ? "#CCCCCC" : "#2E99E5"}
-                        />
-                    </svg>
-                    {/*<SVGInline
-                        svg={
-                            <svg
-                                className="done_icon"
-                                width="32"
-                                height="32"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    d="M9 16.2188L19.5938 5.57812L21 6.98438L9 18.9844L3.42188 13.4062L4.78125 12L9 16.2188Z"
-                                    fill={letter.isRead ? "#CCCCCC" : "#2E99E5"}
-                                />
-                            </svg>
-                        }
-                    />*/}
-                </div>
-            );
-        });
-
         return (
             <div className="mail">
                 <div className="mail-menu">
@@ -232,15 +127,14 @@ class Mail extends Component {
                     </div>
                 </div>
 
-                {letters}
+                {_.map(inverted_mailbox, (letter, i) => (
+                    <DefaultEmailTemplate {...this.getState(i, letter)} />
+                ))}
                 {this.state.show_modal ? (
                     <Modal closeModal={this.closeModal} showCloseButton={true}>
-                        {" "}
                         {this.state.current_modal}
                     </Modal>
-                ) : (
-                    <div />
-                )}
+                ) : null}
             </div>
         );
     }
