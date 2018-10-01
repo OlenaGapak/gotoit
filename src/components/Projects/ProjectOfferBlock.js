@@ -75,24 +75,27 @@ class ProjectOfferBlock extends Component {
                         hideCheckbox={true}
                         max_stat={data.max_stats_projects_offered}
                         stats={stats_progressbar_data}
-                        worker={candidate}
-                        data={data}
+                        workerId={candidate.id}
+                        getRole={this.props.data.helpers.getRole}
+                        changeRole={this.props.data.helpers.changeRole}
                     />
                     <StatsProgressBar
                         type={"program"}
                         hideCheckbox={true}
                         max_stat={data.max_stats_projects_offered}
                         stats={stats_progressbar_data}
-                        worker={candidate}
-                        data={data}
+                        workerId={candidate.id}
+                        getRole={this.props.data.helpers.getRole}
+                        changeRole={this.props.data.helpers.changeRole}
                     />
                     <StatsProgressBar
                         type={"manage"}
                         hideCheckbox={true}
                         max_stat={data.max_stats_projects_offered}
                         stats={stats_progressbar_data}
-                        worker={candidate}
-                        data={data}
+                        workerId={candidate.id}
+                        getRole={this.props.data.helpers.getRole}
+                        changeRole={this.props.data.helpers.changeRole}
                     />
                 </div>
             </div>

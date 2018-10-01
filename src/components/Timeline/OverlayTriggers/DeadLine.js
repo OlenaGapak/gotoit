@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import * as PropTypes from "prop-types";
 import { Avatar } from "../../Projects/Avatar";
 import _ from "lodash";
 import ReactTooltip from "react-tooltip";
 
-export default class DeadLine extends Component {
+export default class DeadLine extends PureComponent {
     static propTypes = {
         avatar: PropTypes.shape(),
         index: PropTypes.number,

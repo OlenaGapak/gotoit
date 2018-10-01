@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classNames from "classnames";
 import * as PropTypes from "prop-types";
+import _ from "lodash";
 
 export default class ProgressDeadline extends Component {
     static propTypes = {
@@ -15,7 +16,7 @@ export default class ProgressDeadline extends Component {
                     className={classNames("progress-bar", this.props.deadline / this.props.deadlineMax < 0.1 ? "bg-danger" : "bg-warning")}
                     role="progressbar"
                     style={{
-                        width: 100 - (this.props.deadline / this.props.deadlineMax) * 100 + "%"
+                        width: _.round(100 - (this.props.deadline / this.props.deadlineMax) * 100, 0) + "%"
                     }}
                 >
                     {this.props.deadlineMax - this.props.deadline} gone
@@ -24,7 +25,7 @@ export default class ProgressDeadline extends Component {
                     className="progress-bar bg-success"
                     role="progressbar"
                     style={{
-                        width: (this.props.deadline / this.props.deadlineMax) * 100 + "%"
+                        width: _.round((this.props.deadline / this.props.deadlineMax) * 100, 0) + "%"
                     }}
                 >
                     {this.props.deadline} to deadline

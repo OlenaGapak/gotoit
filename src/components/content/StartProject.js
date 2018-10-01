@@ -252,27 +252,32 @@ class StartProject extends Component {
                                                                     type={"design"}
                                                                     max_stat={data.max_stat}
                                                                     stats={stats_progressbar_data}
-                                                                    worker={worker}
-                                                                    data={data}
+                                                                    workerId={worker.id}
                                                                     hideStatIcon={true}
+                                                                    getRole={this.props.data.helpers.getRole}
+                                                                    changeRole={this.props.data.helpers.changeRole}
                                                                 />
 
                                                                 <StatsProgressBar
                                                                     type={"program"}
                                                                     max_stat={data.max_stat}
                                                                     stats={stats_progressbar_data}
-                                                                    worker={worker}
+                                                                    workerId={worker.id}
                                                                     data={data}
                                                                     hideStatIcon={true}
+                                                                    getRole={this.props.data.helpers.getRole}
+                                                                    changeRole={this.props.data.helpers.changeRole}
                                                                 />
 
                                                                 <StatsProgressBar
                                                                     type={"manage"}
                                                                     max_stat={data.max_stat}
                                                                     stats={stats_progressbar_data}
-                                                                    worker={worker}
+                                                                    workerId={worker.id}
                                                                     data={data}
                                                                     hideStatIcon={true}
+                                                                    getRole={this.props.data.helpers.getRole}
+                                                                    changeRole={this.props.data.helpers.changeRole}
                                                                 />
                                                             </div>
                                                         </div>

@@ -11,7 +11,7 @@ import success from "../../assets/sounds/success.wav";
 import failed from "../../assets/sounds/failed.wav";
 import dismission from "../../assets/sounds/dismission.wav";
 import React from "react";
-
+import {shallowEqual} from 'shouldcomponentupdate-children';
 export const sounds = {
     button_click: button, //кнопки
     click: click, //Клик по иконке (изменение скорости, закрытия, навыка и пр.)
@@ -33,17 +33,22 @@ const makeSoundOnClick = (Component, sound_name) => {
             let audio = new Audio(sounds[sound_name]);
             audio.play();
         };
-
+        onClick = () => {
+            if(this.props.onClick)
+            {
+            this.makeAudio();
+            this.props.onClick();
+            }
+        }
+        shouldComponentUpdate(nextProps, nextState) {
+            return shallowEqual(this.props, nextProps, this.state, nextState);
+        }
         render() {
             let props = this.props;
             return (
                 <Component
                     {...props}
-                    onClick={() => {
-                        if(this.props.onClick){
-                        this.makeAudio();
-                        this.props.onClick();}
-                    }}
+                    onClick={this.onClick}
                 />
             );
         }

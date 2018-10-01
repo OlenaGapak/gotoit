@@ -294,7 +294,7 @@ export default class ModalWorker extends Component {
                             {worker.in_vacation ? " on vacation! " : ""}
                         </h3>
                         <div className="worker-happiness">
-                            <WorkerHappinessBar worker={worker} />
+                            <WorkerHappinessBar happiness_real={worker.calcEfficiencyReal()} />
                             <>
                                 {worker.is_player ? (
                                     ""
@@ -316,7 +316,7 @@ export default class ModalWorker extends Component {
                         </div>
 
                         <div className="worker-stamina">
-                            <WorkerStaminaBar worker={worker} />
+                            <WorkerStaminaBar stamina={worker.stamina} />
 
                             <DefaultClickSoundButton
                                 className={
@@ -339,8 +339,9 @@ export default class ModalWorker extends Component {
                                         key={skill}
                                         type={skill}
                                         stats={stats_progressbar_data}
-                                        worker={worker}
-                                        data={data}
+                                        workerId={worker.id}
+                                        getRole={this.props.data.helpers.getRole}
+                                        changeRole={this.props.data.helpers.changeRole}
                                     />
                                 );
                             })}

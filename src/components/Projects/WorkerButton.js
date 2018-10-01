@@ -1,17 +1,20 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import * as PropTypes from "prop-types";
 import { Avatar } from "./Avatar";
 import _ from "lodash";
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
+import isEqual from "react-fast-compare";
 
-export class WorkerButton extends PureComponent {
+export class WorkerButton extends Component {
     constructor(props) {
         super(props);
         this.state = {
             avatarHovered: false
         };
     }
-
+    shouldComponentUpdate(nextProps) {
+        return !isEqual(this.props, nextProps);
+    }
     render() {
         return (
             <DefaultClickSoundButton

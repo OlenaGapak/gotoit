@@ -66,8 +66,6 @@ class ToastNest extends Component {
                     draggable
                     pauseOnHover
                 />
-                {/* Same as */}
-                <ToastContainer />
             </div>
         );
     }

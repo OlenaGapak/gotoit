@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import _ from "lodash";
 import { TimeLineStep } from "./TimeLineStep";
+import isEqual from "react-fast-compare";
 
 const timelineWidth = window.innerWidth;
 
@@ -9,7 +10,9 @@ class Timeline extends Component {
     static propTypes = {
         data: PropTypes.shape()
     };
-
+    // shouldComponentUpdate(nextProps) {
+    //     return !isEqual(this.props, nextProps);
+    // }
     render() {
         let { timelineEvents = [], timelineScale } = this.props.data;
 

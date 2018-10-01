@@ -422,27 +422,33 @@ export default class ProjectModal extends Component {
                                                     type={"design"}
                                                     max_stat={data.max_stat}
                                                     stats={stats_progressbar_data}
-                                                    worker={worker}
                                                     data={data}
                                                     hideStatIcon={true}
+                                                    workerId={worker.id}
+                                                    getRole={this.props.data.helpers.getRole}
+                                                    changeRole={this.props.data.helpers.changeRole}
                                                 />
 
                                                 <StatsProgressBar
                                                     type={"program"}
                                                     max_stat={data.max_stat}
                                                     stats={stats_progressbar_data}
-                                                    worker={worker}
                                                     data={data}
                                                     hideStatIcon={true}
+                                                    workerId={worker.id}
+                                                    getRole={this.props.data.helpers.getRole}
+                                                    changeRole={this.props.data.helpers.changeRole}
                                                 />
 
                                                 <StatsProgressBar
                                                     type={"manage"}
                                                     max_stat={data.max_stat}
                                                     stats={stats_progressbar_data}
-                                                    worker={worker}
                                                     data={data}
                                                     hideStatIcon={true}
+                                                    workerId={worker.id}
+                                                    getRole={this.props.data.helpers.getRole}
+                                                    changeRole={this.props.data.helpers.changeRole}
                                                 />
                                             </div>
                                         </div>

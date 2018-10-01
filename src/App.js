@@ -53,7 +53,10 @@ export const addDaysToDate = (date, days) => {
     result.setDate(result.getDate() + days);
     return result;
 };
-
+// if (process.env.NODE_ENV !== "production") {
+//     const { whyDidYouUpdate } = require("why-did-you-update");
+//     whyDidYouUpdate(React, { include: [/^WorkerH/], exclude: [/^Connect/] });
+// }
 export var hired = 1;
 export var projects_done = 0;
 
@@ -254,6 +257,11 @@ class App extends Component {
         };
     }
 
+    setStatedebounce = _.throttle(state => {
+        this.setState(state, () => {
+            localStorage.setItem(game_name + "_app_state", JSON.stringify(state));
+        });
+    }, 600);
     UNSAFE_componentWillMount() {
         let helpers = this.state.data.helpers;
 
@@ -319,7 +327,7 @@ class App extends Component {
             loaded_app_state.data.helpers = helpers;
 
             console.log("App " + game_name + " componentDidMount with state", loaded_app_state);
-            this.setState(loaded_app_state);
+            this.setStatedebounce(loaded_app_state);
         }
     }
 
@@ -336,11 +344,11 @@ class App extends Component {
     }
 
     brutalSet(state) {
-        this.setState(state);
+        this.setStatedebounce(state);
     }
 
     checkState() {
-        this.setState({ data: this.state.data });
+        this.setStatedebounce({ data: this.state.data });
     }
 
     playGame() {
@@ -348,14 +356,14 @@ class App extends Component {
         const data = this.state.data;
         data.game_paused = false;
         this.timerID = setInterval(() => this.tick(true), Math.floor(this.state.data.game_speed / this.state.data.game_speed_multiplier));
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     pauseGame() {
         const data = this.state.data;
         data.game_paused = true;
         clearInterval(this.timerID);
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
         //this.animation.clear();
     }
 
@@ -364,13 +372,13 @@ class App extends Component {
         this.pauseGame();
         data.game_speed_multiplier = speed;
         this.playGame();
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     setGameDate(date) {
         const data = this.state.data;
         data.current_game_date = date;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     setTimelineScale() {
@@ -380,7 +388,7 @@ class App extends Component {
             days.push(addDaysToDate(data.current_game_date, i));
         }
         data.timelineScale = days;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
     addTimelineEvent(type, info, object, inTime) {
         const data = this.state.data;
@@ -404,7 +412,7 @@ class App extends Component {
         let new_state = getDefaultState();
         new_state.data.helpers = helpers;
         console.log(this.new_state);
-        this.setState(new_state);
+        this.setStatedebounce(new_state);
         //this.playGame();
     }
 
@@ -426,7 +434,7 @@ class App extends Component {
 
     modifyRelation(worker_id, project_id, value, role = null, team = null) {
         //console.log(arguments);
-        this.setState(this.modifyRelationPure(this.state, worker_id, project_id, value, role, team));
+        this.setStatedebounce(this.modifyRelationPure(this.state, worker_id, project_id, value, role, team));
     }
 
     modifyRelationPure(state, worker_id, project_id, value, role = null, team = null) {
@@ -489,7 +497,7 @@ class App extends Component {
     changeTeamSelector(project = null) {
         const data = this.state.data;
         data.project_team_selector = project === null ? null : project.id;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     changeTeamModalSelector(project = null) {
@@ -509,7 +517,7 @@ class App extends Component {
             data.hovered_workers_id = [];
         }
 
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     getRole(worker_id, role) {
@@ -521,14 +529,14 @@ class App extends Component {
         const data = this.state.data;
         if (!(worker_id in data.workers_roles)) data.workers_roles[worker_id] = JSON.parse(JSON.stringify(skills_true));
         data.workers_roles[worker_id][role] = value;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     changeContent(component, context = {}) {
         const data = this.state.data;
         data.content = component;
         data.context = context;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     agencySearch(agency_state, agency_reward) {
@@ -538,7 +546,7 @@ class App extends Component {
         let worker = WorkerModel.generateAgency(agency_state);
         data.hiring_agency_state = agency_state;
         data.candidates.agency.push(worker);
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     hireCandidate(id, type) {
@@ -548,7 +556,7 @@ class App extends Component {
                 return candidate.id === id;
             })[0]
         );
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     rejectCandidate(id, type) {
@@ -556,7 +564,7 @@ class App extends Component {
         _.remove(data.candidates[type], candidate => {
             return candidate.id === id;
         });
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     hireEmployer(worker) {
@@ -572,7 +580,7 @@ class App extends Component {
         });
         this.modifyRelation(worker.id, null, true);
         data.statistics.workers_hired.buffer = data.workers.length - 1;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     riseEmployer(worker_id) {
@@ -597,7 +605,7 @@ class App extends Component {
         //console.log(worker);
 
         addMessage("You raised salary to " + worker.name + "!", { timeOut: 5000, extendedTimeOut: 2000 }, "info");
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     dismissEmployer(id) {
@@ -622,7 +630,7 @@ class App extends Component {
                 return worker_id === id;
             });
             worker.items[skill][item_key] = true;
-            this.setState({ data: data });
+            this.setStatedebounce({ data: data });
         } else {
             console.log("not enough money");
         }
@@ -654,7 +662,7 @@ class App extends Component {
                 console.log("Unexpected action " + action);
         }
 
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     hrDepartmentUp(action) {
@@ -686,7 +694,7 @@ class App extends Component {
                 console.log("Unexpected action " + action);
         }
 
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     selectedWorkersToTeam(selected_workers) {
@@ -716,7 +724,7 @@ class App extends Component {
         this.addTimelineEvent("deadline", "Deadline", project, project.deadline);
 
         addMessage("Started " + project.name + " project", { timeOut: 5000, extendedTimeOut: 2000 }, "info");
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     startMeeting(meeting_name, selected_workers) {
@@ -733,7 +741,7 @@ class App extends Component {
         });
 
         addMessage("Start " + meeting_conf.name + " meeting", { timeOut: 5000, extendedTimeOut: 2000 }, "info");
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
 
         _.each(team, worker => {
             this.modifyRelation(worker.id, meeting.id, true, "meeting");
@@ -752,21 +760,21 @@ class App extends Component {
         let project = ProjectModel.generateAgency(agency_state);
         data.sales_agency_state = agency_state;
         this.offerProject(project);
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     offerProject(project) {
         let data = this.state.data;
         data.offered_projects.push(project);
         data.statistics.offered_projects.buffer += 1;
-        this.setState({ data });
+        this.setStatedebounce({ data });
     }
     rejectProject(id) {
         const data = this.state.data;
         _.remove(data.projects, candidate => {
             return candidate.id === id;
         });
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
     rejectOffered(id) {
         // rejectOffer
@@ -774,7 +782,7 @@ class App extends Component {
         _.remove(data.offered_projects, candidate => {
             return candidate.id === id;
         });
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
     acceptOffered(id) {
         console.log("accept");
@@ -785,7 +793,7 @@ class App extends Component {
         project.hot = false;
         this.acceptAndMoveProject(project);
         addMessage("Accepted " + project.name + " project", { timeOut: 5000, extendedTimeOut: 2000 }, "info");
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     startOffered(id) {
@@ -803,7 +811,7 @@ class App extends Component {
         project.briefing = true;
         this.acceptAndMoveProject(project);
         this.openProject(id);
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
 
         data.helpers.addTimelineEvent("deadline", "Deadline", project, project.deadline_max / 24);
     }
@@ -820,7 +828,7 @@ class App extends Component {
                 }
             });
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
         this.modifyRelation(null, project.id, true);
     }
 
@@ -833,7 +841,7 @@ class App extends Component {
                 this.changeTechnology(technology, project.id, true);
             }
         });
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
         this.modifyRelation(worker.id, project.id, true);
     }
 
@@ -864,7 +872,7 @@ class App extends Component {
         console.log("pause");
         let newTimelineEvents = this.state.data.timelineEvents.filter(i => i.object.name !== project.name);
         data.timelineEvents = newTimelineEvents;
-        this.setState({ data });
+        this.setStatedebounce({ data });
         //this.checkState();
     }
 
@@ -896,7 +904,7 @@ class App extends Component {
         });
         project.fix();
         addMessage(project.name + " project enters " + project.iteration + " iteration for fixing bugs.", "error");
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     dreamComeTrueCheck(worker, project, opts) {
@@ -1035,7 +1043,7 @@ class App extends Component {
         data.rumor += Math.floor(bonus_points / 10);
         data.reputation += bonus_points;
 
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     finishMeeting(id) {
@@ -1046,7 +1054,7 @@ class App extends Component {
 
         addMessage(project.name + " meeting end", { timeOut: 10000, extendedTimeOut: 5000 }, "success");
 
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     projectReporting(project_id, stage) {
@@ -1096,7 +1104,7 @@ class App extends Component {
         data.reputation += 50;
         addAction("New project report: " + project.name);
         //data.projects_archive_reports.unshift(project);
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     projectArchiving() {
@@ -1116,7 +1124,7 @@ class App extends Component {
 
         //console.log('archiving', data.projects_end_reports, data.projects_archive_reports, projects, project);
 
-        //  //this.setState({data: data});
+        //  //this.setStatedebounce({data: data});
 
         if (project.is_storyline || project.stage !== "finish") return;
 
@@ -1188,7 +1196,7 @@ class App extends Component {
         const data = this.state.data;
         data.money -= technologies[technology].price;
         data.projects_known_technologies.push(technology);
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     getTechnology(project_id, technology) {
@@ -1204,7 +1212,7 @@ class App extends Component {
         if (!(project_id in data.projects_technologies)) data.projects_technologies[project_id] = {};
         data.projects_technologies[project_id][technology] = value;
         data.projects_default_technologies[technology] = value;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     createMail(letter) {
@@ -1212,7 +1220,7 @@ class App extends Component {
         data.mailbox.push(letter);
         let audio = new Audio(sounds.new_message);
         audio.play();
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     addMoney(quantity, currency = "usd") {
@@ -1237,7 +1245,7 @@ class App extends Component {
             { timeOut: 5000, extendedTimeOut: 1000 },
             "success"
         );
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     chargeMoney(quantity, silent = false) {
@@ -1253,7 +1261,7 @@ class App extends Component {
         data.money -= quantity;
         data.statistics.money_spent.buffer += +quantity;
         if (!silent) addAction("Charge from your wallet: " + quantity + "$", { timeOut: 3000, extendedTimeOut: 2000 }, "warning");
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     buyBTC(usd) {
@@ -1266,7 +1274,7 @@ class App extends Component {
         } else {
             console.log("not enough money");
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     sellBTC(usd) {
@@ -1278,7 +1286,7 @@ class App extends Component {
         } else {
             console.log("not enough btc");
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
     buyShare0(usd) {
         const data = this.state.data;
@@ -1290,7 +1298,7 @@ class App extends Component {
         } else {
             console.log("not enough money");
         }
-        this.setState({ data: data }); //зачем?
+        this.setStatedebounce({ data: data }); //зачем?
     }
 
     sellShare0(usd) {
@@ -1302,7 +1310,7 @@ class App extends Component {
         } else {
             console.log("not enough share0");
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
     buyShare1(usd) {
         const data = this.state.data;
@@ -1314,7 +1322,7 @@ class App extends Component {
         } else {
             console.log("not enough money");
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     sellShare1(usd) {
@@ -1326,7 +1334,7 @@ class App extends Component {
         } else {
             console.log("not enough share1");
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
     buyShare2(usd) {
         const data = this.state.data;
@@ -1338,7 +1346,7 @@ class App extends Component {
         } else {
             console.log("not enough money");
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     sellShare2(usd) {
@@ -1350,7 +1358,7 @@ class App extends Component {
         } else {
             console.log("not enough share2");
         }
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     changeOffice(new_size) {
@@ -1361,7 +1369,7 @@ class App extends Component {
             { timeOut: 10000, extendedTimeOut: 2000 },
             "success"
         );
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     upOffice() {
@@ -1392,7 +1400,7 @@ class App extends Component {
             this.chargeMoney(5000);
             data.office_things.coffeemaker = true;
             data.statistics.office_costs.buffer += 5000;
-            this.setState({ data: data });
+            this.setStatedebounce({ data: data });
         } else {
             console.log("not enough money");
         }
@@ -1401,13 +1409,13 @@ class App extends Component {
     lunchOff() {
         const data = this.state.data;
         data.office_things.lunch = false;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     lunchOn() {
         const data = this.state.data;
         data.office_things.lunch = true;
-        this.setState({ data: data });
+        this.setStatedebounce({ data: data });
     }
 
     getGadgetCost() {
@@ -1426,7 +1434,7 @@ class App extends Component {
         if (data.money >= this.getGadgetCost()) {
             this.chargeMoney(this.getGadgetCost());
             data.office_things.gadget++;
-            this.setState({ data: data });
+            this.setStatedebounce({ data: data });
         } else {
             console.log("not enough money");
         }
@@ -1517,8 +1525,7 @@ class App extends Component {
         */
 
         if (updating) {
-            localStorage.setItem(game_name + "_app_state", JSON.stringify(state));
-            this.setState(state);
+            this.setStatedebounce(state);
         }
     }
 
@@ -1651,7 +1658,7 @@ class App extends Component {
         time.is_working_time = !!(time.hour >= 10 && time.hour <= 18 && time.day !== 6 && time.day !== 0);
 
         data.date = time;
-        //this.setState({data: data});
+        //this.setStatedebounce({data: data});
     }
 
     rollTurn() {
@@ -1768,7 +1775,7 @@ class App extends Component {
             this.offerProject(Lorer.hackathon());
         }
 
-        //this.setState({data: data});
+        //this.setStatedebounce({data: data});
     }*/
 
     pushNewProject() {
@@ -2223,7 +2230,7 @@ class App extends Component {
                         audio.play();
                     }}
                 >
-                    <BubblesAnimation onRef={ref => (this.animation = ref)} />
+                    <BubblesAnimation onRef={ref => (this.animation = ref)} gameSpeed={this.state.data.game_speed_multiplier} />
                     <Popup ref={p => (this.popupHandler = p)} />
                     <Layout data={this.state.data} newGame={this.newGame} />
                 </div>

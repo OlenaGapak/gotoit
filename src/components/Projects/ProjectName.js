@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { project_sizes } from "../../game/knowledge/projects";
 import _ from "lodash";
+import isEqual from "react-fast-compare";
 
-class ProjectName extends PureComponent {
+class ProjectName extends Component {
     static defaultProps = {
         size: 0
     };
@@ -17,7 +18,9 @@ class ProjectName extends PureComponent {
         reward: PropTypes.number,
         size: PropTypes.number
     };
-
+    shouldComponentUpdate(nextProps) {
+        return !isEqual(this.props, nextProps);
+    }
     render() {
         const { size, platform, kind, name, deadlineText } = this.props;
         return (

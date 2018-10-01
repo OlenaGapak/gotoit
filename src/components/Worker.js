@@ -11,6 +11,7 @@ import Modal from "./Modal/Modal";
 import WorkerModal from "./Modal/WorkerModal";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
 import ReactTooltip from "react-tooltip";
+import isEqual from "react-fast-compare";
 
 
 
@@ -26,6 +27,9 @@ class Worker extends Component {
     this.closeModal = this.closeModal.bind(this);
 
   }
+    // shouldComponentUpdate(nextProps) {
+    //     return !isEqual(this.props, nextProps);
+    // }
   // shouldComponentUpdate() {
   //   return false;
   // }
@@ -79,7 +83,7 @@ class Worker extends Component {
     const worker = this.props.worker;
 
     const manage_button = (
-      <DefaultClickSoundButton onClick={() => this.openModal() } className="btn btn-manage">Manage</DefaultClickSoundButton>
+      <DefaultClickSoundButton onClick={this.openModal} className="btn btn-manage">Manage</DefaultClickSoundButton>
     );
 
     const stats_progressbar_data = _.mapValues(worker.stats, (val, stat) => {
@@ -139,8 +143,8 @@ class Worker extends Component {
             {/* {worker.get_monthly_salary ? '' : ' unpaid! '} */}
             {/* <div classNames('progress-bar', (100 / worker.getEfficiency() < 0.5 ? 'bg-danger' : 'bg-warning')) role="progressbar"  */}
 
-            <WorkerHappinessBar worker={worker} />
-            <WorkerStaminaBar worker={worker} />
+            <WorkerHappinessBar happiness_real={worker.calcEfficiencyReal()} />
+            <WorkerStaminaBar stamina={worker.stamina} />
             <div className="worker-skills">
 
               <StatsProgressBar
@@ -148,8 +152,9 @@ class Worker extends Component {
                 type={'design'}
                 max_stat={data.max_stat}
                 stats={stats_progressbar_data}
-                worker={worker}
-                data={data}
+                workerId={worker.id}
+                getRole={this.props.data.helpers.getRole}
+                changeRole={this.props.data.helpers.changeRole}
               />
 
 
@@ -157,16 +162,18 @@ class Worker extends Component {
                 type={'program'}
                 max_stat={data.max_stat}
                 stats={stats_progressbar_data}
-                worker={worker}
-                data={data}
+                workerId={worker.id}
+                getRole={this.props.data.helpers.getRole}
+                changeRole={this.props.data.helpers.changeRole}
               />
 
               <StatsProgressBar
                 type={'manage'}
                 max_stat={data.max_stat}
                 stats={stats_progressbar_data}
-                worker={worker}
-                data={data}
+                workerId={worker.id}
+                getRole={this.props.data.helpers.getRole}
+                changeRole={this.props.data.helpers.changeRole}
               />
               <ReactTooltip id={"progress_skill_design"}>
                 <span>{`Design: ${stats_progressbar_data.design.value}`}</span>

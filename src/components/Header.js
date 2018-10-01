@@ -3,8 +3,12 @@ import { FormattedDate } from "react-intl";
 import { support } from "../game/app_config";
 import Timeline from "./Timeline/Timeline";
 import { DefaultClickSoundButton } from "../game/knowledge/sounds";
+import isEqual from "react-fast-compare";
 
 class Header extends Component {
+    // shouldComponentUpdate(nextProps) {
+    //     return !isEqual(this.props, nextProps);
+    // }
     render() {
         const data = this.props.data;
         const date = this.props.data.date;

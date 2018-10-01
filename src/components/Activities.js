@@ -15,6 +15,7 @@ import StartProject from "../components/content/StartProject.js";
 import Welcome from "../components/content/Welcome.js";
 import Mail from "../components/content/Mail.js";
 import Office from "../components/content/Office.js";
+import isEqual from "react-fast-compare";
 
 const components = {
     Achievements: Achievements,
@@ -42,6 +43,9 @@ class Activities extends Component {
     };
     // shouldComponentUpdate() {
     //   return false;
+    // }
+    // shouldComponentUpdate(nextProps) {
+    //     return !isEqual(this.props, nextProps);
     // }
     render() {
         const ContentComponent = components[this.props.data.content];

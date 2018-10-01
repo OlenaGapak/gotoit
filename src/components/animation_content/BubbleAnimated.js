@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Animate } from "react-move";
-import { easeCubicIn } from "d3-ease";
+import { easeLinear } from "d3-ease";
 import { Motion, spring } from "react-motion";
 import SplashAnimated from "./SplashAnimated";
 import { sounds } from "../../game/knowledge/sounds";
-
-class BubbleAnimated extends Component {
+import { easeExpInOut } from "d3-ease";
+class BubbleAnimated extends PureComponent {
     static propTypes = {
         color: PropTypes.string.isRequired,
         count: PropTypes.number.isRequired,
@@ -17,7 +17,7 @@ class BubbleAnimated extends Component {
     };
     constructor(props) {
         super(props);
-        let { size, color, queue } = props;
+        let { size, color } = props;
         let from = { x: 0, y: 0 };
         let elementFrom = document.getElementById(props.from);
         let elementTo = document.getElementById(props.to);
@@ -30,7 +30,7 @@ class BubbleAnimated extends Component {
             this.state = {
                 ...this.state,
                 step: 1,
-                duration: 700 - 10 * queue,
+                duration: 600 - 50,
                 size,
                 color,
                 opacity: 1,
@@ -45,17 +45,7 @@ class BubbleAnimated extends Component {
     };
     movingEnd = () => {
         let { step } = this.state;
-        if (step === 2) {
-            return this.setState(() => ({
-                opacity: 0,
-                scale: 2,
-                duration: this.state.duration - 300,
-                step: 3
-            }));
-        }
-        if (step === 3) {
-            return this.props.handleTransitionEnd();
-        }
+        return this.props.handleTransitionEnd();
     };
     componentDidMount() {
         let to;
@@ -68,8 +58,7 @@ class BubbleAnimated extends Component {
             to.y -= to.height / 2;
             this.setState({
                 x: to.x,
-                y: to.y,
-                step: 2
+                y: to.y
             });
         }
     }
@@ -78,59 +67,87 @@ class BubbleAnimated extends Component {
         audio.play();
     }
     render() {
-        let { count, queue } = this.props;
+        let { count } = this.props;
         let { size, color, x, y, elementFrom, elementTo, opacity, scale, duration } = this.state;
         if (!elementFrom || !elementTo) return null;
         return (
             <div>
-                {/*<Animate
-                    start={{
-                        x: x,
-                        y: y,
-                        opacity: 1,
-                        scale: 1,
-                        duration: 700
-                    }}
-                    update={[
-                        {
-                            x: [x],
-                            y: [y],
-                            opacity: [opacity],
-                            scale: [scale],
-                            timing: {
-                                duration: duration
-                                // easy: easeCubicIn
+                {
+                    <Animate
+                        start={{
+                            x: x,
+                            y: y,
+                            opacity: 1,
+                            scale: 1
+                            // duration: 700 - 50 * this.props.gameSpeed
+                        }}
+                        update={[
+                            {
+                                x: [x],
+                                y: [y],
+                                timing: {
+                                    duration: 500
+                                    // easy: easeExpInOut
+                                    // easy: easeCubicIn
+                                }
+                                // events: {
+                                // end: this.movingEnd
+                                // }
                             },
-                            events: { end: this.movingEnd }
-                        }
-                    ]}
-                >
-                    {({ x, y, opacity, scale }) => {
-                        return (
-                            <div
-                                style={{
-                                    transform: `translate(${x}px, ${y}px) scale(${scale})`,
-                                    opacity: opacity,
-                                    width: size,
-                                    height: size,
-                                    background: color,
-                                    borderRadius: "50%",
-                                    position: "fixed",
-                                    textAlign: "center",
-                                    lineHeight: size,
-                                    zIndex: 10,
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    color: "white",
-                                    cursor: "pointer"
-                                }}
-                            >
-                                {count}
-                            </div>
-                        );
-                    }}
-                </Animate>*/}
+                            {
+                                opacity: [0],
+                                scale: [2],
+                                timing: {
+                                    delay: 500,
+                                    duration: 500
+                                },
+                                events: {
+                                    end: this.movingEnd
+                                }
+                            }
+                        ]}
+                        // enter={{
+                        //     x: [x],
+                        //     y: [y],
+                        //
+                        //     timing: {
+                        //         duration: [600],
+                        //         ease: easeExpInOut
+                        //     }
+                        //     // events: { end: this.movingEnd }
+                        // }}
+                        leave={[
+                            // an array!
+                            {
+                                x: x,
+                                y: y,
+                                opacity: [1],
+                                scale: 3,
+                                timing: {
+                                    duration: 1000,
+                                    ease: easeExpInOut
+                                }
+                            }
+                        ]}
+                    >
+                        {({ x, y, opacity, scale }) => {
+                            return (
+                                <div
+                                    className="bubbles-item"
+                                    style={{
+                                        transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+                                        opacity: opacity,
+                                        width: size,
+                                        height: size,
+                                        background: color
+                                    }}
+                                >
+                                    {count}
+                                </div>
+                            );
+                        }}
+                    </Animate>
+                }
             </div>
         );
     }

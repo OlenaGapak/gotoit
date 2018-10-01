@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import BarItem from "./BarItem";
 import _ from "lodash";
 import { stat } from "fs";
+import isEqual from "react-fast-compare";
 
 class Bar extends Component {
     static defaultProps = {
@@ -13,7 +14,9 @@ class Bar extends Component {
         bar_data: PropTypes.array.isRequired
         //className: PropTypes.string.isRequired
     };
-
+    shouldComponentUpdate(nextProps) {
+        return !isEqual(this.props, nextProps);
+    }
     render() {
         let { bar_data } = this.props; //must be array!
         let { freelance_modal } = this.props;
