@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Bar from "./Bar/Bar";
 import ReactTooltip from "react-tooltip";
+import { colors } from "../game/knowledge/colors";
 //import PropTypes from 'prop-types';
 //import _ from "lodash";
 //import {roles, skills_names} from "../game/knowledge";
@@ -45,6 +46,8 @@ class StatsProgressBar extends Component {
                     value: _.round(parseInt(stats[stat].value, 10), 0),
                     width: _.round((parseInt(stats[stat].value, 10) / max_stat) * 100, 0),
                     color: stats[stat].color,
+                    backgroundColor: stats[stat].color,
+                    trail: colors[stat].skillTrail,
                     showName: true
                 };
                 break;
@@ -55,6 +58,7 @@ class StatsProgressBar extends Component {
                     value: _.round(parseInt(stats[stat].value, 10), 0),
                     width: _.round((parseInt(stats[stat].value, 10) / max_stat) * 100, 0),
                     color: stats[stat].color,
+                    trail: colors[stat].skillTrail,
                     showName: true
                 };
                 break;
@@ -65,6 +69,7 @@ class StatsProgressBar extends Component {
                     value: _.round(parseInt(stats[stat].value, 10), 0),
                     width: _.round((parseInt(stats[stat].value, 10) / max_stat) * 100, 0),
                     color: stats[stat].color,
+                    trail: colors[stat].skillTrail,
                     showName: true
                 };
                 break;

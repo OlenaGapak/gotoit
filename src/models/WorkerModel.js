@@ -43,6 +43,7 @@ class WorkerModel {
         this.character = worker_character_types[_.random(0, 4)];
         this.salary_coefficient = this.character.name === "Workaholic" ? -15 : this.character.name === "Modest" ? 20 : 0;
         this.thirst_to_knowledge_coefficient = this.character.name === "Gifted" ? 0.75 : this.character.name === "Wonk" ? 1.25 : 1;
+        this.standing = 100 * ((_.sum(_.values(this.stats)) / 3 + _.max(_.values(this.stats))) / 2) - 100;
 
         this.feelings = new ValueCache(24, () => {
             return Narrator.workerFeelings(this);
@@ -84,8 +85,6 @@ class WorkerModel {
         this.motivation_pull = 0;
 
         this.effects = {};
-
-        this.standing = 100 * ((_.sum(_.values(this.stats)) / 3 + _.max(_.values(this.stats))) / 2) - 100;
 
         console.log(this.standing);
         console.log((_.sum(_.values(this.stats)) / 3 + _.max(_.values(this.stats))) / 2);
@@ -169,7 +168,7 @@ class WorkerModel {
             return 0;
         } else {
             //    console.log("standing " + this.standing + " means " + (1 + (this.standing/(12*4*7*8*Math.PI))));
-            //return 1000 + Math.floor((this.statsSum() + _.max(_.values(this.stats))) * (1 + this.getOverrate() / 100) * 160);
+            //return 1000 + Math.floor((this.statsSum() + _.max(_.values(this.stats))) * (1 + this.getOverrate() / 100) * 160);zz
             return Math.floor(1000 * (1 + this.getOverrate() / 100) * 1);
         }
     }

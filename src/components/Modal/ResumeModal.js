@@ -21,34 +21,36 @@ class Resume extends Component {
             if (worker.gender === "other") return "them";
         })();
         const DefaultClickSoundButtons = (
-            <div>
-                <DefaultClickSoundButton
-                    className="btn btn-md btn-danger"
-                    id={worker.id}
-                    onClick={e => {
-                        this.props.data.helpers.rejectCandidate(e.target.id, "resumes");
-                        expired = true;
-                        this.props.closeModal();
-                    }}
-                >
-                    Reject
-                </DefaultClickSoundButton>
-
-                <DefaultClickSoundButton
-                    className="btn btn-md btn-success"
-                    id={worker.id}
-                    onClick={e => {
-                        if (data.workers.length !== data.office.space) {
-                            this.props.data.helpers.hireCandidate(worker.id, "resumes");
-                            worker.hired = true;
+            <div className="flex-element flex-container-column expired">
+                <div className="btn_group">
+                    <DefaultClickSoundButton
+                        className="btn btn-danger"
+                        id={worker.id}
+                        onClick={e => {
+                            this.props.data.helpers.rejectCandidate(e.target.id, "resumes");
+                            expired = true;
                             this.props.closeModal();
-                        } else {
-                            alert("Your office is full");
-                        }
-                    }}
-                >
-                    Accept
-                </DefaultClickSoundButton>
+                        }}
+                    >
+                        Reject
+                    </DefaultClickSoundButton>
+
+                    <DefaultClickSoundButton
+                        className="btn btn-success"
+                        id={worker.id}
+                        onClick={e => {
+                            if (data.workers.length !== data.office.space) {
+                                this.props.data.helpers.hireCandidate(worker.id, "resumes");
+                                worker.hired = true;
+                                this.props.closeModal();
+                            } else {
+                                alert("Your office is full");
+                            }
+                        }}
+                    >
+                        Accept
+                    </DefaultClickSoundButton>
+                </div>
             </div>
         );
 

@@ -13,7 +13,7 @@ export const technologies = {
         acronym: "Over",
         price: 0,
         meeting: "fire",
-        description: "It helps to finish project on time but exhausts your team.",
+        description: "It helps to finish project on time but exhausts your team",
         img_sm: overtime_sm
     },
     micromanagement: {
@@ -21,7 +21,7 @@ export const technologies = {
         acronym: "Micro",
         price: 10000,
         meeting: "status",
-        description: "Solid control is averaging performance and work visiting.",
+        description: "Solid control is averaging performance and work visiting",
         img_sm: micromanage_sm
     },
     tdd: {
@@ -29,7 +29,7 @@ export const technologies = {
         acronym: "TDD",
         price: 10000,
         meeting: "test",
-        description: "Developing tests reduce the probability of errors.",
+        description: "Developing tests reduce the probability of errors",
         img_sm: tdd_sm
     },
     refactoring: {
@@ -37,7 +37,7 @@ export const technologies = {
         acronym: "Ref",
         price: 10000,
         meeting: "review",
-        description: "The complexity of the code - it's just a task for refactoring.",
+        description: "The complexity of the code - it's just a task for refactoring",
         img_sm: refactoring_sm
     },
     creativity: {
@@ -45,7 +45,7 @@ export const technologies = {
         acronym: "Free",
         price: 0,
         meeting: "training",
-        description: "Every fifth working hour is given to pet projects that boost experience.",
+        description: "Every fifth working hour is given to pet projects that boost experience",
         img_sm: creativity_sm
     },
     rad: {
@@ -53,7 +53,7 @@ export const technologies = {
         acronym: "RAD",
         price: 10000,
         meeting: "planing",
-        description: "Faster Development at the cost of increasing complexity.",
+        description: "Faster Development at the cost of increasing complexity",
         img_sm: rad_sm
     },
     motivation: {
@@ -61,7 +61,7 @@ export const technologies = {
         acronym: "motive",
         price: 10000,
         meeting: "backlog",
-        description: "The head of the company develop motivation of employees, spending part of their working time on this.",
+        description: "Head of the company develop motivation of employees, spending their working time",
         img_sm: motivation_sm
     },
     pair: {
@@ -69,7 +69,7 @@ export const technologies = {
         acronym: "Pair",
         price: 10000,
         meeting: "teambuilding",
-        description: "Working in tandem allows us to solve complex problems and sharing experience.",
+        description: "Working in tandem allows us to solve complex problems and sharing experience",
         img_sm: pair_sm
     }
 };

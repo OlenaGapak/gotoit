@@ -17,7 +17,13 @@ class ProjectProgressBar extends Component {
         let sum_design, sum_prog, sum_manage;
         let design_data, prog_data, manage_data;
         let own_modal = this.props.own_modal;
-        if (project.type === "own") {
+        if (!project.type) {
+            design_data = [
+                {
+                    value: project.design
+                }
+            ];
+        } else if (project.type === "own") {
             sum_design = project.done.design + project.bugs.design;
             design_data = [
                 {
@@ -167,7 +173,7 @@ class ProjectProgressBar extends Component {
                 {manage_data[0].value !== 0 ? (
                     <div className="flexbox">
                         <span className={`icon-manage ${own_modal ? "icon-manage-own" : ""}`} id={`${project.id}_manage`} />
-                        <Bar className="flex-grow" bar_data={manage_data} own_modal={own_modal} />
+                        <Bar className="flex-grow" bar_data={manage_data} own_modal={own_modal ? own_modal : false} />
                     </div>
                 ) : (
                     ""
