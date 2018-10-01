@@ -59,7 +59,7 @@
   text-align: center;
   color: var(--color-alpha-dark-text);
   cursor: pointer;
-  min-width: 48px;
+  min-width: 32px;
   white-space: nowrap;
   border: none;
   //border-top: 1px solid transparent;
@@ -72,6 +72,10 @@
   &:hover {
   //   color: var(--color-alpha-dark-text-active);
   //   border-top-color: var(--color-primary);
+  }
+
+  &:active {
+    color: var(--white);
   }
 
   &:focus {
@@ -238,7 +242,7 @@
 
   .topbar-btn {
     font-size: 1.125rem;
-    min-width: 48px;
+    min-width: 32px;
     color: var(--color-alpha-dark-text-light);
 
     &.has-new {

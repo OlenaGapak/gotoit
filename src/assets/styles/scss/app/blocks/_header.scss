@@ -53,10 +53,10 @@
   .topbar-btn {
     border-radius: 25% / 50%;
 
-
     &.active {
       background-color: var(--color-primary);
       color: var(--white);
+      -webkit-text-fill-color: var(--white);
     }
   }
 
