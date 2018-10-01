@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import Bar from "./Bar/Bar";
 import _ from "lodash";
 import isEqual from "react-fast-compare";
-class WorkerHappinessBar extends PureComponent {
+class WorkerHappinessBar extends Component {
     // shouldComponentUpdate(nextProps) {
     //     return !isEqual(this.props, nextProps);
     // }

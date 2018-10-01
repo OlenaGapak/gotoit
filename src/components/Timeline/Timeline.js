@@ -27,9 +27,7 @@ class Timeline extends Component {
                                     return true;
                                 } else return false;
                             });
-                            return (
-                                <TimeLineStep key={day.getTime()} index={index} length={timelineScale.length} day={day} events={events} />
-                            );
+                            return <TimeLineStep key={index} index={index} length={timelineScale.length} day={day} events={events} />;
                         })}
                     </div>
                 </div>

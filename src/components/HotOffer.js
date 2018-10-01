@@ -63,15 +63,16 @@ class HotOffer extends PureComponent {
 
                     <div className="moat slim_top">
                         <div key={id} className="card">
-                            <ProjectName
-                                name={name}
-                                penalty={penalty}
-                                deadlineText={project.getDeadlineText()}
-                                platform={platform}
-                                reward={reward}
-                            />
                             <div>
                                 <span>
+                                    {" "}
+                                    <ProjectName
+                                        name={name}
+                                        penalty={penalty}
+                                        deadlineText={project.getDeadlineText()}
+                                        platform={platform}
+                                        reward={reward}
+                                    />
                                     <h4 className="project-reward text-success"> Reward: ${reward}</h4>
                                 </span>
                                 {penalty > 0 ? (

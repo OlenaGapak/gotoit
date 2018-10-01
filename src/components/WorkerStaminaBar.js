@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 //import PropTypes from 'prop-types';
 import { colors } from "../game/knowledge/colors";
 import Bar from "./Bar/Bar";
 import _ from "lodash";
 import isEqual from "react-fast-compare";
-class WorkerStaminaBar extends PureComponent {
+class WorkerStaminaBar extends Component {
     static defaultProps = {
         stamina: 0
     };

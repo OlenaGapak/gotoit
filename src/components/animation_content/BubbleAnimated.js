@@ -45,8 +45,6 @@ class BubbleAnimated extends PureComponent {
     };
     movingEnd = () => {
         let { step } = this.state;
-        console.info("movingEnd ");
-
         return this.props.handleTransitionEnd();
     };
     componentDidMount() {

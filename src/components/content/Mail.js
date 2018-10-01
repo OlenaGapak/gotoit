@@ -39,8 +39,7 @@ class Mail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            current_modal: null,
-            letters: null,
+            index: null,
             show_modal: false,
             onlyFavorites: false
         };
@@ -48,12 +47,22 @@ class Mail extends Component {
     closeModal = () => {
         this.setState({ show_modal: false });
     };
+
     markAllAsRead = () => {
         _.map(this.props.data.mailbox, letter => {
             letter.isRead = true;
         });
     };
+
+    toggleFavoriteFilter = () => {
+        this.setState({
+            onlyFavorites: !this.state.onlyFavorites,
+            show_modal: false
+        });
+    };
+
     getState = (index, letter) => {
+        if (!letter) return {};
         let object = letter.object || {};
         let _states = {
             "Project report": {
@@ -102,21 +111,71 @@ class Mail extends Component {
                 iconSrc: clients
             },
             Event: {
-                content: <HistoricalEvent closeModal={this.closeModal} key={index} content={object} date={letter.date} />,
+                content: <NewsMessage closeModal={this.closeModal} key={index} content={letter.object} />,
                 title: `World news: ${_.get(object, "name")}`,
                 description: _.get(object, "description"),
                 iconSrc: news
+            },
+            Welcome: {
+                content: <WelcomeMessage closeModal={this.closeModal} key={index} content={object} date={letter.date} />,
+                title: `Welcome to the new world of IT`,
+                description: "Hello! So you've started your own company. That is so ...",
+                iconSrc: mail
+            },
+            Relations: {
+                content: <RelationsMessage closeModal={this.closeModal} key={index} date={letter.date} />,
+                title: `Relations introduce`,
+                description: "Good morning! Congratulations with starting your company! We hope ...",
+                iconSrc: pr
+            },
+            Office: {
+                content: (
+                    <OfficeMessage
+                        closeModal={this.closeModal}
+                        haveOffice={this.props.data.office.size > 1}
+                        key={index}
+                        date={letter.date}
+                    />
+                ),
+                title: `Office introduce`,
+                description:
+                    this.props.data.office.size > 1
+                        ? "We are glad you chose our service to rent an office. Hope you enjoy it."
+                        : "What we want to do is offer you a nice modern office.",
+                iconSrc: office
+            },
+            Analytics: {
+                content: <AnalyticsMessage closeModal={this.closeModal} key={index} date={letter.date} />,
+                title: `Analytics introduce`,
+                description: "Greetings. It's time to talk about serious stuff. The IT market is very dynamic ...",
+                iconSrc: market_analysis
             }
         };
         return {
             ..._states[letter.type],
-            date: letter.date
+            date: letter.date,
+            isFavorite: letter.favorite,
+            isRead: letter.isRead,
+            letter
         };
+    };
+    toggleFavorite = letter => {
+        letter.favorite = !letter.favorite;
+        return letter.favorite;
+    };
+    handleClick = (content, iconSrc, letter, index) => {
+        this.setState({
+            index
+        });
+        this.setState({ show_modal: true });
+        letter.isRead = true;
     };
     render() {
         const data = this.props.data;
         const inverted_mailbox = _.reverse([...data.mailbox]);
-        let handleClick;
+        const filtered_mailbox = this.state.onlyFavorites ? _.filter(inverted_mailbox, "favorite") : inverted_mailbox;
+        const openLetter = filtered_mailbox[this.state.index];
+        const { content, iconSrc } = this.getState(this.state.index, openLetter);
         return (
             <div className="mail">
                 <div className="mail-menu">
@@ -149,14 +208,22 @@ class Mail extends Component {
                     </div>
                 </div>
 
-                {_.map(inverted_mailbox, (letter, i) => (
-                    <DefaultEmailTemplate {...this.getState(i, letter)} />
+                {_.map(filtered_mailbox, (letter, i) => (
+                    <DefaultEmailTemplate {...this.getState(i, letter)} index={i} handleClick={this.handleClick} key={i} />
                 ))}
-                {this.state.show_modal ? (
-                    <Modal closeModal={this.closeModal} showCloseButton={true}>
-                        {this.state.current_modal}
-                    </Modal>
-                ) : null}
+                {this.state.show_modal &&
+                    openLetter && (
+                        <MailModal
+                            closeModal={this.closeModal}
+                            icon={iconSrc}
+                            toggleFavorite={() => this.toggleFavorite(openLetter)}
+                            type={openLetter.type}
+                            date={openLetter.date}
+                            favorite={openLetter.favorite}
+                        >
+                            {content}
+                        </MailModal>
+                    )}
             </div>
         );
     }
