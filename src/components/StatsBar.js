@@ -71,7 +71,7 @@ class StatsBar extends Component {
                         <span key={stat}>
                             <span key={stat}>
                                 {stats[stat].name}:{" "}
-                                <span>
+                                <span style={{ marginRight: "10px" }}>
                                     {stats[stat].val}
                                     {"  "}
                                 </span>

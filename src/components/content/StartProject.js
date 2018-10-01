@@ -136,7 +136,9 @@ class StartProject extends Component {
                                                 </div>
                                             );
                                         })}
-                                        <p className="filament">{project_platforms[this.state.project_platform].description}</p>
+                                        <p style={{ margin: "12px", color: "black" }}>
+                                            {project_platforms[this.state.project_platform].description}
+                                        </p>
                                     </div>
                                     <div className="card flex-element flex-container-column">
                                         <h4 className="text-center">Project type</h4>
@@ -174,7 +176,9 @@ class StartProject extends Component {
                                                 </div>
                                             );
                                         })}
-                                        <p className="filament">{project_kinds[this.state.project_kind].description}</p>
+                                        <p className="filament" style={{ margin: "12px" }}>
+                                            {project_kinds[this.state.project_kind].description}
+                                        </p>
                                     </div>
                                     <div className="flex-container-column flex-element card text-center workers-list-column">
                                         <h4 className="text-center">Workers on project</h4>
@@ -207,16 +211,16 @@ class StartProject extends Component {
         `}
                                                         id={worker.id}
                                                     >
-                                                        {/*  <input
-                                                                 type="checkbox"
-                                                                 id={worker.id || 0}
-                                                                 checked={this.state.selected_workers[worker.id] || false}
-                                                                 onChange={event => {
-                                                                     let state = JSON.parse(JSON.stringify(this.state));
-                                                                     state.selected_workers[worker.id] = event.target.checked;
-                                                                     this.setState(state);
-                                                                 }}
-                                                             /> */}
+                                                        <input
+                                                            type="checkbox"
+                                                            id={worker.id || 0}
+                                                            checked={this.state.selected_workers[worker.id] || false}
+                                                            onChange={event => {
+                                                                let state = JSON.parse(JSON.stringify(this.state));
+                                                                state.selected_workers[worker.id] = event.target.checked;
+                                                                this.setState(state);
+                                                            }}
+                                                        />
                                                         <div
                                                             className={
                                                                 "flex-element avatar-wrapper " +
@@ -240,10 +244,10 @@ class StartProject extends Component {
                                                             />
                                                         </div>
                                                         <div className="flex-container-column flex-element">
-                                                            <div className="flex-element worker-info">
+                                                            <div className="flex-element">
                                                                 <h2 className="worker-name"> {worker.name} </h2>
                                                             </div>
-                                                            <div className="flex-container-row worker-skills flex-element">
+                                                            <div className="flex-container-row worker-skills">
                                                                 <StatsProgressBar
                                                                     type={"design"}
                                                                     max_stat={data.max_stat}
@@ -280,7 +284,7 @@ class StartProject extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="text-center">
+                        <div className="text-center" style={{ marginBottom: "32px" }}>
                             <DefaultClickSoundButton className="btn btn-success btn-lg" onClick={() => this.startProject()}>
                                 Start Project
                             </DefaultClickSoundButton>

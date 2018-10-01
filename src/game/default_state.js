@@ -27,7 +27,7 @@ var default_state = {
             is_working_time: false
         },
 
-        content: "Welcome",
+        content: "Mail",
         context: {},
 
         money: 0,

@@ -24,21 +24,24 @@ export const colors = {
         colorEstimate: "#ffc299",
         colorCompleted: "#ff954d",
         colorBug: "#c47640",
-        colorTrail: "#FFF0E5"
+        colorTrail: "#FFF0E5",
+        skillTrail: "#B36836"
     },
     program: {
         name: "program",
         colorEstimate: "#ffb2f2",
         colorCompleted: "#cc6cbc",
         colorBug: "#99518d",
-        colorTrail: "#FFE5FB"
+        colorTrail: "#FFE5FB",
+        skillTrail: "#754080"
     },
     manage: {
         name: "manage",
         colorEstimate: "#a9f2ee",
         colorCompleted: "#57d9d1",
         colorBug: "#43918d",
-        colorTrail: "#DAF2F0"
+        colorTrail: "#DAF2F0",
+        skillTrail: "#2E9999"
     },
     success: "#5cb85c",
     warning: "#f0ad4e",

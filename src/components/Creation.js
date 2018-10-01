@@ -7,6 +7,8 @@ import bulkStyler from "../services/bulkStyler";
 
 import WorkerModel from "../models/WorkerModel";
 import ProjectModel from "../models/ProjectModel";
+import BarItem from "./Bar/BarItem";
+import { colors } from "../game/knowledge/colors";
 
 import { skills_1 } from "../game/knowledge/skills";
 import { technologies } from "../game/knowledge/technologies";
@@ -24,10 +26,21 @@ import {
 } from "../game/knowledge/worker_avatar";
 import logo from "../assets/images/go2it-logo.png";
 import bdcLogo from "../assets/images/bdc-logo_light.png";
+import arrowLeft from "../assets/images/creation/appearance/arrow-left.svg";
+import arrowRight from "../assets/images/creation/appearance/arrow-right.svg";
 import specialistImg from "../assets/images/creation/backgrounds/specialist.png";
 import coworkerImg from "../assets/images/creation/backgrounds/coworker.png";
 import bussinessmanImg from "../assets/images/creation/backgrounds/bussinessman.png";
-import bonusImg from "../assets/images/creation/bonuses/cash.png";
+import bonusCash from "../assets/images/creation/bonuses/cash.png";
+import bonusIde from "../assets/images/creation/bonuses/ide.png";
+import bonusMicromanage from "../assets/images/creation/bonuses/micromanage.png";
+import bonusMotivation from "../assets/images/creation/bonuses/motivation.png";
+import bonusPairProg from "../assets/images/creation/bonuses/pair-prog.png";
+import bonusPlusSpecialist from "../assets/images/creation/bonuses/plus_specialist.png";
+import bonusManage from "../assets/images/creation/bonuses/plus_manage.png";
+import bonusTablet from "../assets/images/creation/bonuses/tablet.png";
+import bonusTracker from "../assets/images/creation/bonuses/tracker.png";
+
 import { DefaultClickSoundButton, sounds } from "../game/knowledge/sounds";
 
 export var player = null;
@@ -306,6 +319,28 @@ class Creation extends Component {
 
     }
 */
+    getBonusIcon = spice => {
+        if (spice === "design") {
+            return bonusTablet;
+        } else if (spice === "program") {
+            return bonusIde;
+        } else if (spice === "manage") {
+            return bonusManage;
+        } else if (spice === "pair") {
+            return bonusPairProg;
+        } else if (spice === "helper") {
+            return bonusPlusSpecialist;
+        } else if (spice === "motivation") {
+            return bonusMotivation;
+        } else if (spice === "cash") {
+            return bonusCash;
+        } else if (spice === "micromanagement") {
+            return bonusMicromanage;
+        } else if (spice === "manager") {
+            return bonusTracker;
+        }
+    };
+
     render() {
         const data = this.props.data;
         const selected_background = player_backgrounds[this.state.selected_background];
@@ -328,12 +363,12 @@ class Creation extends Component {
                     <h5 className="fw-700">{key_upper}</h5>
                     <div className="customizator-controls">
                         <DefaultClickSoundButton className="control-arrow" onClick={() => this.fragmentDec(key)}>
-                            {"<"}
+                            <img src={arrowLeft} />
                         </DefaultClickSoundButton>
                         <h5 className="text-center">{asset[key][this.state.avatarNums[key]].name}</h5>
 
                         <DefaultClickSoundButton className="control-arrow" onClick={() => this.fragmentInc(key)}>
-                            {">"}
+                            <img src={arrowRight} />
                         </DefaultClickSoundButton>
                     </div>
                 </div>
@@ -362,7 +397,9 @@ class Creation extends Component {
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <img className="bdc-logo" src={bdcLogo} />
+                                    <a href="http://blackdeckcrew.com" target="_blank" rel="noopener noreferrer">
+                                        <img className="bdc-logo" src={bdcLogo} />
+                                    </a>
                                     <DefaultClickSoundButton
                                         className="btn btn-success btn-lg ml-auto fw-700"
                                         onClick={() => {
@@ -435,7 +472,6 @@ class Creation extends Component {
                                         </div>
                                     </div>
                                     <div className="flex-container-row inputs">
-                                        <div className="customizator">{selectors}</div>
                                         <div className="portrait">
                                             <Avatar
                                                 className="player-avatar worker-avatar"
@@ -446,6 +482,7 @@ class Creation extends Component {
                                                 Randomise
                                             </DefaultClickSoundButton>
                                         </div>
+                                        <div className="customizator">{selectors}</div>
                                     </div>
                                 </div>
 
@@ -487,7 +524,7 @@ class Creation extends Component {
                         {this.state.step === "background" ? (
                             <div className="modal-content background">
                                 <div className="modal-header">
-                                    <h2 className="modal-title text-center fw-300">Choose background</h2>
+                                    <h2 className="modal-title text-center fw-300">Choose your background</h2>
                                 </div>
                                 <div className="modal-body">
                                     <div className="background-select pb-16 bb-1 border-secondary">
@@ -525,39 +562,33 @@ class Creation extends Component {
                                         })}
                                         <h5 className="background-description text-center">
                                             {player_backgrounds[this.state.selected_background].text}
-                                            <br />
-                                            <br />
-                                            {player_backgrounds[this.state.selected_background].start_tech.length > 0 ? (
-                                                <span>
-                                                    Start tech:{" "}
-                                                    {technologies[player_backgrounds[this.state.selected_background].start_tech].name}
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}{" "}
-                                            Start {selected_background.might}:
-                                            {selected_background.spices[this.state[this.state.selected_background]].description}{" "}
-                                            {player_backgrounds[this.state.selected_background].spices[
-                                                this.state[this.state.selected_background]
-                                            ].start_tech.length > 0 ? (
-                                                <span>
-                                                    Start tech:{" "}
-                                                    {
-                                                        technologies[
-                                                            player_backgrounds[this.state.selected_background].spices[
-                                                                this.state[this.state.selected_background]
-                                                            ].start_tech
-                                                        ].name
-                                                    }
-                                                </span>
-                                            ) : (
-                                                ""
-                                            )}
                                         </h5>
                                     </div>
 
-                                    <div className="creation-skills">
-                                        <StatsBar stats={stats_data} data={data} />
+                                    <div className="creation-skills flex-container-row">
+                                        {_.map(stats_data, (item, key) => {
+                                            return (
+                                                <div className="flex-container-column" style={{ width: "120px" }}>
+                                                    <h4>{item.name}</h4>
+
+                                                    <div className="flex-container-row project-progress-bar">
+                                                        <span className={`flex-element icon-${item.name}`}> </span>
+                                                        <div
+                                                            className="flex-element progress bar-style"
+                                                            style={{ width: "100%", backgroundColor: `${colors[key].skillTrail}` }}
+                                                        >
+                                                            <BarItem
+                                                                className="flex-element"
+                                                                showName={false}
+                                                                color={colors[key].colorCompleted}
+                                                                value={`${item.val}`}
+                                                                width={`${item.val * 12}`}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
 
                                     <div className="bonus-select pt-16 bt-1 border-secondary">
@@ -577,9 +608,10 @@ class Creation extends Component {
                                                             this.setState(state);
                                                         }}
                                                     />
-                                                    <label className="btn-background" htmlFor={spice + "-radio-button"}>
-                                                        <img className="bonus-img mb-8" src={bonusImg} />
+                                                    <label className="btn-background text-center" htmlFor={spice + "-radio-button"}>
+                                                        <img className="bonus-img mb-8" src={this.getBonusIcon(spice)} />
                                                         <h5 className="fw-700">{selected_background.spices[spice].name}</h5>
+                                                        <h6>{selected_background.spices[spice].description}</h6>
                                                     </label>
                                                 </div>
                                             );
@@ -645,18 +677,18 @@ class Creation extends Component {
                                                         }}
                                                     />
                                                     <label className="btn-epoch" htmlFor={epoch + "-radio-button"}>
-                                                        <img className="epoch-img" src={epoch_list[epoch].icon} />
                                                         <h4 className="fw-700 mt-8">{epoch_list[epoch].name}</h4>
+                                                        <img className="epoch-img" src={epoch_list[epoch].icon} />
+                                                        <h4 className="fw-700 mt-8">{epoch_list[epoch].description}</h4>
                                                     </label>
                                                 </div>
                                             );
                                         })}
                                     </div>
                                     <h5 className=" epoch-description text-center">
-                                        {epoch_list[this.state.selected_epoch].description}
-                                        {/*<div className="tech text-center">
-                                            Start tech: {epoch_list[this.state.selected_epoch].start_tech}
-                                        </div>*/}
+                                        <div className="tech text-center">
+                                            <h4>{epoch_list[this.state.selected_epoch].start_tech}</h4>
+                                        </div>
                                     </h5>
                                 </div>
                                 <div className="modal-footer">
