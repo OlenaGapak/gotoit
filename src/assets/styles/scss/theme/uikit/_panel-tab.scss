@@ -1,18 +1,18 @@
 
 .nav-tabs {
-  border-bottom-color: var(--color-divider);
+  //border-bottom-color: var(--color-divider);
   margin-bottom: 1rem;
 
   .nav-item {
     &.show .nav-link,
     &.show .nav-link:focus,
     &.show .nav-link:hover {
-      color: var(--color-text);
-      background-color: var(--white);
-      box-shadow:
-        // 0 46px 0px 6px white,
-        0px 4px 8px rgba(0, 0, 0, 0.3),
-        0px 0px 16px rgba(0, 0, 0, 0.2);
+      //color: var(--color-text);
+      //background-color: var(--white);
+      ////box-shadow:
+      //  // 0 46px 0px 6px white,
+      //  0px 4px 8px rgba(0, 0, 0, 0.3),
+      //  0px 0px 16px rgba(0, 0, 0, 0.2);
     }
   }
 
@@ -124,7 +124,7 @@
 //
 .nav-tabs-light-mode {
   border-bottom: none;
-  background-color: var(--white);
+  //background-color: var(--white);
 
   .nav-link {
     border-bottom: none;

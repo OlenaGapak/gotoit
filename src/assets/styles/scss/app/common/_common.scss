@@ -75,10 +75,10 @@ overflow-y: auto;
 
 .card{
     .card-content-center {
-        margin: 0 8px 0;
-        padding: 4px 4px 2px 4px;
+        margin: 8px;
+        //padding: 4px 4px 2px 4px;
         text-align: center;
-        height: 100%;
+        //height: 100%;
         display: flex;
 
         .office-actions{
