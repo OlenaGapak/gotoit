@@ -284,7 +284,7 @@ class StartProject extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="text-center">
+                        <div className="text-center" style={{ marginBottom: "32px" }}>
                             <DefaultClickSoundButton className="btn btn-success btn-lg" onClick={() => this.startProject()}>
                                 Start Project
                             </DefaultClickSoundButton>
