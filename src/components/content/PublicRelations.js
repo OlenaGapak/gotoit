@@ -27,7 +27,7 @@ class PublicRelations extends Component {
                 <div className="card flex-container-row card-content-center">
                     <div className="flex-container-column" style={{ padding: "24px" }}>
                         <div className="flex-element flex-container-row">
-                            <div style={{ width: "45%" }}>
+                            <div style={{ width: "35%" }}>
                                 <CircularProgressbar
                                     className="skills-circle"
                                     initialAnimation={true}
@@ -53,7 +53,7 @@ class PublicRelations extends Component {
                     </div>
                     <div className="flex-container-column" style={{ padding: "24px" }}>
                         <div className="flex-element flex-container-row">
-                            <div style={{ width: "45%" }}>
+                            <div style={{ width: "35%" }}>
                                 <CircularProgressbar
                                     className="skills-circle"
                                     initialAnimation={true}
@@ -81,18 +81,18 @@ class PublicRelations extends Component {
                 </div>
 
                 <div className="flex-container-row pr-actions" style={{ textAlign: "center" }}>
-                    <div className="flex-element" style={{ marginTop: "24px" }}>
+                    <div className="flex-element" style={{ marginTop: "8px" }}>
                         {_.map(public_relations, (item, key) => {
                             return (
                                 <div
                                     key={key}
                                     className="card"
-                                    style={{ margin: "10px", padding: "16px 16px 16px 16px", maxWidth: "250px" }}
+                                    style={{ margin: "8px", padding: "16px 16px 16px 16px", maxWidth: "250px" }}
                                 >
                                     <h6>{public_relations[key].name + " "}</h6>
-                                    <h6 style={{ fontSize: "9px", lineHeight: "11px", marginBottom: "10px" }}>
+                                    <div style={{ fontSize: "9px", lineHeight: "11px", marginBottom: "10px" }}>
                                         {public_relations[key].tooltip}
-                                    </h6>
+                                    </div>
                                     <div className="btn-wrapper">
                                         <DefaultClickSoundButton
                                             className={
