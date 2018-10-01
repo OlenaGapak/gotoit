@@ -69,12 +69,17 @@
   position: relative;
   z-index: var(--zindex-dropdown-toggle);
 
-  // &:hover {
+  &:hover {
   //   color: var(--color-alpha-dark-text-active);
   //   border-top-color: var(--color-primary);
-  // }
+  }
 
-  .icon {
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+    .icon {
     vertical-align: baseline;
     margin-right: 6px;
     font-size: 0.75rem;
