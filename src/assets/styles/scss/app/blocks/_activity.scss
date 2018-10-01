@@ -2,7 +2,7 @@
   border-radius: size(1);
   padding-left: 0 !important;
   padding-right: 0 !important;
-  background-color: white;
+  //background-color: white;
   height: auto;
   max-height: 72vh;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -43,11 +43,11 @@
     line-height: size(3.5)+1px;
     padding-top: 0;
     padding-bottom: 0;
-    transition: 1s ease-in;
+    transition: 0.2s ease-in;
 
     &:hover {
       background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(235,235,235,0.8) 100%);
-      transition: 1s ease-in;
+      transition: 0.2s ease-in;
 
     }topbar-center game-time
 
@@ -55,7 +55,7 @@
     &.active:focus,
     &.active:hover {
       background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(235,235,235,1) 100%);
-      transition: 1s ease-in;
+      transition: 0.2s ease-in;
     }
   }
 
@@ -67,7 +67,31 @@
     border: 1px solid var(--color-black-005);
     border-radius: 0 0 8px 8px;
     margin-top: -1px;
-    background-image: url("/src/assets/images/activity_backgrounds/browser_mail.png");
+    padding-top: 4px;
+    background-image: url(../../images/activity_backgrounds/browser_mail.png);
+    background-size: cover;
+    background-position: -1px 2px;
+    background-repeat: no-repeat;
     background-color: var(--gray-200);
+  }
+
+  .browser .analytics {
+    background-color: rgba(255,255,255,0.8);
+  }
+
+  .chart {
+  }
+
+  .trading {
+
+    h5 {
+      text-align: left;
+      padding-left: 4px;
+    }
+
+    .btn {
+      width: 80px;
+      margin-bottom: 8px;
+    }
   }
 }
