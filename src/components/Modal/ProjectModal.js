@@ -4,10 +4,12 @@ import { Avatar } from "../Projects/Avatar";
 import { ReleaseButton } from "../Projects/ReleaseButton";
 import { ProjectReward } from "../Projects/ProjectReward";
 import { RejectButton } from "../Projects/RejectButton";
+import StatsProgressBar from "../StatsProgressBar";
 import ProjectProgressBar from "../Projects/ProjectProgressBar";
 import ProjectDeadlineBar from "../Projects/ProjectDeadlineBar";
 import TechToggle from "../Projects/TechToggle";
 import { StatsDataItem } from "../Projects/StatsDataItem";
+import { colors } from "../../game/knowledge/colors";
 import { technologies } from "../../game/knowledge/technologies";
 import { DefaultClickSoundButton } from "../../game/knowledge/sounds";
 import ClickOutside from "react-click-outside-component";
@@ -184,8 +186,8 @@ export default class ProjectModal extends Component {
                 }}
             >
                 <div className="flex-container-row">
-                    <div className="modal-header flex-container-column">
-                        <Avatar sources={_.toPairs(avatar)} style={{ height: "96px", width: "120px" }} className="project-avatar" />
+                    <div className="modal-header flex-container-column col-3">
+                        <Avatar sources={_.toPairs(avatar)} style={{ height: "144px", width: "144px" }} className="project-avatar-big" />
                     </div>
                     <div className="flex-element flex-container-column col-9" style={{ width: "100%", paddingLeft: "32px" }}>
                         <div className="flex-element">
@@ -355,7 +357,7 @@ export default class ProjectModal extends Component {
                             <span className="icon-add" style={{ color: "#fff" }} />
                         </DefaultClickSoundButton>
                         {data.project_team_modal_selector === id ? (
-                            <ClickOutside onClickOutside={this.closeSelect} className="select">
+                            <ClickOutside onClickOutside={this.closeSelect} className="">
                                 <Select
                                     onChange={this.onSelectChange}
                                     style={{ marginBottom: "10px" }}
@@ -374,6 +376,13 @@ export default class ProjectModal extends Component {
                         ) : null}
                         <div style={{ display: "block", justifyContent: "space-around" }}>
                             {team.map((worker, i) => {
+                                const stats_progressbar_data = _.mapValues(worker.stats, (val, stat) => {
+                                    return {
+                                        name: stat,
+                                        value: worker.getStatsData(stat),
+                                        color: colors[stat].colorCompleted
+                                    };
+                                });
                                 return (
                                     <div
                                         key={i}
@@ -388,7 +397,7 @@ export default class ProjectModal extends Component {
                                             justifyContent: "space-around"
                                         }}
                                     >
-                                        <span style={{ height: "32px", width: "32px" }}>
+                                        <div style={{ height: "32px", width: "32px" }}>
                                             <Avatar
                                                 className="player-avatar"
                                                 name={worker.name}
@@ -396,27 +405,47 @@ export default class ProjectModal extends Component {
                                                 size={32}
                                                 sources={_.toPairs(worker.avatar)}
                                             />
-                                        </span>
-                                        <span>{worker.name}</span>
-                                        <span>
-                                            <span
-                                                className="icon-program"
-                                                style={{
-                                                    marginRight: "8px",
-                                                    fontSize: "18px",
-                                                    color: "var(--color-program)"
-                                                }}
-                                            />
-                                            <span className="icon-design" style={{ fontSize: "18px", color: "var(--color-design)" }} />
-                                            <span
-                                                className="icon-manage"
-                                                style={{
-                                                    marginLeft: "8px",
-                                                    fontSize: "18px",
-                                                    color: "var(--color-manage)"
-                                                }}
-                                            />
-                                        </span>
+                                        </div>
+                                        <div
+                                            style={{
+                                                width: "60%",
+                                                height: "32px",
+                                                display: "flex",
+                                                flexDirection: "column"
+                                            }}
+                                        >
+                                            <div className="flex-element">
+                                                <h5 className="worker-name">{worker.name}</h5>
+                                            </div>
+                                            <div className="flex-container-row worker-skills">
+                                                <StatsProgressBar
+                                                    type={"design"}
+                                                    max_stat={data.max_stat}
+                                                    stats={stats_progressbar_data}
+                                                    worker={worker}
+                                                    data={data}
+                                                    hideStatIcon={true}
+                                                />
+
+                                                <StatsProgressBar
+                                                    type={"program"}
+                                                    max_stat={data.max_stat}
+                                                    stats={stats_progressbar_data}
+                                                    worker={worker}
+                                                    data={data}
+                                                    hideStatIcon={true}
+                                                />
+
+                                                <StatsProgressBar
+                                                    type={"manage"}
+                                                    max_stat={data.max_stat}
+                                                    stats={stats_progressbar_data}
+                                                    worker={worker}
+                                                    data={data}
+                                                    hideStatIcon={true}
+                                                />
+                                            </div>
+                                        </div>
                                         <span style={{ width: "2px", height: "24px", backgroundColor: "rgba(0, 51, 51, 0.2)" }} />
                                         <button
                                             onClick={() => {
