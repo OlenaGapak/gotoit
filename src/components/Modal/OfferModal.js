@@ -47,7 +47,7 @@ class Offer extends Component {
             <section className="offer-modal">
                 <div className="modal-header flexbox">
                     <div>
-                        <Avatar className="project-avatar" name={project.name} sources={_.toPairs(project.avatar)} />
+                        <Avatar className="project-avatar" sources={_.toPairs(project.avatar)} />
                     </div>
                 </div>
                 <div className="modal-body">

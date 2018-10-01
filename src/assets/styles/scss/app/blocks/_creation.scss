@@ -348,7 +348,7 @@
   .background-description {
     margin-top: 16px;
     width: 100%;
-    height: size(7);
+    height: size(4);
   }
 
   .epoch-description {
@@ -376,7 +376,8 @@
     }
 
     .bar-style {
-      box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.1), inset 0px 0px 3px rgba(0, 0, 0, 0.1);
+      height: 16px;
+      box-shadow: inset 0px 2px 3px rgba(0, 0, 0, 0.1), inset 0px 0px 3px rgba(0, 0, 0, 0.1) !important;
       border-radius: 10px;
     }
 

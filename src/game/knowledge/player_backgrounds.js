@@ -9,7 +9,7 @@ export const player_backgrounds = {
         money: 10000,
         might: "skill",
         start_tech: ["rad"],
-        text: "Raised their professional skills and buy some stuff",
+        text: "Raised professional skills, has a great understanding of Rapid Application Development",
         spices: {
             design: {
                 name: "Designer",
@@ -33,7 +33,7 @@ export const player_backgrounds = {
         money: 10000,
         might: "team",
         start_tech: [],
-        text: "Team player with co-worker",
+        text: "Team player with co-worker ready to work on new projects",
         spices: {
             pair: {
                 name: technologies.pair.name,

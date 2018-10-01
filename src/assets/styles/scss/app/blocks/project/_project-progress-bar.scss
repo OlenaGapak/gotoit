@@ -36,39 +36,46 @@
     }
 }
 
-.project-progress-bar, .flex-container-row {
-    flex-flow: row nowrap;
-    vertical-align: middle;
-    align-items: center;
+.creation-skills {
+    .project-progress-bar {
+        flex-flow: row nowrap;
+        vertical-align: middle;
+        align-items: center;
 
-    .icon- {
-        &program {
+        .progress-bar {
+            border-radius: 10px;
+            box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5), inset 0px 4px 8px rgba(255, 255, 255, 0.3), inset 0px -2px 4px rgba(0, 0, 0, 0.1), inset 0px -1px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon- {
+            &program {
+                color: var(--color-program);
+            }
+            &design {
+                color: var(--color-design);
+            }
+            &manage {
+                color: var(--color-manage);
+            }
+        }
+
+        .icon-program-own {
             color: var(--color-program);
+            font-size: 18px;
         }
-        &design {
+
+        .icon-design-own {
             color: var(--color-design);
+            font-size: 18px
         }
-        &manage {
+
+        .icon-manage-own {
             color: var(--color-manage);
+            font-size: 18px;
         }
-    }
 
-    .icon-program-own {
-        color: var(--color-program);
-        font-size: 18px;
-    }
-
-    .icon-design-own {
-        color: var(--color-design);
-        font-size: 18px
-    }
-
-    .icon-manage-own {
-        color: var(--color-manage);
-        font-size: 18px;
-    }
-
-    [class^='icon-'] {
-        margin-right: 20px;
+        [class^='icon-'] {
+            margin-right: 20px;
+        }
     }
 }

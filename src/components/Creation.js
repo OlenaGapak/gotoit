@@ -575,7 +575,7 @@ class Creation extends Component {
                                                         <span className={`flex-element icon-${item.name}`}> </span>
                                                         <div
                                                             className="flex-element progress bar-style"
-                                                            style={Object.assign({ width: "100%" })}
+                                                            style={{ width: "100%", backgroundColor: `${colors[key].skillTrail}` }}
                                                         >
                                                             <BarItem
                                                                 className="flex-element"
