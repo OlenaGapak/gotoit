@@ -3,7 +3,7 @@ export const public_relations = {
         name: "Start a forum thread",
         long: 24,
         cost: 0,
-        tooltip: "Tell the whole Internet about your company and projects. Who knows? Maybe it`ll help, but surely not for long",
+        tooltip: "Tell the whole Internet about your company and projects. Maybe it`ll help",
         onClick: state => {
             state.on_tick_effects.push({
                 type: "forum_thread",

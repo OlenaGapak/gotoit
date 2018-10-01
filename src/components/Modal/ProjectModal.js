@@ -178,14 +178,14 @@ export default class ProjectModal extends Component {
         return (
             <section
                 style={{
-                    padding: "32px",
+                    padding: "34px",
                     width: "680px",
                     height: "670px"
                 }}
             >
                 <div className="flex-container-row">
-                    <div className="flex-element col-3">
-                        <Avatar sources={_.toPairs(avatar)} style={{ height: "144px", width: "144px" }} className="project-avatar-big" />
+                    <div className="modal-header flex-container-column">
+                        <Avatar sources={_.toPairs(avatar)} style={{ height: "96px", width: "120px" }} className="project-avatar" />
                     </div>
                     <div className="flex-element flex-container-column col-9" style={{ width: "100%", paddingLeft: "32px" }}>
                         <div className="flex-element">
@@ -450,11 +450,16 @@ export default class ProjectModal extends Component {
                             <span className="icon-tech" />
                             Metodologies
                         </h4>
-                        <div className="project-techs">{tech_label}</div>
+                        <div className="project-techs">
+                            {tech_label}
+                            <div
+                                className="flex-container-column"
+                                style={{ marginTop: "82px", marginLeft: "70%", height: "32px", width: "80px" }}
+                            >
+                                <RejectButton onClick={this.onReject} />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                    <RejectButton onClick={this.onReject} />
                 </div>
             </section>
         );

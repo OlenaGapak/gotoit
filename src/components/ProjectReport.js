@@ -3,7 +3,8 @@ import _ from "lodash";
 import classNames from "classnames";
 
 import StatsBar from "./StatsBar";
-import ProjectName from "./Projects/ProjectName";
+import { ProjectReward } from "../components/Projects/ProjectReward";
+//import ChartsController from "../components/content/ChartsController";
 
 import { technologies } from "../game/knowledge/technologies";
 import { skills } from "../game/knowledge/skills";
@@ -67,44 +68,49 @@ class ProjectReport extends Component {
         });
 
         return (
-            <div className="card">
-                <ProjectName project={project} /> ({project.reward}
-                $)
-                {project.deadline_max > 0 ? (
-                    <div className="progress">
-                        <div
-                            className={classNames(
-                                "progress-bar",
-                                project.deadline / project.deadline_max < 0.1 ? "bg-danger" : "bg-warning"
-                            )}
-                            role="progressbar"
-                            style={{
-                                width: 100 - (project.deadline / project.deadline_max) * 100 + "%"
-                            }}
-                        >
-                            {project.deadline_max - project.deadline} gone
-                        </div>
-                        <div
-                            className="progress-bar bg-success"
-                            role="progressbar"
-                            style={{
-                                width: (project.deadline / project.deadline_max) * 100 + "%"
-                            }}
-                        >
-                            {project.deadline} to deadline
-                        </div>
-                    </div>
-                ) : (
-                    ""
-                )}
-                <h4 className="slim">
-                    Project is{" "}
-                    <strong>
+            <div className="">
+                <div className="flex-container-row">
+                    <h4
+                        className="slim"
+                        style={{
+                            marginRight: "25%",
+                            fontWeight: "bold",
+                            fontSize: "24px",
+                            textAlign: "center"
+                        }}
+                    >
                         {project.stage}
                         ed
-                    </strong>
-                    .
-                </h4>
+                    </h4>
+                    {project.deadline_max > 0 ? (
+                        <div className="progress">
+                            <div
+                                className={classNames(
+                                    "progress-bar",
+                                    project.deadline / project.deadline_max < 0.1 ? "bg-danger" : "bg-warning"
+                                )}
+                                role="progressbar"
+                                style={{
+                                    width: 100 - (project.deadline / project.deadline_max) * 100 + "%"
+                                }}
+                            >
+                                {project.deadline_max - project.deadline} gone
+                            </div>
+                            <div
+                                className="progress-bar bg-success"
+                                role="progressbar"
+                                style={{
+                                    width: (project.deadline / project.deadline_max) * 100 + "%"
+                                }}
+                            >
+                                {project.deadline} to deadline
+                            </div>
+                        </div>
+                    ) : (
+                        ""
+                    )}
+                </div>
+
                 <p className="small">
                     With team {team_label}.{tech.length ? <span className="small"> and tech {tech_label}.</span> : " "}
                     {project.facts.money_spent ? `Spent ${project.facts.money_spent}$ for salary. ` : ""}
@@ -113,18 +119,29 @@ class ProjectReport extends Component {
                     {project.facts.refactored ? `Did ${project.facts.refactored} refactoring. ` : ""}
                     {project.facts.tests_wrote ? `Wrote ${project.facts.tests_wrote} tests. ` : ""}
                 </p>
-                <StatsBar stats={stats_data} data={this.props.data} />
-                <div className="">
-                    <div className="">
-                        {" "}
-                        Tasks: {project.tasksQuantity()}/{project.planedTasksQuantity()}{" "}
+                <div className="flex-container-row">
+                    <div className="flex-container-column" style={{ marginRight: "25%" }}>
+                        <ProjectReward reward={project.reward} penalty={project.penalty} project={project} />
                     </div>
-                    <div className="">
-                        {" "}
-                        Bugs: <span className="text-danger">{project.bugsQuantity()}</span>{" "}
+                    <div className="flex-container-column">
+                        <StatsBar stats={stats_data} data={this.props.data} />
+                        <div className="" style={{ marginRight: "8px" }}>
+                            {" "}
+                            Tasks: {project.tasksQuantity()}/{project.planedTasksQuantity()}{" "}
+                        </div>
+                        <div className="" style={{ marginRight: "8px" }}>
+                            {" "}
+                            Bugs: <span className="text-danger">{project.bugsQuantity()}</span>{" "}
+                        </div>
+                        <div className="" style={{ marginRight: "8px" }}>
+                            {" "}
+                            Complexity: {project.complexity}{" "}
+                        </div>
+                        <div className="" style={{ marginRight: "8px" }}>
+                            {" "}
+                            Iteration: {project.iteration}{" "}
+                        </div>
                     </div>
-                    <div className=""> Complexity: {project.complexity} </div>
-                    <div className=""> Iteration: {project.iteration} </div>
                 </div>
             </div>
         );
